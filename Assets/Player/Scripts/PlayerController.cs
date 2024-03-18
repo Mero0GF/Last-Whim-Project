@@ -12,9 +12,13 @@ public class PlayerController : MonoBehaviour
     private enum State
     {
         Moving,
+        ChargingAtk,
         Dodging,
     }
     private State state;
+
+    // Charging attack variables
+    public float chargingMoveSpd = 3;
 
     // movement variables
     public bool canMove = true;
@@ -40,7 +44,7 @@ public class PlayerController : MonoBehaviour
     Vector2 lastMoveDirection = Vector2.zero;
     Vector2 movementInput;
 
-    public GameObject floatingSword;
+    public FloatingSword floatingSword;
     Rigidbody2D rb;
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
 
@@ -61,12 +65,20 @@ public class PlayerController : MonoBehaviour
         switch (state)
         {
             case State.Moving:
+                // ---------- State changing ----------
                 if ((inputHandler.DodgeInput) && (dodgeCD <= dodgeMinCD)) // check if player pressed the dodge button
                 {
                     dodgeDir = inputDirection;
                     state = State.Dodging;
                 }
 
+                if ((isCharging()) && (floatingSword.isInPlayer)) // check if player pressed the dodge button
+                {
+                    floatingSword.isCharging = true;
+                    moveSpd = chargingMoveSpd;
+                }
+                else moveSpd = 6;
+                // -------------------------------------
 
                 if (canMove)
                 {
@@ -140,11 +152,6 @@ public class PlayerController : MonoBehaviour
         canMove = true;
     }
 
-    public void OnFire()
-    {
-
-    }
-
     private bool Dodge(Vector2 dodgeDir)
     {
         int count = rb.Cast(dodgeDir, movementFilter, castCollisions, dodgeSpd * Time.fixedDeltaTime + collisionOffset);
@@ -171,5 +178,10 @@ public class PlayerController : MonoBehaviour
             }
             return false;
         }
+    }
+
+    public bool isCharging()
+    {
+        return inputHandler.FireInput;
     }
 }

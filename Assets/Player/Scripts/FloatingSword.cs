@@ -13,13 +13,20 @@ public class FloatingSword : MonoBehaviour
     }
     private State state;
 
+    // Sword attack variables
+    public bool isInPlayer = true;
+    public bool isCharging = false;
+    private float maxCharge = 250f;
+    private float minCharge = 100f;
+    private float charge = 100f;
+
     // Following player variables
     public bool canMove = true;
     public float speed = 0.6f;
     public float maxSpd = 6;
     public float minSpd = 0.6f;
     public float accel = 1.04f;
-    public float deaccel = 0.935f;
+    public float deaccel = 0.9325f;
     public float maxDistance = 0.8f;
     private float pos = 0.37f;
     private float distance;
@@ -34,6 +41,7 @@ public class FloatingSword : MonoBehaviour
 
     SpriteRenderer spriteRenderer;
     public GameObject player;
+    public PlayerController playerController;
 
     Collider2D swordCollider;
     Rigidbody2D rb;
@@ -53,6 +61,16 @@ public class FloatingSword : MonoBehaviour
             case State.FollowingPlayer:
                 distance = Vector2.Distance(transform.position, (player.transform.position + new Vector3(pos, pos, 0)));
                 Vector2 direction = (player.transform.position + new Vector3(pos, pos, 0)) - transform.position;
+
+                if (isCharging) // checks if player is charging the attack and changes the value of some core variables
+                {
+                    speed = 0;
+                    deaccel = 0.8f;
+                    accel = 1.25f;
+                    minSpd = 0.6f;
+                    maxSpd = 160;
+                    state = State.ChargingAtk;
+                }
 
                 if (distance == 0)
                 {
@@ -75,12 +93,44 @@ public class FloatingSword : MonoBehaviour
                 transform.position = Vector2.MoveTowards(transform.position, (player.transform.position + new Vector3(pos, pos, 0)), speed * Time.deltaTime);
                 break;
             case State.ChargingAtk:
+                if (playerController.isCharging()) // checks if player is pressing the button
+                {
+                    distance = Vector2.Distance(transform.position, (player.transform.position + new Vector3(pos, pos, 0)));
+
+                    if (distance == 0)
+                    {
+                        speed = playerController.chargingMoveSpd;
+                    }
+                    else 
+                    {
+                        speed = Mathf.Clamp(speed * (accel * accel), minSpd, maxSpd);
+                    }
+                    transform.position = Vector2.MoveTowards(transform.position, (player.transform.position + new Vector3(pos, pos, 0)), speed * Time.deltaTime);
+                }
+                else
+                {
+                    speed = 0;
+                    maxSpd = 6;
+                    minSpd = 0.6f;
+                    accel = 1.04f;
+                    deaccel = 0.9325f;
+                    isCharging = false;
+                    state = State.FollowingPlayer;
+                }
                 break;
             case State.Bouncing:
+                if (isCharging) // checks if player is charging the attack
+                {
+                    speed = 0;
+                    deaccel = 0.2f;
+                    accel = 1.4f;
+                    minSpd = 0.6f;
+                    maxSpd = 160;
+                    state = State.ChargingAtk;
+                }
                 distance = Vector2.Distance(transform.position, (player.transform.position + new Vector3(pos, pos, 0)));
                 if (distance > 0.25f)
                 {
-                    speed = 0;
                     state = State.FollowingPlayer;
                 }
                 if (flagUp)

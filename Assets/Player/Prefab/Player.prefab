@@ -228,6 +228,7 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
+  floatingSword: {fileID: 0}
 --- !u!61 &2443423811278254582
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -243,7 +244,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
