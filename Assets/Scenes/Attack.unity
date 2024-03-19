@@ -183,9 +183,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4624747960824434646, guid: 96cd9f190579a7b4ea0b476264d05e5a, type: 3}
+      propertyPath: m_Simulated
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8266466938005678871, guid: 96cd9f190579a7b4ea0b476264d05e5a, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9059430535892231824, guid: 96cd9f190579a7b4ea0b476264d05e5a, type: 3}
       propertyPath: m_Name
       value: Sword
+      objectReference: {fileID: 0}
+    - target: {fileID: 9059430535892231824, guid: 96cd9f190579a7b4ea0b476264d05e5a, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2424,6 +2436,10 @@ PrefabInstance:
     - target: {fileID: 4998876449373218527, guid: dd04d54e8ffc0b441a4738fed0ef6287, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4998876449373218527, guid: dd04d54e8ffc0b441a4738fed0ef6287, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 7298865535348805768, guid: dd04d54e8ffc0b441a4738fed0ef6287, type: 3}
       propertyPath: m_LocalPosition.x

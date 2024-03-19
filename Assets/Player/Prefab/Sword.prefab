@@ -99,6 +99,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a30b7ca7632b5544e810fa54f87b74aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isOnPlayer: 1
+  isCharging: 0
   canMove: 1
   speed: 0.6
   maxSpd: 6
@@ -111,6 +113,7 @@ MonoBehaviour:
   limitPosDown: -1
   bounceSpd: 0.5
   player: {fileID: 0}
+  playerController: {fileID: 0}
 --- !u!61 &8266466938005678871
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 inputDirection = Vector2.zero;
 
     public FloatingSword floatingSword;
+    Collider2D playerCollider;
     Rigidbody2D rb;
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
 
@@ -53,6 +54,7 @@ public class PlayerController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        playerCollider = GetComponent<Collider2D>();
         inputHandler = PlayerInputHandler.Instance;
         lastMoveDirection.x = 0;
         lastMoveDirection.y = -1;
@@ -82,7 +84,7 @@ public class PlayerController : MonoBehaviour
                     floatingSword.isCharging = false;
                     moveSpd = 6;
                 }
-                // -------------------------------------
+                // ------------------------------------
 
                 if (canMove)
                 {

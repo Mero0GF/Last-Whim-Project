@@ -20,6 +20,7 @@ public class FloatingSword : MonoBehaviour
 
     public bool isOnPlayer = true;
     public bool isCharging = false;
+    private float distanceOffset = 0.6f;
     private bool canAttack = false;
     private Vector2 atkDir = Vector2.zero;
     private float chargeSpd = 2;
@@ -60,6 +61,7 @@ public class FloatingSword : MonoBehaviour
         transform.position = new Vector3(pos, pos, 0);
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
+        Physics2D.IgnoreLayerCollision(6, 7);
         state = State.FollowingPlayer;
     }
 
@@ -77,31 +79,35 @@ public class FloatingSword : MonoBehaviour
 
                 if (isCharging) // checks if player is charging the attack and changes the value of some core variables
                 {
-                    speed = 0;
                     accel = 1.12f;
                     minSpd = 6f;
                     maxSpd = 160;
                     state = State.ChargingAtk;
                 }
-
-                if (distance == 0)
+                else if (speed > maxSpd)
                 {
-                    speed = 0;
-                    y = transform.position.y;
-                    state = State.Bouncing;
+                    speed = Mathf.Clamp(speed * deaccel, 5.8f, maxCharge);
                 }
-                else if (distance > 0)
+                else
                 {
-                    if (distance <= maxDistance)
+                    if (distance == 0)
                     {
-                        speed = Mathf.Clamp(speed * (deaccel * deaccel), minSpd, maxSpd);
+                        speed = 0;
+                        y = transform.position.y;
+                        state = State.Bouncing;
                     }
-                    else
+                    else if (distance > 0)
                     {
-                        speed = Mathf.Clamp(speed * (accel * accel), minSpd, maxSpd);
+                        if (distance <= maxDistance)
+                        {
+                            speed = Mathf.Clamp(speed * (deaccel * deaccel), minSpd, maxSpd);
+                        }
+                        else
+                        {
+                            speed = Mathf.Clamp(speed * (accel * accel), minSpd, maxSpd);
+                        }
                     }
                 }
-
                 transform.position = Vector2.MoveTowards(transform.position, (player.transform.position + new Vector3(pos, pos, 0)), speed * Time.deltaTime);
                 break;
 
@@ -117,7 +123,7 @@ public class FloatingSword : MonoBehaviour
                     {
                         charge = Mathf.Clamp(charge + chargeSpd, minCharge, maxCharge); // charges the speed/power of the attack
                     }
-                    if ((distance <= 0.6))
+                    if ((distance <= distanceOffset))
                     {
                         speed = playerController.chargingMoveSpd;
                         canAttack = true;
@@ -145,11 +151,11 @@ public class FloatingSword : MonoBehaviour
                 }
                 else
                 {
-                    charge = 0;
-                    speed = 6f;
                     maxSpd = 6;
                     minSpd = 0.6f;
                     accel = 1.04f;
+                    speed = Mathf.Clamp(speed * deaccel, 5.8f, maxCharge);
+                    transform.position = Vector2.MoveTowards(transform.position, (player.transform.position + new Vector3(pos, pos, 0)), speed * Time.deltaTime);
                     state = State.FollowingPlayer;
                 }
                 break;
@@ -171,16 +177,16 @@ public class FloatingSword : MonoBehaviour
 
 
             case State.Bouncing:
+                distance = Vector2.Distance(transform.position, (player.transform.position + new Vector3(pos, pos, 0)));
                 if (isCharging) // checks if player is charging the attack
                 {
-                    speed = 0;
                     accel = 1.4f;
                     minSpd = 0.6f;
                     maxSpd = 160;
+                    canAttack = true;
                     state = State.ChargingAtk;
                 }
 
-                distance = Vector2.Distance(transform.position, (player.transform.position + new Vector3(pos, pos, 0)));
                 if (distance > 0.25f)
                 {
                     state = State.FollowingPlayer;
