@@ -12,9 +12,13 @@ public class PlayerController : MonoBehaviour
     private enum State
     {
         Moving,
+        ChargingAtk,
         Dodging,
     }
     private State state;
+
+    // Charging attack variables
+    public float chargingMoveSpd = 3;
 
     // movement variables
     public bool canMove = true;
@@ -37,10 +41,10 @@ public class PlayerController : MonoBehaviour
     Animator animator;
 
     private PlayerInputHandler inputHandler;
-    Vector2 lastMoveDirection = Vector2.zero;
-    Vector2 movementInput;
+    public Vector2 lastMoveDirection = Vector2.zero;
+    public Vector2 inputDirection = Vector2.zero;
 
-    public GameObject floatingSword;
+    public FloatingSword floatingSword;
     Rigidbody2D rb;
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
 
@@ -61,12 +65,24 @@ public class PlayerController : MonoBehaviour
         switch (state)
         {
             case State.Moving:
+                // ---------- State changing ----------
                 if ((inputHandler.DodgeInput) && (dodgeCD <= dodgeMinCD)) // check if player pressed the dodge button
                 {
                     dodgeDir = inputDirection;
                     state = State.Dodging;
                 }
 
+                if ((isCharging()) && (floatingSword.isOnPlayer)) // check if player pressed the dodge button
+                {
+                    floatingSword.isCharging = true;
+                    moveSpd = chargingMoveSpd;
+                }
+                else
+                {
+                    floatingSword.isCharging = false;
+                    moveSpd = 6;
+                }
+                // -------------------------------------
 
                 if (canMove)
                 {
@@ -83,7 +99,7 @@ public class PlayerController : MonoBehaviour
                         }
                         //animator.SetBool("isMoving", true);
                         //Animate();
-                        //lastMoveDirection = movementInput;
+                        lastMoveDirection = inputDirection;
                         //if (animator.GetFloat("moveX") > 0) swordAtk.direction = SwordAtk.AttackDirection.right;
                         //if (animator.GetFloat("moveX") < 0) swordAtk.direction = SwordAtk.AttackDirection.left;
                         //if (animator.GetFloat("moveY") < 0) swordAtk.direction = SwordAtk.AttackDirection.down;
@@ -98,6 +114,13 @@ public class PlayerController : MonoBehaviour
                 }
                 break;
             case State.Dodging:
+                if ((isCharging()) && (floatingSword.isOnPlayer)) // check if player pressed the dodge button
+                {
+                    floatingSword.isCharging = true;
+                    moveSpd = chargingMoveSpd;
+                }
+                else moveSpd = 6;
+
                 canMove = Dodge(dodgeDir);
                 if (!canMove)
                 {
@@ -122,13 +145,13 @@ public class PlayerController : MonoBehaviour
         else return false;
     }
 
-    public void Animate()
-    {
-        animator.SetFloat("moveX", movementInput.x);
-        animator.SetFloat("moveY", movementInput.y);
-        animator.SetFloat("lastMoveX", lastMoveDirection.x);
-        animator.SetFloat("lastMoveY", lastMoveDirection.y);
-    }
+    //public void Animate()
+    //{
+    //    animator.SetFloat("moveX", movementInput.x);
+    //    animator.SetFloat("moveY", movementInput.y);
+    //    animator.SetFloat("lastMoveX", lastMoveDirection.x);
+    //    animator.SetFloat("lastMoveY", lastMoveDirection.y);
+    //}
 
     public void LockMovement()
     {
@@ -138,11 +161,6 @@ public class PlayerController : MonoBehaviour
     public void UnlockMovement()
     {
         canMove = true;
-    }
-
-    public void OnFire()
-    {
-
     }
 
     private bool Dodge(Vector2 dodgeDir)
@@ -171,5 +189,10 @@ public class PlayerController : MonoBehaviour
             }
             return false;
         }
+    }
+
+    public bool isCharging()
+    {
+        return inputHandler.FireInput;
     }
 }
