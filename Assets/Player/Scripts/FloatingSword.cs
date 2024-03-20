@@ -10,16 +10,23 @@ public class FloatingSword : MonoBehaviour
     {
         FollowingPlayer,
         ChargingAtk,
-        Bouncing,
         Attack,
+        Retrieving,
+        Bouncing,
         
     }
     private State state;
 
-    // Sword attack variables
+    // Sword retrieving variables
+    private float retrievingMinSpd = 2;
+    private float retrievingDistanceOffset = 2f;
 
-    public bool isOnPlayer = true;
-    public bool isCharging = false;
+    // Sword attack variables
+    public int atkCD = 0;
+    private int maxAtkCD = 60;
+    private int minAtkCD = 0;
+    public bool isAvailable = true;
+    public bool isChargingAtk = false;
     private float distanceOffset = 0.6f;
     private bool canAttack = false;
     private Vector2 atkDir = Vector2.zero;
@@ -69,15 +76,11 @@ public class FloatingSword : MonoBehaviour
     {
         switch (state)
         {
-
-
-
-
             case State.FollowingPlayer:
                 distance = Vector2.Distance(transform.position, (player.transform.position + new Vector3(pos, pos, 0)));
                 Vector2 direction = (player.transform.position + new Vector3(pos, pos, 0)) - transform.position;
 
-                if (isCharging) // checks if player is charging the attack and changes the value of some core variables
+                if (isChargingAtk) // checks if player is charging the attack and changes the value of some core variables
                 {
                     accel = 1.12f;
                     minSpd = 6f;
@@ -108,14 +111,17 @@ public class FloatingSword : MonoBehaviour
                         }
                     }
                 }
+                Debug.Log(atkCD);
+                atkCD = Mathf.Clamp(atkCD-1,minAtkCD,maxAtkCD);
                 transform.position = Vector2.MoveTowards(transform.position, (player.transform.position + new Vector3(pos, pos, 0)), speed * Time.deltaTime);
                 break;
 
 
 
 
+
             case State.ChargingAtk:
-                if (isCharging) // checks if player is pressing the button
+                if (isChargingAtk) // checks if player is pressing the button
                 {
                     distance = Vector2.Distance(transform.position, (player.transform.position + new Vector3(pos, pos, 0)));
                     // all the variables inside this state were changed on "FollowingPlayer" state before
@@ -163,12 +169,42 @@ public class FloatingSword : MonoBehaviour
 
 
 
+
             case State.Attack:
+                isAvailable = false;
                 speed = Mathf.Clamp(speed*atkDeaccel, 1, maxCharge);
                 rb.MovePosition(rb.position + atkDir * speed * Time.deltaTime);
                 if (speed == 1)
                 {
                     charge = 0;
+                    speed = 0;
+                    isAvailable = true;
+                    state = State.Retrieving;
+                }
+                break;
+
+
+
+
+
+            case State.Retrieving:
+                // isAvailable set true on Attack state
+                distance = Vector2.Distance(transform.position, (player.transform.position + new Vector3(pos, pos, 0)));
+                if ((isChargingAtk) && (distance != 0)) 
+                {
+                    speed = Mathf.Clamp(speed*accel, retrievingMinSpd, maxCharge);
+                    transform.position = Vector2.MoveTowards(transform.position, (player.transform.position + new Vector3(pos, pos, 0)), speed * Time.deltaTime);
+                }
+                else if (distance > retrievingDistanceOffset)
+                {
+                    speed = Mathf.Clamp(speed * deaccel, retrievingMinSpd, maxCharge);
+                    if (speed == retrievingMinSpd) speed = 0;
+                    transform.position = Vector2.MoveTowards(transform.position, (player.transform.position + new Vector3(pos, pos, 0)), speed * Time.deltaTime);
+                }
+                if (distance <= retrievingDistanceOffset)
+                {
+                    transform.position = Vector2.MoveTowards(transform.position, (player.transform.position + new Vector3(pos, pos, 0)), speed * Time.deltaTime);
+                    atkCD = maxAtkCD;
                     state = State.FollowingPlayer;
                 }
                 break;
@@ -176,9 +212,10 @@ public class FloatingSword : MonoBehaviour
 
 
 
+
             case State.Bouncing:
                 distance = Vector2.Distance(transform.position, (player.transform.position + new Vector3(pos, pos, 0)));
-                if (isCharging) // checks if player is charging the attack
+                if (isChargingAtk) // checks if player is charging the attack
                 {
                     accel = 1.4f;
                     minSpd = 0.6f;
