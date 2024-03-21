@@ -20,6 +20,7 @@ public class PlayerInputHandler : MonoBehaviour
     private InputAction dodgeAction;
     private InputAction fireAction;
 
+
     public Vector2 MoveInput { get; private set; }
     public bool DodgeInput { get; private set; }
     public bool FireInput { get; private set; }
