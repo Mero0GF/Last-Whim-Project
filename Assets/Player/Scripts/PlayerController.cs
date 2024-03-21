@@ -99,19 +99,19 @@ public class PlayerController : MonoBehaviour
                                 canMove = TryMove(new Vector2(0, inputDirection.y));
                             }
                         }
-                        //animator.SetBool("isMoving", true);
-                        //Animate();
+                        animator.SetBool("isMoving", true);
+                        Animate(inputDirection);
                         lastMoveDirection = inputDirection;
                         //if (animator.GetFloat("moveX") > 0) swordAtk.direction = SwordAtk.AttackDirection.right;
                         //if (animator.GetFloat("moveX") < 0) swordAtk.direction = SwordAtk.AttackDirection.left;
                         //if (animator.GetFloat("moveY") < 0) swordAtk.direction = SwordAtk.AttackDirection.down;
                         //if (animator.GetFloat("moveY") > 0) swordAtk.direction = SwordAtk.AttackDirection.up;
                     }
-                    //else
-                    //{
-                    //    //animator.SetBool("isMoving", false);
-                    //    //Animate();
-                    //}
+                    else
+                    {
+                        animator.SetBool("isMoving", false);
+                        Animate(inputDirection);
+                    }
                     dodgeCD = Mathf.Clamp(dodgeCD - 1, dodgeMinCD, dodgeMaxCD);
                 }
                 break;
@@ -156,13 +156,13 @@ public class PlayerController : MonoBehaviour
         else return false;
     }
 
-    //public void Animate()
-    //{
-    //    animator.SetFloat("moveX", movementInput.x);
-    //    animator.SetFloat("moveY", movementInput.y);
-    //    animator.SetFloat("lastMoveX", lastMoveDirection.x);
-    //    animator.SetFloat("lastMoveY", lastMoveDirection.y);
-    //}
+    public void Animate(Vector2 inputDirection)
+    {
+        animator.SetFloat("moveX", inputDirection.x);
+        animator.SetFloat("moveY", inputDirection.y);
+        animator.SetFloat("lastMoveX", lastMoveDirection.x);
+        animator.SetFloat("lastMoveY", lastMoveDirection.y);
+    }
 
     public void LockMovement()
     {

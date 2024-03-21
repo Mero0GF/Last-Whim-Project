@@ -89,7 +89,8 @@ public class FloatingSword : MonoBehaviour
                 }
                 else if (speed > maxSpd)
                 {
-                    speed = Mathf.Clamp(speed * deaccel, 5.8f, maxCharge);
+                    speed = Mathf.Clamp(speed * 0.8f, 5.8f, maxCharge);
+
                 }
                 else
                 {
