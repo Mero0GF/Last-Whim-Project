@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4624747960824434646}
   m_Layer: 7
   m_Name: Sword
-  m_TagString: FloatingSword
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99,14 +99,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a30b7ca7632b5544e810fa54f87b74aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOnPlayer: 1
-  isCharging: 0
+  atkCD: 0
+  isAvailable: 1
+  isChargingAtk: 0
   canMove: 1
   speed: 0.6
   maxSpd: 6
   minSpd: 0.6
   accel: 1.04
-  deaccel: 0.935
+  deaccel: 0.9325
   maxDistance: 0.8
   deaccelPoint: 0.1
   limitPosUp: 1
