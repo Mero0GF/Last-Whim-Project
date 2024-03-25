@@ -13,7 +13,7 @@ public class FloatingSword : MonoBehaviour
         Attack,
         Retrieving,
         Bouncing,
-        
+        Collision,
     }
     private State state;
 
@@ -175,6 +175,13 @@ public class FloatingSword : MonoBehaviour
                 isAvailable = false;
                 speed = Mathf.Clamp(speed*atkDeaccel, 1, maxCharge);
                 rb.MovePosition(rb.position + atkDir * speed * Time.deltaTime);
+
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, atkDir, 0.001f);
+                if (hit.collider != null)
+                {
+                    state = State.Collision;
+                }
+
                 if (speed == 1)
                 {
                     charge = 0;
@@ -185,7 +192,12 @@ public class FloatingSword : MonoBehaviour
                 break;
 
 
-
+            case State.Collision:
+                charge = 0;
+                speed = 0;
+                isAvailable = true;
+                state = State.Retrieving;
+                break;
 
 
             case State.Retrieving:
@@ -211,7 +223,7 @@ public class FloatingSword : MonoBehaviour
                 break;
 
 
-
+            
 
 
             case State.Bouncing:
@@ -238,6 +250,8 @@ public class FloatingSword : MonoBehaviour
                     BounceDown();
                 }
                 break;
+
+            
         }
     }
 
