@@ -112,7 +112,6 @@ public class FloatingSword : MonoBehaviour
                         }
                     }
                 }
-                Debug.Log(atkCD);
                 atkCD = Mathf.Clamp(atkCD-1,minAtkCD,maxAtkCD);
                 transform.position = Vector2.MoveTowards(transform.position, (player.transform.position + new Vector3(pos, pos, 0)), speed * Time.deltaTime);
                 break;
@@ -173,7 +172,8 @@ public class FloatingSword : MonoBehaviour
 
             case State.Attack:
                 isAvailable = false;
-                speed = Mathf.Clamp(speed*atkDeaccel, 1, maxCharge);
+
+                speed = Mathf.Clamp(speed * atkDeaccel, 1, maxCharge);
                 rb.MovePosition(rb.position + atkDir * speed * Time.deltaTime);
                 if (speed == 1)
                 {
@@ -237,6 +237,7 @@ public class FloatingSword : MonoBehaviour
                 {
                     BounceDown();
                 }
+                atkCD = Mathf.Clamp(atkCD - 1, minAtkCD, maxAtkCD);
                 break;
         }
     }
@@ -253,6 +254,25 @@ public class FloatingSword : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("tag: " + collision.tag);
+        if (state == State.Attack) 
+        {   
+            if(collision.tag == "Wall")
+            {
+                charge = 0;
+                speed = 0;
+                isAvailable = true;
+                state = State.Retrieving;
+            }
+            //speed = 0;
+        }
+        else
+        {
+            // Does nothing
+        }
+    }
     private void BounceDown()
     {
         if (transform.position.y < (y - deaccelPoint)) bounceSpd = Mathf.Clamp(bounceSpd * 0.935f, 0.05f, 0.5f); //deacceleration
