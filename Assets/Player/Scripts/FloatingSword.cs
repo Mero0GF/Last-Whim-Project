@@ -256,9 +256,17 @@ public class FloatingSword : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("tag: " + collision.tag);
         if (state == State.Attack) 
-        {
-            speed = 0;
+        {   
+            if(collision.tag == "Wall")
+            {
+                charge = 0;
+                speed = 0;
+                isAvailable = true;
+                state = State.Retrieving;
+            }
+            //speed = 0;
         }
         else
         {
