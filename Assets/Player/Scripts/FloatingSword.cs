@@ -6,7 +6,7 @@ using UnityEngine.Rendering;
 
 public class FloatingSword : MonoBehaviour
 {
-    private enum State
+    public enum State
     {
         FollowingPlayer,
         ChargingAtk,
@@ -16,7 +16,7 @@ public class FloatingSword : MonoBehaviour
         Static,
         
     }
-    private State state;
+    public State state;
 
     // Sword retrieving variables
     private float retrievingMinSpd = 2;
@@ -266,7 +266,6 @@ public class FloatingSword : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("tag: " + collision.tag);
         if (state == State.Attack) 
         {   
             if(collision.tag == "Wall")
