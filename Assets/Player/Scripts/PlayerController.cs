@@ -12,10 +12,12 @@ public class PlayerController : MonoBehaviour
     private enum State
     {
         Moving,
-        ChargingAtk,
         Dodging,
     }
     private State state;
+
+    // Floating sword variables
+    public bool hasSword = false;
 
     // Charging attack variables
     public float chargingMoveSpd = 3;
@@ -74,7 +76,7 @@ public class PlayerController : MonoBehaviour
                     state = State.Dodging;
                 }
 
-                if ((isChargingAtk()) && (floatingSword.isAvailable) && (floatingSword.atkCD == 0)) // check if player pressed the dodge button
+                if ((isChargingAtk()) && (floatingSword.isAvailable) && (floatingSword.atkCD == 0) && (hasSword)) // check if player pressed the dodge button
                 {
                     floatingSword.isChargingAtk = true;
                     moveSpd = chargingMoveSpd;
@@ -205,5 +207,10 @@ public class PlayerController : MonoBehaviour
     public bool isChargingAtk()
     {
         return inputHandler.FireInput;
+    }
+
+    public void SwordPickup()
+    {
+        hasSword = true;
     }
 }

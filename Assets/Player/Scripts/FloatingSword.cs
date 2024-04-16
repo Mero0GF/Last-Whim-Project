@@ -13,6 +13,7 @@ public class FloatingSword : MonoBehaviour
         Attack,
         Retrieving,
         Bouncing,
+        Static,
         
     }
     private State state;
@@ -44,7 +45,7 @@ public class FloatingSword : MonoBehaviour
     public float accel = 1.04f;
     public float deaccel = 0.9325f;
     public float maxDistance = 0.8f;
-    private float pos = 0.37f;
+    private float pos = 0.45f;
     private float distance;
 
     // Bouncing variables
@@ -65,11 +66,11 @@ public class FloatingSword : MonoBehaviour
 
     void Start()
     {
-        transform.position = new Vector3(pos, pos, 0);
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         Physics2D.IgnoreLayerCollision(6, 7);
-        state = State.FollowingPlayer;
+        if (playerController.hasSword) state = State.FollowingPlayer;
+        else state = State.Static;
     }
 
     private void FixedUpdate()
@@ -239,6 +240,15 @@ public class FloatingSword : MonoBehaviour
                 }
                 atkCD = Mathf.Clamp(atkCD - 1, minAtkCD, maxAtkCD);
                 break;
+
+
+
+
+
+            case State.Static:
+                if (playerController.hasSword) state = State.FollowingPlayer;
+                break;
+
         }
     }
 
