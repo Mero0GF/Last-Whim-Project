@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a30b7ca7632b5544e810fa54f87b74aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
   atkCD: 0
   isAvailable: 1
   isChargingAtk: 0
@@ -185,5 +186,5 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0

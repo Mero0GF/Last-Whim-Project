@@ -60,15 +60,12 @@ public class FloatingSword : MonoBehaviour
     public GameObject player;
     public PlayerController playerController;
 
-    Collider2D swordCollider;
     Rigidbody2D rb;
-    List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
 
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
-        Physics2D.IgnoreLayerCollision(6, 7);
         if (playerController.hasSword) state = State.FollowingPlayer;
         else state = State.Static;
     }
@@ -252,6 +249,46 @@ public class FloatingSword : MonoBehaviour
         }
     }
 
+    //IEnumerator Predict()
+
+    //{
+    //    Vector2 prediction = new Vector2(transform.position.x, transform.position.y) + rb.velocity * Time.fixedDeltaTime;
+    //    RaycastHit2D hit;
+    //    int layerMask = LayerMask.GetMask("Wall");
+    //    //Debug.DrawLine(transform.position, prediction);
+    //    if (Physics2D.Linecast(transform.position, prediction, layerMask))
+    //    {
+    //        transform.position = hit.point;
+    //        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+    //        rb.isKinematic = true;
+    //        yield return 0;
+    //        OnTriggerEnterFixed(hit.);
+    //    }
+    //}
+
+    //void OnTriggerEnterFixed(Collider other)
+    //{
+    //    if (other.CompareTag("Target"))
+    //        Destroy(gameObject);
+    //}
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (state == State.Attack)
+        {
+            if (collision.tag == "Wall"){
+                charge = 0;
+                speed = 0;
+                isAvailable = true;
+                state = State.Retrieving;
+            }
+        }
+        else
+        {
+            // Does nothing
+        }
+    }
+
     private void BounceUp()
     {
         if (transform.position.y > (y + deaccelPoint)) bounceSpd = Mathf.Clamp(bounceSpd * 0.935f, 0.05f, 0.5f); //deacceleration
@@ -264,24 +301,6 @@ public class FloatingSword : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (state == State.Attack) 
-        {   
-            if(collision.tag == "Wall")
-            {
-                charge = 0;
-                speed = 0;
-                isAvailable = true;
-                state = State.Retrieving;
-            }
-            //speed = 0;
-        }
-        else
-        {
-            // Does nothing
-        }
-    }
     private void BounceDown()
     {
         if (transform.position.y < (y - deaccelPoint)) bounceSpd = Mathf.Clamp(bounceSpd * 0.935f, 0.05f, 0.5f); //deacceleration

@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
     public float dodgeMinSpd = 6f;
 
     // collision components and variables
+    private bool isMoving = false;
     public float collisionOffset = 0.05f;
     public ContactFilter2D movementFilter;
 
@@ -75,7 +76,6 @@ public class PlayerController : MonoBehaviour
                     dodgeDir = inputDirection;
                     state = State.Dodging;
                 }
-
                 if ((isChargingAtk()) && (floatingSword.isAvailable) && (floatingSword.atkCD == 0) && (hasSword)) // check if player pressed the dodge button
                 {
                     floatingSword.isChargingAtk = true;
@@ -92,13 +92,13 @@ public class PlayerController : MonoBehaviour
                 {
                     if (inputDirection != Vector2.zero)
                     {
-                        bool canMove = TryMove(inputDirection);
-                        if (!canMove)
+                        isMoving = TryMove(inputDirection);
+                        if (!isMoving)
                         {
-                            canMove = TryMove(new Vector2(inputDirection.x, 0));
-                            if (!canMove)
+                            isMoving = TryMove(new Vector2(inputDirection.x, 0));
+                            if (!isMoving)
                             {
-                                canMove = TryMove(new Vector2(0, inputDirection.y));
+                                isMoving = TryMove(new Vector2(0, inputDirection.y));
                             }
                         }
                         animator.SetBool("isMoving", true);
@@ -133,14 +133,13 @@ public class PlayerController : MonoBehaviour
                     floatingSword.isChargingAtk = false;
                     moveSpd = 6;
                 }
-
-                canMove = Dodge(dodgeDir);
-                if (!canMove)
+                isMoving = Dodge(dodgeDir);
+                if (!isMoving)
                 {
-                    canMove = Dodge(new Vector2(dodgeDir.x, 0));
-                    if (!canMove)
+                    isMoving = Dodge(new Vector2(dodgeDir.x, 0));
+                    if (!isMoving)
                     {
-                        canMove = Dodge(new Vector2(0, dodgeDir.y));
+                        isMoving = Dodge(new Vector2(0, dodgeDir.y));
                     }
                 }
                 break;
