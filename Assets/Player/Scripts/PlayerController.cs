@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     private enum State
     {
         Moving,
-        Dodging,
+        Dashing,
     }
     private State state;
 
@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
     private int dodgeCD = 0;
     private int dodgeMaxCD = 30;
     public float dodgeDeaccel = 0.8f;
-    public float dodgeSpd = 50f;
+    public float dodgeSpd = 30f;
     public float dodgeMinSpd = 6f;
 
     // collision components and variables
@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
                 if ((inputHandler.DodgeInput) && (dodgeCD <= dodgeMinCD)) // check if player pressed the dodge button
                 {
                     dodgeDir = inputDirection;
-                    state = State.Dodging;
+                    state = State.Dashing;
                 }
                 if ((isChargingAtk()) && (floatingSword.isAvailable) && (floatingSword.atkCD == 0) && (hasSword)) // check if player pressed the dodge button
                 {
@@ -122,7 +122,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-            case State.Dodging:
+            case State.Dashing:
                 if ((isChargingAtk()) && (floatingSword.isAvailable) && (floatingSword.atkCD == 0)) // check if player pressed the dodge button
                 {
                     floatingSword.isChargingAtk = true;
@@ -133,6 +133,7 @@ public class PlayerController : MonoBehaviour
                     floatingSword.isChargingAtk = false;
                     moveSpd = 6;
                 }
+                animator.SetBool("isDashing", true);
                 isMoving = Dodge(dodgeDir);
                 if (!isMoving)
                 {
@@ -184,8 +185,9 @@ public class PlayerController : MonoBehaviour
             dodgeSpd = dodgeSpd * dodgeDeaccel;
             if (dodgeSpd <= dodgeMinSpd)
             {
-                dodgeSpd = 50f;
+                dodgeSpd = 30f;
                 dodgeCD = dodgeMaxCD;
+                animator.SetBool("isDashing", false);
                 state = State.Moving;
             }
             return true;
@@ -195,8 +197,9 @@ public class PlayerController : MonoBehaviour
             dodgeSpd = dodgeSpd * dodgeDeaccel;
             if (dodgeSpd <= dodgeMinSpd)
             {
-                dodgeSpd = 50f;
+                dodgeSpd = 30f;
                 dodgeCD = dodgeMaxCD;
+                animator.SetBool("isDashing", false);
                 state = State.Moving;
             }
             return false;

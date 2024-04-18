@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f5a0d88aecb48204cb980ef66dfdb169
+guid: 9200a1b14c8da7e4297dc5d5f0c536cc
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: spr_player_leftDown_walk_0
+      name: spr_player_rightDown_walk 1_0
       rect:
         serializedVersion: 2
         x: 0
@@ -124,14 +124,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b92705f10b5ee1f45b0d80243f14fed3
-      internalID: 430764781
+      spriteID: c25be18e28d7df44688108808224fbd3
+      internalID: -2055336568
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spr_player_leftDown_walk_1
+      name: spr_player_rightDown_walk 1_1
       rect:
         serializedVersion: 2
         x: 64
@@ -145,14 +145,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d04e663555bf2eb4db9a8ecf6dda9584
-      internalID: 386537067
+      spriteID: d56552323b0799f4f9af59fc9da3dc19
+      internalID: 215604128
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spr_player_leftDown_walk_2
+      name: spr_player_rightDown_walk 1_2
       rect:
         serializedVersion: 2
         x: 128
@@ -166,14 +166,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aa70d7e72a703064eae597ea0c4a8ee6
-      internalID: -135683050
+      spriteID: daae8a158f5919e4e9e2af38f9b9a68d
+      internalID: -870758248
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spr_player_leftDown_walk_3
+      name: spr_player_rightDown_walk 1_3
       rect:
         serializedVersion: 2
         x: 192
@@ -187,14 +187,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 443881d2e2bcbd046adf47734a95bb05
-      internalID: -402693632
+      spriteID: 966ebdf9a06efa84f805a8d8e3d975aa
+      internalID: -1885162350
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spr_player_leftDown_walk_4
+      name: spr_player_rightDown_walk 1_4
       rect:
         serializedVersion: 2
         x: 256
@@ -208,14 +208,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e630bb2ca905a4348a374980b2934cf0
-      internalID: 1848735119
+      spriteID: de13acdb4b9e0a44d8aebc9363f2cbac
+      internalID: 1230749490
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spr_player_leftDown_walk_5
+      name: spr_player_rightDown_walk 1_5
       rect:
         serializedVersion: 2
         x: 320
@@ -229,8 +229,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 951a60ddcf129674f906a10b0e586f07
-      internalID: 773481874
+      spriteID: 964cfbf3c375f3546b971ad6910cf8ac
+      internalID: 1802019614
       vertices: []
       indices: 
       edges: []
@@ -246,12 +246,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      spr_player_leftDown_walk_0: 430764781
-      spr_player_leftDown_walk_1: 386537067
-      spr_player_leftDown_walk_2: -135683050
-      spr_player_leftDown_walk_3: -402693632
-      spr_player_leftDown_walk_4: 1848735119
-      spr_player_leftDown_walk_5: 773481874
+      spr_player_rightDown_walk 1_0: -2055336568
+      spr_player_rightDown_walk 1_1: 215604128
+      spr_player_rightDown_walk 1_2: -870758248
+      spr_player_rightDown_walk 1_3: -1885162350
+      spr_player_rightDown_walk 1_4: 1230749490
+      spr_player_rightDown_walk 1_5: 1802019614
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
