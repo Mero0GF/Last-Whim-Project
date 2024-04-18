@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class FloatingSword : MonoBehaviour
 {
@@ -17,6 +18,9 @@ public class FloatingSword : MonoBehaviour
         
     }
     public State state;
+
+    private List<RaycastHit2D> hit = new List<RaycastHit2D>();
+    public ContactFilter2D contactFilter;
 
     // Sword retrieving variables
     private float retrievingMinSpd = 2;
@@ -66,6 +70,8 @@ public class FloatingSword : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
+        LayerMask mask = LayerMask.GetMask("Col");
+        contactFilter.SetLayerMask(mask);
         if (playerController.hasSword) state = State.FollowingPlayer;
         else state = State.Static;
     }
@@ -77,7 +83,6 @@ public class FloatingSword : MonoBehaviour
             case State.FollowingPlayer:
                 distance = Vector2.Distance(transform.position, (player.transform.position + new Vector3(pos, pos, 0)));
                 Vector2 direction = (player.transform.position + new Vector3(pos, pos, 0)) - transform.position;
-
                 if (isChargingAtk) // checks if player is charging the attack and changes the value of some core variables
                 {
                     accel = 1.12f;
@@ -170,15 +175,29 @@ public class FloatingSword : MonoBehaviour
 
             case State.Attack:
                 isAvailable = false;
-
-                speed = Mathf.Clamp(speed * atkDeaccel, 1, maxCharge);
-                rb.MovePosition(rb.position + atkDir * speed * Time.deltaTime);
-                if (speed == 1)
+                Vector2 swordPos = new Vector2(transform.position.x, transform.position.y);
+                int localMask = LayerMask.GetMask("Col");
+                RaycastHit2D collision = Physics2D.Raycast(swordPos, atkDir, speed * Time.deltaTime, localMask);
+                if (collision == true)
                 {
+                    //rb.position = rb.position + atkDir * speed * Time.deltaTime;
+                    rb.position = collision.point;
                     charge = 0;
                     speed = 0;
                     isAvailable = true;
                     state = State.Retrieving;
+                }
+                else
+                {
+                    rb.MovePosition(rb.position + atkDir * speed * Time.deltaTime);
+                    speed = Mathf.Clamp(speed * atkDeaccel, 1, maxCharge);
+                    if (speed == 1)
+                    {
+                        charge = 0;
+                        speed = 0;
+                        isAvailable = true;
+                        state = State.Retrieving;
+                    }
                 }
                 break;
 
@@ -249,46 +268,6 @@ public class FloatingSword : MonoBehaviour
         }
     }
 
-    //IEnumerator Predict()
-
-    //{
-    //    Vector2 prediction = new Vector2(transform.position.x, transform.position.y) + rb.velocity * Time.fixedDeltaTime;
-    //    RaycastHit2D hit;
-    //    int layerMask = LayerMask.GetMask("Wall");
-    //    //Debug.DrawLine(transform.position, prediction);
-    //    if (Physics2D.Linecast(transform.position, prediction, layerMask))
-    //    {
-    //        transform.position = hit.point;
-    //        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
-    //        rb.isKinematic = true;
-    //        yield return 0;
-    //        OnTriggerEnterFixed(hit.);
-    //    }
-    //}
-
-    //void OnTriggerEnterFixed(Collider other)
-    //{
-    //    if (other.CompareTag("Target"))
-    //        Destroy(gameObject);
-    //}
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (state == State.Attack)
-        {
-            if (collision.tag == "Wall"){
-                charge = 0;
-                speed = 0;
-                isAvailable = true;
-                state = State.Retrieving;
-            }
-        }
-        else
-        {
-            // Does nothing
-        }
-    }
-
     private void BounceUp()
     {
         if (transform.position.y > (y + deaccelPoint)) bounceSpd = Mathf.Clamp(bounceSpd * 0.935f, 0.05f, 0.5f); //deacceleration
@@ -312,4 +291,43 @@ public class FloatingSword : MonoBehaviour
             flagUp = true;
         }
     }
+
+    // On trigger functions
+
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (state == State.Attack)
+    //    {
+    //        if (collision.tag == "Wall")
+    //        {
+    //            charge = 0;
+    //            speed = 0;
+    //            isAvailable = true;
+    //            state = State.Retrieving;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        // Does nothing
+    //    }
+    //}
+
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (state == State.Attack)
+    //    {
+    //        if (collision.tag == "Wall")
+    //        {
+    //            charge = 0;
+    //            speed = 0;
+    //            isAvailable = true;
+    //            state = State.Retrieving;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        // Does nothing
+    //    }
+    //}
 }
+

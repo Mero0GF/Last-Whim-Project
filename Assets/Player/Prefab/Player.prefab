@@ -208,7 +208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5fcf3512c71d334991838c9367801e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasSword: 0
+  hasSword: 1
   chargingMoveSpd: 3
   canMove: 1
   moveSpd: 6

@@ -100,6 +100,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
+  contactFilter:
+    useTriggers: 0
+    useLayerMask: 1
+    useDepth: 1
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 8
+    minDepth: Infinity
+    maxDepth: Infinity
+    minNormalAngle: 0
+    maxNormalAngle: 0
   atkCD: 0
   isAvailable: 1
   isChargingAtk: 0
@@ -108,7 +122,7 @@ MonoBehaviour:
   maxSpd: 6
   minSpd: 0.6
   accel: 1.04
-  deaccel: 0.9325
+  deaccel: 0.965
   maxDistance: 0.8
   deaccelPoint: 0.1
   limitPosUp: 1
@@ -169,7 +183,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9059430535892231824}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
