@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
     private int dodgeMinCD = 0;
     private int dodgeCD = 0;
     private int dodgeMaxCD = 30;
-    public float dodgeDeaccel = 0.8f;
+    public float dodgeDeaccel = 0.95f;
     public float dodgeSpd = 30f;
     public float dodgeMinSpd = 6f;
 
@@ -137,9 +137,11 @@ public class PlayerController : MonoBehaviour
                 isMoving = Dodge(dodgeDir);
                 if (!isMoving)
                 {
+                    dodgeSpd = dodgeSpd / dodgeDeaccel;
                     isMoving = Dodge(new Vector2(dodgeDir.x, 0));
                     if (!isMoving)
                     {
+                        dodgeSpd = dodgeSpd / dodgeDeaccel;
                         isMoving = Dodge(new Vector2(0, dodgeDir.y));
                     }
                 }
