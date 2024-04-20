@@ -176,11 +176,10 @@ public class FloatingSword : MonoBehaviour
             case State.Attack:
                 isAvailable = false;
                 Vector2 swordPos = new Vector2(transform.position.x, transform.position.y);
-                int localMask = LayerMask.GetMask("Col");
-                RaycastHit2D collision = Physics2D.Raycast(swordPos, atkDir, speed * Time.deltaTime, localMask);
+                int colMask = LayerMask.GetMask("Col");
+                RaycastHit2D collision = Physics2D.Raycast(swordPos, atkDir, speed * Time.deltaTime, colMask);
                 if (collision == true)
                 {
-                    //rb.position = rb.position + atkDir * speed * Time.deltaTime;
                     rb.position = collision.point;
                     charge = 0;
                     speed = 0;

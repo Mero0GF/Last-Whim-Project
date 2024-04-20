@@ -537,6 +537,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8266466938005678871, guid: 96cd9f190579a7b4ea0b476264d05e5a, type: 3}
+      propertyPath: m_Size.x
+      value: 0.2957583
+      objectReference: {fileID: 0}
+    - target: {fileID: 8266466938005678871, guid: 96cd9f190579a7b4ea0b476264d05e5a, type: 3}
+      propertyPath: m_Size.y
+      value: 0.8879049
+      objectReference: {fileID: 0}
+    - target: {fileID: 8266466938005678871, guid: 96cd9f190579a7b4ea0b476264d05e5a, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.04039368
+      objectReference: {fileID: 0}
+    - target: {fileID: 8266466938005678871, guid: 96cd9f190579a7b4ea0b476264d05e5a, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.19185102
+      objectReference: {fileID: 0}
     - target: {fileID: 9059430535892231824, guid: 96cd9f190579a7b4ea0b476264d05e5a, type: 3}
       propertyPath: m_Name
       value: Sword
@@ -3619,10 +3635,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 566739073987077269, guid: dd04d54e8ffc0b441a4738fed0ef6287, type: 3}
-      propertyPath: hasSword
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 566739073987077269, guid: dd04d54e8ffc0b441a4738fed0ef6287, type: 3}
       propertyPath: floatingSword
       value: 
