@@ -355,7 +355,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 403078473}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -3635,6 +3635,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 566739073987077269, guid: dd04d54e8ffc0b441a4738fed0ef6287, type: 3}
+      propertyPath: hasSword
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 566739073987077269, guid: dd04d54e8ffc0b441a4738fed0ef6287, type: 3}
       propertyPath: floatingSword
       value: 
