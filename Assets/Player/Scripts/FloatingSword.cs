@@ -66,7 +66,7 @@ public class FloatingSword : MonoBehaviour
 
     Rigidbody2D rb;
 
-    void Start()
+    private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();

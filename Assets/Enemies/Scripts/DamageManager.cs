@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class DamageManager : MonoBehaviour
 {
-    [SerializeField] private FloatingSword floatingSword;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public int takeDamage(int hp)
     {
-        Debug.Log("tag: " + collision.tag);
-        if ((floatingSword.state == FloatingSword.State.Attack) && (collision.CompareTag("FloatingSword")))
-        {
-            floatingSword.speed = floatingSword.speed / 2;
-            Destroy(gameObject);
-        }
+        hp = hp - 1;
+        return hp;
     }
+
 }
