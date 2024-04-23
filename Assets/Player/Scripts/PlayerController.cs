@@ -12,10 +12,12 @@ public class PlayerController : MonoBehaviour
     private enum State
     {
         Moving,
-        ChargingAtk,
-        Dodging,
+        Dashing,
     }
     private State state;
+
+    // Floating sword variables
+    public bool hasSword = false;
 
     // Charging attack variables
     public float chargingMoveSpd = 3;
@@ -29,11 +31,12 @@ public class PlayerController : MonoBehaviour
     private int dodgeMinCD = 0;
     private int dodgeCD = 0;
     private int dodgeMaxCD = 30;
-    public float dodgeDeaccel = 0.8f;
-    public float dodgeSpd = 50f;
+    public float dodgeDeaccel = 0.95f;
+    public float dodgeSpd = 30f;
     public float dodgeMinSpd = 6f;
 
     // collision components and variables
+    private bool isMoving = false;
     public float collisionOffset = 0.05f;
     public ContactFilter2D movementFilter;
 
@@ -71,10 +74,9 @@ public class PlayerController : MonoBehaviour
                 if ((inputHandler.DodgeInput) && (dodgeCD <= dodgeMinCD)) // check if player pressed the dodge button
                 {
                     dodgeDir = inputDirection;
-                    state = State.Dodging;
+                    state = State.Dashing;
                 }
-
-                if ((isChargingAtk()) && (floatingSword.isAvailable) && (floatingSword.atkCD == 0)) // check if player pressed the dodge button
+                if ((isChargingAtk()) && (floatingSword.isAvailable) && (floatingSword.atkCD == 0) && (hasSword)) // check if player pressed the dodge button
                 {
                     floatingSword.isChargingAtk = true;
                     moveSpd = chargingMoveSpd;
@@ -90,13 +92,13 @@ public class PlayerController : MonoBehaviour
                 {
                     if (inputDirection != Vector2.zero)
                     {
-                        bool canMove = TryMove(inputDirection);
-                        if (!canMove)
+                        isMoving = TryMove(inputDirection);
+                        if (!isMoving)
                         {
-                            canMove = TryMove(new Vector2(inputDirection.x, 0));
-                            if (!canMove)
+                            isMoving = TryMove(new Vector2(inputDirection.x, 0));
+                            if (!isMoving)
                             {
-                                canMove = TryMove(new Vector2(0, inputDirection.y));
+                                isMoving = TryMove(new Vector2(0, inputDirection.y));
                             }
                         }
                         animator.SetBool("isMoving", true);
@@ -120,7 +122,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-            case State.Dodging:
+            case State.Dashing:
                 if ((isChargingAtk()) && (floatingSword.isAvailable) && (floatingSword.atkCD == 0)) // check if player pressed the dodge button
                 {
                     floatingSword.isChargingAtk = true;
@@ -131,14 +133,16 @@ public class PlayerController : MonoBehaviour
                     floatingSword.isChargingAtk = false;
                     moveSpd = 6;
                 }
-
-                canMove = Dodge(dodgeDir);
-                if (!canMove)
+                animator.SetBool("isDashing", true);
+                isMoving = Dodge(dodgeDir);
+                if (!isMoving)
                 {
-                    canMove = Dodge(new Vector2(dodgeDir.x, 0));
-                    if (!canMove)
+                    dodgeSpd = dodgeSpd / dodgeDeaccel;
+                    isMoving = Dodge(new Vector2(dodgeDir.x, 0));
+                    if (!isMoving)
                     {
-                        canMove = Dodge(new Vector2(0, dodgeDir.y));
+                        dodgeSpd = dodgeSpd / dodgeDeaccel;
+                        isMoving = Dodge(new Vector2(0, dodgeDir.y));
                     }
                 }
                 break;
@@ -183,8 +187,9 @@ public class PlayerController : MonoBehaviour
             dodgeSpd = dodgeSpd * dodgeDeaccel;
             if (dodgeSpd <= dodgeMinSpd)
             {
-                dodgeSpd = 50f;
+                dodgeSpd = 30f;
                 dodgeCD = dodgeMaxCD;
+                animator.SetBool("isDashing", false);
                 state = State.Moving;
             }
             return true;
@@ -194,8 +199,9 @@ public class PlayerController : MonoBehaviour
             dodgeSpd = dodgeSpd * dodgeDeaccel;
             if (dodgeSpd <= dodgeMinSpd)
             {
-                dodgeSpd = 50f;
+                dodgeSpd = 30f;
                 dodgeCD = dodgeMaxCD;
+                animator.SetBool("isDashing", false);
                 state = State.Moving;
             }
             return false;
@@ -205,5 +211,10 @@ public class PlayerController : MonoBehaviour
     public bool isChargingAtk()
     {
         return inputHandler.FireInput;
+    }
+
+    public void SwordPickup()
+    {
+        hasSword = true;
     }
 }

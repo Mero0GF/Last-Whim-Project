@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 8662512756819166431}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -208,11 +208,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5fcf3512c71d334991838c9367801e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasSword: 0
   chargingMoveSpd: 3
   canMove: 1
   moveSpd: 6
-  dodgeDeaccel: 0.8
-  dodgeSpd: 50
+  dodgeDeaccel: 0.95
+  dodgeSpd: 30
   dodgeMinSpd: 6
   collisionOffset: 0.05
   movementFilter:
@@ -292,7 +293,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -302,5 +303,5 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0

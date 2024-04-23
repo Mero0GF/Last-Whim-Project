@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4624747960824434646}
   m_Layer: 7
   m_Name: Sword
-  m_TagString: Untagged
+  m_TagString: FloatingSword
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 98
-  m_Sprite: {fileID: 21300000, guid: 0c3173a6590b6c6489ddac174e191ac4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2052e05fb193ee046a79b461b46c32d6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -99,6 +99,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a30b7ca7632b5544e810fa54f87b74aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
+  contactFilter:
+    useTriggers: 0
+    useLayerMask: 1
+    useDepth: 1
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 8
+    minDepth: Infinity
+    maxDepth: Infinity
+    minNormalAngle: 0
+    maxNormalAngle: 0
   atkCD: 0
   isAvailable: 1
   isChargingAtk: 0
@@ -107,7 +122,7 @@ MonoBehaviour:
   maxSpd: 6
   minSpd: 0.6
   accel: 1.04
-  deaccel: 0.9325
+  deaccel: 0.965
   maxDistance: 0.8
   deaccelPoint: 0.1
   limitPosUp: 1
@@ -147,18 +162,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.022545055, y: 0.02254504}
+  m_Offset: {x: -0.04039368, y: -0.19185102}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 2, y: 2}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5340692, y: 0.5340692}
+  m_Size: {x: 0.2957583, y: 0.8879049}
   m_EdgeRadius: 0
 --- !u!50 &4624747960824434646
 Rigidbody2D:
@@ -175,7 +190,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -185,5 +200,5 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0

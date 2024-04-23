@@ -6,6 +6,8 @@ TagManager:
   tags:
   - FloatingSword
   - Wall
+  - Enemy
+  - Target
   layers:
   - Default
   - TransparentFX
@@ -16,8 +18,8 @@ TagManager:
   - Player
   - FloatingSword
   - Floor
-  - 
-  - 
+  - Enemies
+  - TriggerBoxes
   - 
   - 
   - 
