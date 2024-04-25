@@ -6,6 +6,8 @@ TagManager:
   tags:
   - FloatingSword
   - Wall
+  - Enemy
+  - EnemySword
   layers:
   - Default
   - TransparentFX
