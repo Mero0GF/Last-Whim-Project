@@ -2463,6 +2463,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1249494561}
+  spawnPosition: {x: 0, y: 0}
+  spawnSwordPosition: {x: 0, y: 0}
+  data:
+    position: []
+  sword: {fileID: 776228577}
 --- !u!1 &1249494551 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4998876449373218527, guid: dd04d54e8ffc0b441a4738fed0ef6287, type: 3}
