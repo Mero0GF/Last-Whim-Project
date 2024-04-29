@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/Beach.unity
+    guid: c2a6463adbb52024da23cabc91c7d01c
+  - enabled: 1
+    path: Assets/Scenes/SwordCave.unity
+    guid: 3ec9cef7a086522439404c538c31389c
   m_configObjects: {}

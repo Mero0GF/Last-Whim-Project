@@ -41,19 +41,22 @@ public class PlayerController : MonoBehaviour
     public ContactFilter2D movementFilter;
 
     SpriteRenderer spriteRenderer;
-    Animator animator;
+    public Animator animator;
 
     private PlayerInputHandler inputHandler;
     public Vector2 lastMoveDirection = Vector2.zero;
     public Vector2 inputDirection = Vector2.zero;
 
-    public FloatingSword floatingSword;
+    private GameObject Sword;
+    private FloatingSword floatingSword;
     Collider2D playerCollider;
     Rigidbody2D rb;
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
 
     private void Start()
     {
+        Sword = GameObject.FindGameObjectWithTag("FloatingSword");
+        floatingSword = Sword.GetComponent<FloatingSword>(); 
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
@@ -73,7 +76,11 @@ public class PlayerController : MonoBehaviour
                 // ---------- State changing ----------
                 if ((inputHandler.DodgeInput) && (dodgeCD <= dodgeMinCD)) // check if player pressed the dodge button
                 {
-                    dodgeDir = inputDirection;
+                    if (inputDirection == Vector2.zero)
+                    {
+                        dodgeDir = lastMoveDirection;
+                    }
+                    else dodgeDir = inputDirection;
                     state = State.Dashing;
                 }
                 if ((isChargingAtk()) && (floatingSword.isAvailable) && (floatingSword.atkCD == 0) && (hasSword)) // check if player pressed the dodge button

@@ -7,12 +7,16 @@ public class TriggerCutscene : MonoBehaviour
 {
     [SerializeField] private PlayableDirector playableDirector;
     [SerializeField] private Animator animator;
-    [SerializeField] private PlayerController playerController;
+
+    private GameObject player;
+    private PlayerController playerController;
 
     //private bool triggerActivated = false;
 
     private void Awake()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerController = player.GetComponent<PlayerController>();
         animator = GetComponent<Animator>();
         animator.SetTrigger("FadeOut");
         GetComponent<SpriteRenderer>().enabled = true;

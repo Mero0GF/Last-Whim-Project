@@ -42,7 +42,6 @@ public class FloatingSword : MonoBehaviour
     private float charge = 0;
 
     // Following player variables
-    public bool canMove = true;
     public float speed = 0.6f;
     public float maxSpd = 6;
     public float minSpd = 0.6f;
@@ -61,13 +60,15 @@ public class FloatingSword : MonoBehaviour
     public float bounceSpd = 0.5f;
 
     SpriteRenderer spriteRenderer;
-    public GameObject player;
-    public PlayerController playerController;
+    private GameObject player;
+    private PlayerController playerController;
 
     Rigidbody2D rb;
 
     private void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerController = player.GetComponent<PlayerController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         LayerMask mask = LayerMask.GetMask("Col");
