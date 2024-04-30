@@ -15,15 +15,18 @@ public class PlayerInputHandler : MonoBehaviour
     [SerializeField] private string move = "Move";
     [SerializeField] private string dodge = "Dodge";
     [SerializeField] private string fire = "Fire";
+    [SerializeField] private string interact = "Interact";
 
     private InputAction moveAction;
     private InputAction dodgeAction;
     private InputAction fireAction;
+    private InputAction interactAction;
 
 
     public Vector2 MoveInput { get; private set; }
     public bool DodgeInput { get; private set; }
     public bool FireInput { get; private set; }
+    public bool InteractInput { get; private set; }
 
     public static PlayerInputHandler Instance { get; private set; }
 
@@ -38,6 +41,7 @@ public class PlayerInputHandler : MonoBehaviour
         moveAction = playerControls.FindActionMap(actionMapName).FindAction(move);
         dodgeAction = playerControls.FindActionMap(actionMapName).FindAction(dodge);
         fireAction = playerControls.FindActionMap(actionMapName).FindAction(fire);
+        interactAction = playerControls.FindActionMap(actionMapName).FindAction(interact);
         RegisterInputActions();
     }
 
@@ -52,6 +56,8 @@ public class PlayerInputHandler : MonoBehaviour
         fireAction.performed += context => FireInput = true;
         fireAction.canceled += context => FireInput = false;
 
+        interactAction.performed += context => InteractInput = true;
+        interactAction.canceled += context => InteractInput = false;
     }
 
     private void OnEnable()
@@ -59,6 +65,7 @@ public class PlayerInputHandler : MonoBehaviour
         moveAction.Enable();
         dodgeAction.Enable();
         fireAction.Enable();
+        interactAction.Enable();
     }
 
     private void OnDisable()
@@ -66,5 +73,6 @@ public class PlayerInputHandler : MonoBehaviour
         moveAction.Disable();
         dodgeAction.Disable();
         fireAction.Disable();
+        interactAction.Disable();
     }
 }

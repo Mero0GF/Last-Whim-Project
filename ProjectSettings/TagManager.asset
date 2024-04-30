@@ -10,6 +10,8 @@ TagManager:
   - Target
   - Camera
   - CamFocus
+  - DestructableWall
+  - Barrier
   layers:
   - Default
   - TransparentFX

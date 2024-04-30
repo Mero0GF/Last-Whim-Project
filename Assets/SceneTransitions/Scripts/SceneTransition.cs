@@ -26,13 +26,13 @@ public class SceneTransition : MonoBehaviour
         {
             playerController.LockMovement();
             playerController.dodgeSpd = 0;
-            LoadScene();
+            LoadScene(scene);
         }
     }
 
-    private void LoadScene()
+    private void LoadScene(string sceneName)
     {
-        StartCoroutine(LoadLevel("SwordCave"));
+        StartCoroutine(LoadLevel(sceneName));
     }
     
     IEnumerator LoadLevel(string sceneName)

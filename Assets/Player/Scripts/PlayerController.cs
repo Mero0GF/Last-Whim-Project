@@ -215,9 +215,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void CancelWakeup()
+    {
+        animator.SetBool("isWakingUp", false);
+    }
+
     public bool isChargingAtk()
     {
         return inputHandler.FireInput;
+    }
+
+    public bool Interact()
+    {
+        return inputHandler.InteractInput;
     }
 
     public void SwordPickup()
