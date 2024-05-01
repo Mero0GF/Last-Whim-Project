@@ -37,6 +37,10 @@ public class TeleporterManager : MonoBehaviour
     private IEnumerator FadeIn()
     {
         animator.SetTrigger("FadeIn");
+        if (playerController.state == PlayerController.State.Dashing)
+        {
+            playerController.dodgeSpd = 0;
+        }
         playerController.animator.SetBool("isDashing", false);
         playerController.animator.SetBool("isMoving", false);
         playerController.LockMovement();

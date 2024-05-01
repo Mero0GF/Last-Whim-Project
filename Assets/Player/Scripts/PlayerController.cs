@@ -9,12 +9,12 @@ using static UnityEditor.PlayerSettings;
 public class PlayerController : MonoBehaviour
 {
     // player states
-    private enum State
+    public enum State
     {
         Moving,
         Dashing,
     }
-    private State state;
+    public State state;
 
     // Floating sword variables
     public bool hasSword = false;
@@ -73,30 +73,29 @@ public class PlayerController : MonoBehaviour
         switch (state)
         {
             case State.Moving:
-                // ---------- State changing ----------
-                if ((inputHandler.DodgeInput) && (dodgeCD <= dodgeMinCD)) // check if player pressed the dodge button
-                {
-                    if (inputDirection == Vector2.zero)
-                    {
-                        dodgeDir = lastMoveDirection;
-                    }
-                    else dodgeDir = inputDirection;
-                    state = State.Dashing;
-                }
-                if ((isChargingAtk()) && (floatingSword.isAvailable) && (floatingSword.atkCD == 0) && (hasSword)) // check if player pressed the dodge button
-                {
-                    floatingSword.isChargingAtk = true;
-                    moveSpd = chargingMoveSpd;
-                }
-                else
-                {
-                    floatingSword.isChargingAtk = false;
-                    moveSpd = 6;
-                }
-                // ------------------------------------
-
                 if (canMove)
                 {
+                    // ---------- State changing ----------
+                    if ((inputHandler.DodgeInput) && (dodgeCD <= dodgeMinCD)) // check if player pressed the dodge button
+                    {
+                        if (inputDirection == Vector2.zero)
+                        {
+                            dodgeDir = lastMoveDirection;
+                        }
+                        else dodgeDir = inputDirection;
+                        state = State.Dashing;
+                    }
+                    if ((isChargingAtk()) && (floatingSword.isAvailable) && (floatingSword.atkCD == 0) && (hasSword)) // check if player pressed the dodge button
+                    {
+                        floatingSword.isChargingAtk = true;
+                        moveSpd = chargingMoveSpd;
+                    }
+                    else
+                    {
+                        floatingSword.isChargingAtk = false;
+                        moveSpd = 6;
+                    }
+                    // ------------------------------------
                     if (inputDirection != Vector2.zero)
                     {
                         isMoving = TryMove(inputDirection);

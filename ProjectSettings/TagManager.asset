@@ -9,9 +9,9 @@ TagManager:
   - Enemy
   - Target
   - Camera
-  - CamFocus
   - DestructableWall
   - Barrier
+  - NewCam
   layers:
   - Default
   - TransparentFX

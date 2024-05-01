@@ -10,11 +10,9 @@ public class ChangeCamManager : MonoBehaviour
 
     private new GameObject camera;
     private CinemachineVirtualCamera cameraSettings;
-    private GameObject camFocus;
 
     private void Start()
     {
-        camFocus = GameObject.FindGameObjectWithTag("CamFocus");
         camera = GameObject.FindGameObjectWithTag("Camera");
         cameraSettings = camera.GetComponent<CinemachineVirtualCamera>();
     }
