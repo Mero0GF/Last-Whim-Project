@@ -63,6 +63,10 @@ public class PlayerController : MonoBehaviour
         lastMoveDirection.y = -1;
     }
 
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        Debug.Log("working2");
+    }
 
     private void FixedUpdate()
     {

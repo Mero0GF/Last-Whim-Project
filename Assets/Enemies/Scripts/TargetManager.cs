@@ -2,17 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TargetManager : MonoBehaviour
+public class TargetManager : MonoBehaviour, IData
 {
+    [SerializeField] private string id;
+
+    [ContextMenu("Generate guid for id")]
+
+    private void GenerateGuid()
+    {
+        id = System.Guid.NewGuid().ToString();
+    }
+
+   
+    private bool spawn = true;
     private int hp = 1;
     public DamageManager DamageManager;
     public FloatingSword FloatingSword;
 
     private void FixedUpdate()
     {
-        if (hp <= 0) 
+        if (hp <= 0)
         {
+            spawn = false;
             Destroy(gameObject);
+            Debug.Log("Enemy Killed " + spawn);
         }
     }
 
@@ -22,5 +35,23 @@ public class TargetManager : MonoBehaviour
         {
             hp = DamageManager.takeDamage(hp);
         }
+    }
+
+    public void LoadData(GameData data)
+    {
+        data.spawnEnemy.TryGetValue(id, out spawn);
+        if (!spawn)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public void SaveData(GameData data)
+    {
+        if (data.spawnEnemy.ContainsKey(id))
+        {
+            data.spawnEnemy.Remove(id);
+        }
+        data.spawnEnemy.Add(id, spawn);
     }
 }

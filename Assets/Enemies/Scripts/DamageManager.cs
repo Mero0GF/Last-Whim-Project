@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DamageManager : MonoBehaviour
 {
-
+    
     public int takeDamage(int hp)
     {
         hp = hp - 1;
