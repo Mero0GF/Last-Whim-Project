@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 4371341938303165844}
   - component: {fileID: 5780977800470031842}
   - component: {fileID: 6244885553266457174}
-  - component: {fileID: 7499690256637370384}
+  - component: {fileID: 821115990771894659}
+  - component: {fileID: -9212831463168061984}
   m_Layer: 0
   m_Name: TempBoss
   m_TagString: Enemy
@@ -31,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.4595121, y: -0.7198224, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 7, y: 7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -136,7 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2.5
---- !u!114 &7499690256637370384
+--- !u!114 &821115990771894659
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -145,7 +146,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 8171593566380691473}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0afca91ca76bb6d42ac2047129685fd4, type: 3}
+  m_Script: {fileID: 11500000, guid: 0aa04dc63fe5ca34c9a9028e103e58f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemySword: {fileID: 6696935020515145157, guid: 76a89264cfcf72c4d9decb64e3992f88, type: 3}
+  enemyEye: {fileID: 9093688304932660328, guid: 0ee5ef3ff9e5f1a459d7e38d6c9bd0e0, type: 3}
+--- !u!114 &-9212831463168061984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8171593566380691473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3eb540143f344774c8b766881e51bd09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sword: {fileID: 4131257049717587324, guid: 76a89264cfcf72c4d9decb64e3992f88, type: 3}

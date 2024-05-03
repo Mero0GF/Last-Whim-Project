@@ -24,7 +24,7 @@ public class BossFollow : MonoBehaviour
     {
         boss.LookAtPlayer();
 
-        Vector2 target = player.position;
+        //Vector2 target = player.position;
         transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
     }
 }

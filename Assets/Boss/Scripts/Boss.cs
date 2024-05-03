@@ -7,6 +7,10 @@ public class Boss : MonoBehaviour
 
     public Transform player;
 
+    //private float targetTime = 5.0f;
+
+    //public bool swordAttack = false;
+
     public bool isFlipped = false;
 
     public void LookAtPlayer()
@@ -30,5 +34,21 @@ public class Boss : MonoBehaviour
         }
     }
 
-    
+    /*
+    private void Update()
+    {
+        targetTime -= Time.deltaTime;
+
+        if (targetTime <= 0.0f)
+        {
+            timerEnded();
+        }
+
+        void timerEnded()
+        {
+            swordAttack = true;
+        }
+    }
+    */
+
 }
