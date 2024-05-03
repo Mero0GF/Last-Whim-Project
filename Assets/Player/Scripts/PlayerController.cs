@@ -47,6 +47,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 lastMoveDirection = Vector2.zero;
     public Vector2 inputDirection = Vector2.zero;
 
+    [SerializeField] private PersistentDataSO persistentDataSO;
     private GameObject Sword;
     private FloatingSword floatingSword;
     Collider2D playerCollider;
@@ -64,6 +65,10 @@ public class PlayerController : MonoBehaviour
         inputHandler = PlayerInputHandler.Instance;
         lastMoveDirection.x = 0;
         lastMoveDirection.y = -1;
+        if (persistentDataSO.hasSword)
+        {
+            hasSword = true;
+        }
     }
 
 
@@ -231,6 +236,7 @@ public class PlayerController : MonoBehaviour
 
     public void SwordPickup()
     {
+        persistentDataSO.hasSword = true;
         hasSword = true;
     }
 }

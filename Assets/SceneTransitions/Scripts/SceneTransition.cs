@@ -11,19 +11,39 @@ public class SceneTransition : MonoBehaviour
 
     public Animator animator;
 
-    public string scene;
+    [SerializeField] private PersistentDataSO persistentDataSO;
+
+    [SerializeField] private LevelManager levelManager;
+
+    [SerializeField] private Transform spawnPoint;
+
+    [SerializeField] private GameObject sword;
+
+    [SerializeField] private string scene;
+
     float transitionTime = 1f;
 
     private void Start()
     {
+        sword = GameObject.FindGameObjectWithTag("FloatingSword");
         player = GameObject.FindGameObjectWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
+        if (levelManager == LevelManager.ActiveLevels)
+        {
+            player.transform.position = spawnPoint.position;
+            if (persistentDataSO.hasSword)
+            {
+                sword.transform.position = spawnPoint.position;
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
+
+            LevelManager.ActiveLevels = levelManager;
             playerController.LockMovement();
             playerController.dodgeSpd = 0;
             LoadScene(scene);

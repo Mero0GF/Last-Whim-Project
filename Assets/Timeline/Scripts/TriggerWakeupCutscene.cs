@@ -3,30 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 
-public class TriggerCutscene : MonoBehaviour
+public class TriggerWakeupCutscene : MonoBehaviour
 {
     [SerializeField] private PlayableDirector playableDirector;
-    [SerializeField] private Animator animator;
     [SerializeField] private PersistentDataSO persistentDataSO;
-
+    [SerializeField] private GameObject blackscreen;
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
-        animator.SetTrigger("FadeOut");
-        GetComponent<SpriteRenderer>().enabled = true;
-        if (persistentDataSO.hasSword)
+        if (persistentDataSO.beachCutscenePlayed)
         {
+            blackscreen.GetComponent<SpriteRenderer>().enabled = false;
+            blackscreen.GetComponent<Animator>().enabled = false;
             GetComponent<Collider2D>().enabled = false;
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            playableDirector.Play();
             GetComponent<Collider2D>().enabled = false;
+            playableDirector.Play();
         }
     }
 }
