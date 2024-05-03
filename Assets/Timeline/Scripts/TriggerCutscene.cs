@@ -7,42 +7,26 @@ public class TriggerCutscene : MonoBehaviour
 {
     [SerializeField] private PlayableDirector playableDirector;
     [SerializeField] private Animator animator;
-    [SerializeField] private PlayerController playerController;
+    [SerializeField] private PersistentDataSO persistentDataSO;
 
-    //private bool triggerActivated = false;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
         animator.SetTrigger("FadeOut");
         GetComponent<SpriteRenderer>().enabled = true;
+        if (persistentDataSO.hasSword)
+        {
+            GetComponent<Collider2D>().enabled = false;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player")) 
+        if (collision.CompareTag("Player"))
         {
             playableDirector.Play();
             GetComponent<Collider2D>().enabled = false;
         }
     }
-
-    //private void FixedUpdate()
-    //{
-    //    if (triggerActivated)
-    //    {
-    //        playableDirector.Play();
-    //        Destroy(gameObject);
-    //    }
-    //}
-
-    //public void FadeInActivation()
-    //{
-    //    animator.SetTrigger("FadeIn");
-    //}
-
-    //public void FadeInComplete()
-    //{
-    //    triggerActivated = true;
-    //}
 }

@@ -9,12 +9,12 @@ using static UnityEditor.PlayerSettings;
 public class PlayerController : MonoBehaviour
 {
     // player states
-    private enum State
+    public enum State
     {
         Moving,
         Dashing,
     }
-    private State state;
+    public State state;
 
     // Floating sword variables
     public bool hasSword = false;
@@ -41,19 +41,23 @@ public class PlayerController : MonoBehaviour
     public ContactFilter2D movementFilter;
 
     SpriteRenderer spriteRenderer;
-    Animator animator;
+    public Animator animator;
 
     private PlayerInputHandler inputHandler;
     public Vector2 lastMoveDirection = Vector2.zero;
     public Vector2 inputDirection = Vector2.zero;
 
-    public FloatingSword floatingSword;
+    [SerializeField] private PersistentDataSO persistentDataSO;
+    private GameObject Sword;
+    private FloatingSword floatingSword;
     Collider2D playerCollider;
     Rigidbody2D rb;
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
 
     private void Start()
     {
+        Sword = GameObject.FindGameObjectWithTag("FloatingSword");
+        floatingSword = Sword.GetComponent<FloatingSword>(); 
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
@@ -61,6 +65,10 @@ public class PlayerController : MonoBehaviour
         inputHandler = PlayerInputHandler.Instance;
         lastMoveDirection.x = 0;
         lastMoveDirection.y = -1;
+        if (persistentDataSO.hasSword)
+        {
+            hasSword = true;
+        }
     }
 
 
@@ -70,26 +78,29 @@ public class PlayerController : MonoBehaviour
         switch (state)
         {
             case State.Moving:
-                // ---------- State changing ----------
-                if ((inputHandler.DodgeInput) && (dodgeCD <= dodgeMinCD)) // check if player pressed the dodge button
-                {
-                    dodgeDir = inputDirection;
-                    state = State.Dashing;
-                }
-                if ((isChargingAtk()) && (floatingSword.isAvailable) && (floatingSword.atkCD == 0) && (hasSword)) // check if player pressed the dodge button
-                {
-                    floatingSword.isChargingAtk = true;
-                    moveSpd = chargingMoveSpd;
-                }
-                else
-                {
-                    floatingSword.isChargingAtk = false;
-                    moveSpd = 6;
-                }
-                // ------------------------------------
-
                 if (canMove)
                 {
+                    // ---------- State changing ----------
+                    if ((inputHandler.DodgeInput) && (dodgeCD <= dodgeMinCD)) // check if player pressed the dodge button
+                    {
+                        if (inputDirection == Vector2.zero)
+                        {
+                            dodgeDir = lastMoveDirection;
+                        }
+                        else dodgeDir = inputDirection;
+                        state = State.Dashing;
+                    }
+                    if ((isChargingAtk()) && (floatingSword.isAvailable) && (floatingSword.atkCD == 0) && (hasSword)) // check if player pressed the dodge button
+                    {
+                        floatingSword.isChargingAtk = true;
+                        moveSpd = chargingMoveSpd;
+                    }
+                    else
+                    {
+                        floatingSword.isChargingAtk = false;
+                        moveSpd = 6;
+                    }
+                    // ------------------------------------
                     if (inputDirection != Vector2.zero)
                     {
                         isMoving = TryMove(inputDirection);
@@ -208,13 +219,24 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void CancelWakeup()
+    {
+        animator.SetBool("isWakingUp", false);
+    }
+
     public bool isChargingAtk()
     {
         return inputHandler.FireInput;
     }
 
+    public bool Interact()
+    {
+        return inputHandler.InteractInput;
+    }
+
     public void SwordPickup()
     {
+        persistentDataSO.hasSword = true;
         hasSword = true;
     }
 }
