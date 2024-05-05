@@ -49,6 +49,8 @@ public class PlayerController : MonoBehaviour, IDataPersistence
     Rigidbody2D rb;
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
 
+    public DataPersistenceManager manager;
+
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -215,5 +217,18 @@ public class PlayerController : MonoBehaviour, IDataPersistence
     public void SaveData(GameData data)
     {
         data.playerSpawnPosition = this.transform.position;
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("tag: " + collision.tag);
+        if (collision.tag == "Checkpoint")
+        {
+            /*Vector2 swordSpawnPosition;
+            swordSpawnPosition.x = this.transform.position.x + 0.37f;
+            swordSpawnPosition.y = this.transform.position.y + 0.37f;
+            manager.gameData.swordSpawnPosition = swordSpawnPosition;*/
+            manager.SaveGame();
+        }
     }
 }

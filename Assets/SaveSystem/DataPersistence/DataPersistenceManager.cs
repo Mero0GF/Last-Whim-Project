@@ -20,7 +20,7 @@ public class DataPersistenceManager : MonoBehaviour
     {
         if(instance != null)
         {
-            Debug.LogError("Found more than one Dat persistence Manager in the scene.");
+            Debug.LogError("Found more than one Data persistence Manager in the scene.");
         }
         instance = this;
     }
@@ -64,10 +64,11 @@ public class DataPersistenceManager : MonoBehaviour
         dataHandler.Save(gameData);
     }
 
-    public void OnApplicationQuit()
+    /*public void OnApplicationQuit()
     {
         SaveGame();
-    }
+    }*/
+
 
     //encontrar os scripts que utilizam a interface IDataPersistence e retornar uma lista desses scripts
     private List<IDataPersistence> FindAllDataPersistenceObjects()

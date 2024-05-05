@@ -63,6 +63,8 @@ public class FloatingSword : MonoBehaviour, IDataPersistence
     Rigidbody2D rb;
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
 
+    GameData data;
+
     void Start()
     {
         transform.position = new Vector3(pos, pos, 0);
@@ -268,6 +270,14 @@ public class FloatingSword : MonoBehaviour, IDataPersistence
             }
             //speed = 0;
         }
+        /*else if(state == State.FollowingPlayer)
+        {
+            if(collision.tag == "Checkpoint")
+            {
+                data.swordSpawnPosition = this.transform.position;
+                SaveData(data);
+            }
+        }*/
         else
         {
             // Does nothing
