@@ -1045,6 +1045,10 @@ PrefabInstance:
       value: -0.84
       objectReference: {fileID: 0}
     - target: {fileID: 9184285129832835713, guid: fb5b7d9f57abff24d8dfadd50fb5c647, type: 3}
+      propertyPath: scene
+      value: FirstBossRoom
+      objectReference: {fileID: 0}
+    - target: {fileID: 9184285129832835713, guid: fb5b7d9f57abff24d8dfadd50fb5c647, type: 3}
       propertyPath: levelManager
       value: 
       objectReference: {fileID: 11400000, guid: 5276aa2465a41104daca5495a56303ad, type: 2}
