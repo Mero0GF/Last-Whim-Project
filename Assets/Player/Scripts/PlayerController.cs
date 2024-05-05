@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEditor.PlayerSettings;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDataPersistence
 {
     // player states
     private enum State
@@ -205,5 +205,15 @@ public class PlayerController : MonoBehaviour
     public bool isChargingAtk()
     {
         return inputHandler.FireInput;
+    }
+
+    public void LoadData(GameData data)
+    {
+        this.transform.position = data.playerSpawnPosition;
+    }
+
+    public void SaveData(GameData data)
+    {
+        data.playerSpawnPosition = this.transform.position;
     }
 }

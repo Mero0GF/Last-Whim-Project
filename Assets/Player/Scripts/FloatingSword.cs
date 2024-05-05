@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class FloatingSword : MonoBehaviour
+public class FloatingSword : MonoBehaviour, IDataPersistence
 {
     private enum State
     {
@@ -283,5 +283,15 @@ public class FloatingSword : MonoBehaviour
             flagDown = false;
             flagUp = true;
         }
+    }
+
+    public void SaveData(GameData data)
+    {
+        data.swordSpawnPosition = this.transform.position;
+    }
+
+    public void LoadData(GameData data)
+    {
+        this.transform.position = data.swordSpawnPosition;
     }
 }
