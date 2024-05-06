@@ -224,10 +224,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
         Debug.Log("tag: " + collision.tag);
         if (collision.tag == "Checkpoint")
         {
-            /*Vector2 swordSpawnPosition;
-            swordSpawnPosition.x = this.transform.position.x + 0.37f;
-            swordSpawnPosition.y = this.transform.position.y + 0.37f;
-            manager.gameData.swordSpawnPosition = swordSpawnPosition;*/
+            
             manager.SaveGame();
         }
     }

@@ -297,7 +297,10 @@ public class FloatingSword : MonoBehaviour, IDataPersistence
 
     public void SaveData(GameData data)
     {
-        data.swordSpawnPosition = this.transform.position;
+        Vector2 swordSpawnPosition;
+        swordSpawnPosition.x = player.transform.position.x + pos;
+        swordSpawnPosition.y = player.transform.position.y + pos;
+        data.swordSpawnPosition = swordSpawnPosition;
     }
 
     public void LoadData(GameData data)
