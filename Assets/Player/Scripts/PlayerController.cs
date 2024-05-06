@@ -247,9 +247,10 @@ public class PlayerController : MonoBehaviour, IDataPersistence
         Debug.Log("tag: " + collision.tag);
         if (collision.tag == "Checkpoint")
         {
-            
+
             manager.SaveGame();
         }
+    }
     public bool Interact()
     {
         return inputHandler.InteractInput;
