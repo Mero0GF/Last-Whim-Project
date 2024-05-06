@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
-public class FloatingSword : MonoBehaviour
+public class FloatingSword : MonoBehaviour, IDataPersistence
 {
     public enum State
     {
@@ -64,6 +64,8 @@ public class FloatingSword : MonoBehaviour
     private PlayerController playerController;
 
     Rigidbody2D rb;
+
+    GameData data;
 
     private void Start()
     {
@@ -286,7 +288,7 @@ public class FloatingSword : MonoBehaviour
         }
     }
 
-    private void BounceDown()
+private void BounceDown()
     {
         if (transform.position.y < (y - deaccelPoint)) bounceSpd = Mathf.Clamp(bounceSpd * 0.935f, 0.05f, 0.5f); //deacceleration
         else bounceSpd = Mathf.Clamp(bounceSpd * 1.07f, 0.06f, 0.5f); // acceleration
@@ -296,6 +298,19 @@ public class FloatingSword : MonoBehaviour
             flagDown = false;
             flagUp = true;
         }
+    }
+
+    public void SaveData(GameData data)
+    {
+        Vector2 swordSpawnPosition;
+        swordSpawnPosition.x = player.transform.position.x + pos;
+        swordSpawnPosition.y = player.transform.position.y + pos;
+        data.swordSpawnPosition = swordSpawnPosition;
+    }
+
+    public void LoadData(GameData data)
+    {
+        this.transform.position = data.swordSpawnPosition;
     }
 
     // On trigger functions
