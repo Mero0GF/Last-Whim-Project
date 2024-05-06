@@ -3,19 +3,24 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class FloatingSword : MonoBehaviour, IDataPersistence
 {
-    private enum State
+    public enum State
     {
         FollowingPlayer,
         ChargingAtk,
         Attack,
         Retrieving,
         Bouncing,
+        Static,
         
     }
-    private State state;
+    public State state;
+
+    private List<RaycastHit2D> hit = new List<RaycastHit2D>();
+    public ContactFilter2D contactFilter;
 
     // Sword retrieving variables
     private float retrievingMinSpd = 2;
@@ -37,14 +42,13 @@ public class FloatingSword : MonoBehaviour, IDataPersistence
     private float charge = 0;
 
     // Following player variables
-    public bool canMove = true;
     public float speed = 0.6f;
     public float maxSpd = 6;
     public float minSpd = 0.6f;
     public float accel = 1.04f;
     public float deaccel = 0.9325f;
     public float maxDistance = 0.8f;
-    private float pos = 0.37f;
+    private float pos = 0.45f;
     private float distance;
 
     // Bouncing variables
@@ -56,22 +60,23 @@ public class FloatingSword : MonoBehaviour, IDataPersistence
     public float bounceSpd = 0.5f;
 
     SpriteRenderer spriteRenderer;
-    public GameObject player;
-    public PlayerController playerController;
+    private GameObject player;
+    private PlayerController playerController;
 
-    Collider2D swordCollider;
     Rigidbody2D rb;
-    List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
 
     GameData data;
 
-    void Start()
+    private void Start()
     {
-        transform.position = new Vector3(pos, pos, 0);
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerController = player.GetComponent<PlayerController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
-        Physics2D.IgnoreLayerCollision(6, 7);
-        state = State.FollowingPlayer;
+        LayerMask mask = LayerMask.GetMask("Col");
+        contactFilter.SetLayerMask(mask);
+        if (playerController.hasSword) state = State.FollowingPlayer;
+        else state = State.Static;
     }
 
     private void FixedUpdate()
@@ -81,7 +86,6 @@ public class FloatingSword : MonoBehaviour, IDataPersistence
             case State.FollowingPlayer:
                 distance = Vector2.Distance(transform.position, (player.transform.position + new Vector3(pos, pos, 0)));
                 Vector2 direction = (player.transform.position + new Vector3(pos, pos, 0)) - transform.position;
-
                 if (isChargingAtk) // checks if player is charging the attack and changes the value of some core variables
                 {
                     accel = 1.12f;
@@ -174,15 +178,34 @@ public class FloatingSword : MonoBehaviour, IDataPersistence
 
             case State.Attack:
                 isAvailable = false;
-
-                speed = Mathf.Clamp(speed * atkDeaccel, 1, maxCharge);
-                rb.MovePosition(rb.position + atkDir * speed * Time.deltaTime);
-                if (speed == 1)
+                Vector2 swordPos = new Vector2(transform.position.x, transform.position.y);
+                int enemyMask = LayerMask.GetMask("Enemies");
+                int colMask = LayerMask.GetMask("Col");
+                RaycastHit2D collision = Physics2D.Raycast(swordPos, atkDir, speed * Time.deltaTime, colMask);
+                if (collision == true)
                 {
+                    rb.position = collision.point;
                     charge = 0;
                     speed = 0;
                     isAvailable = true;
                     state = State.Retrieving;
+                }
+                else
+                {
+                    RaycastHit2D enemyHit = Physics2D.Raycast(swordPos, atkDir, speed * Time.deltaTime, enemyMask);
+                    if (enemyHit)
+                    {
+                        rb.position = enemyHit.point;
+                    }
+                    rb.MovePosition(rb.position + atkDir * speed * Time.deltaTime);
+                    speed = Mathf.Clamp(speed * atkDeaccel, 1, maxCharge);
+                    if (speed == 1)
+                    {
+                        charge = 0;
+                        speed = 0;
+                        isAvailable = true;
+                        state = State.Retrieving;
+                    }
                 }
                 break;
 
@@ -241,6 +264,15 @@ public class FloatingSword : MonoBehaviour, IDataPersistence
                 }
                 atkCD = Mathf.Clamp(atkCD - 1, minAtkCD, maxAtkCD);
                 break;
+
+
+
+
+
+            case State.Static:
+                if (playerController.hasSword) state = State.FollowingPlayer;
+                break;
+
         }
     }
 
@@ -256,34 +288,7 @@ public class FloatingSword : MonoBehaviour, IDataPersistence
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        Debug.Log("tag: " + collision.tag);
-        if (state == State.Attack) 
-        {   
-            if(collision.tag == "Wall")
-            {
-                charge = 0;
-                speed = 0;
-                isAvailable = true;
-                state = State.Retrieving;
-            }
-            //speed = 0;
-        }
-        /*else if(state == State.FollowingPlayer)
-        {
-            if(collision.tag == "Checkpoint")
-            {
-                data.swordSpawnPosition = this.transform.position;
-                SaveData(data);
-            }
-        }*/
-        else
-        {
-            // Does nothing
-        }
-    }
-    private void BounceDown()
+private void BounceDown()
     {
         if (transform.position.y < (y - deaccelPoint)) bounceSpd = Mathf.Clamp(bounceSpd * 0.935f, 0.05f, 0.5f); //deacceleration
         else bounceSpd = Mathf.Clamp(bounceSpd * 1.07f, 0.06f, 0.5f); // acceleration
@@ -307,4 +312,43 @@ public class FloatingSword : MonoBehaviour, IDataPersistence
     {
         this.transform.position = data.swordSpawnPosition;
     }
+
+    // On trigger functions
+
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (state == State.Attack)
+    //    {
+    //        if (collision.tag == "Wall")
+    //        {
+    //            charge = 0;
+    //            speed = 0;
+    //            isAvailable = true;
+    //            state = State.Retrieving;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        // Does nothing
+    //    }
+    //}
+
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (state == State.Attack)
+    //    {
+    //        if (collision.tag == "Wall")
+    //        {
+    //            charge = 0;
+    //            speed = 0;
+    //            isAvailable = true;
+    //            state = State.Retrieving;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        // Does nothing
+    //    }
+    //}
 }
+
