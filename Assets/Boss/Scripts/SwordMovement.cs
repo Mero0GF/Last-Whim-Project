@@ -24,7 +24,6 @@ public class SwordMovement : MonoBehaviour
 
     PointSword pointSword;
 
-    BossSwordAttack bossSwordAttack;
 
     bool enableAttack = false;
 
@@ -39,7 +38,6 @@ public class SwordMovement : MonoBehaviour
         target = GameObject.FindGameObjectWithTag("Player").transform;
         bossGameObject = GameObject.FindGameObjectWithTag("Enemy");
         
-        bossSwordAttack = bossGameObject.GetComponent<BossSwordAttack>();
         pointSword = GetComponent<PointSword>();
         //initialPosition = bossGameObject.transform.position - transform.position;
     }

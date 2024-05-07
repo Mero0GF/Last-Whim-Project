@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5780977800470031842}
   - component: {fileID: 6244885553266457174}
   - component: {fileID: 821115990771894659}
-  - component: {fileID: 7985664117776095374}
+  - component: {fileID: 8646886188830004071}
   m_Layer: 0
   m_Name: TempBoss
   m_TagString: Enemy
@@ -77,9 +77,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.9248581, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -123,11 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  enemySword: {fileID: 0}
-  sword1: {fileID: 0}
-  sword2: {fileID: 0}
-  sword3: {fileID: 0}
-  sword4: {fileID: 0}
+  enemySword: {fileID: 6696935020515145157, guid: 76a89264cfcf72c4d9decb64e3992f88, type: 3}
   isFlipped: 0
 --- !u!114 &6244885553266457174
 MonoBehaviour:
@@ -155,7 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyEye: {fileID: 9093688304932660328, guid: 0ee5ef3ff9e5f1a459d7e38d6c9bd0e0, type: 3}
---- !u!114 &7985664117776095374
+--- !u!114 &8646886188830004071
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -164,7 +160,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8171593566380691473}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3eb540143f344774c8b766881e51bd09, type: 3}
+  m_Script: {fileID: 11500000, guid: ba1fb78eaa278c648b8086d3120fb854, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enableSwordAttack: 0
+  speed: 20
+  warningVertical: {fileID: 5612629827379990856, guid: 2f51fd992f0ad3c4494543cb589505ff, type: 3}
+  warningHorizontal: {fileID: 2646983441367708101, guid: 359577a0fcb99064ebaac829a1c0fc16, type: 3}
+  projectileSword: {fileID: 6696935020515145157, guid: 22963b4a86ed7664aad8876ea415975f, type: 3}

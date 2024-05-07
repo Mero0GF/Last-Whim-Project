@@ -9,10 +9,10 @@ public class Boss : MonoBehaviour
 
     [SerializeField] private GameObject enemySword;
 
-    public GameObject sword1;
-    public GameObject sword2;
-    public GameObject sword3;
-    public GameObject sword4;
+    private GameObject sword1;
+    private GameObject sword2;
+    private GameObject sword3;
+    private GameObject sword4;
 
     //private float targetTime = 5.0f;
 

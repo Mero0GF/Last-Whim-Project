@@ -5,7 +5,7 @@ using UnityEngine;
 public class DestroySword : MonoBehaviour
 {
 
-    private float targetTime = 3.0f;
+    private float targetTime = 5.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +28,7 @@ public class DestroySword : MonoBehaviour
 
     void timerEnded()
     {
-        if(gameObject.transform.position.y < -10f)
+        if(gameObject.transform.position.x > 300.0f || gameObject.transform.position.y < -300.0f)
         {
             Destroy(gameObject);
         }
