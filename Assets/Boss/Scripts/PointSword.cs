@@ -8,7 +8,7 @@ public class PointSword : MonoBehaviour
 
     public bool followPlayer = false;
 
-    public float speed;
+    public float speed = 20.0f;
 
     public float rotationModifier;
 

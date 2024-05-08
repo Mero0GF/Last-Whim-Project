@@ -4482,6 +4482,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TempBoss
       objectReference: {fileID: 0}
+    - target: {fileID: 8646886188830004071, guid: 44b0fe5289671d548a45e9aaf8cc61e0, type: 3}
+      propertyPath: speed
+      value: 40
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

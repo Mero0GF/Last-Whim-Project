@@ -79,11 +79,14 @@ public class BossGridSwordAttack : MonoBehaviour
             if (createSwords && attackTimer <= 3.0f)
             {
                 createSwords = false;
-                verticalSword1 = GameObject.Instantiate(projectileSword, new Vector3(verticalWarning1.transform.position.x, verticalWarning1.transform.position.y + 10, verticalWarning1.transform.position.z), projectileSword.transform.rotation);
-                verticalSword2 = GameObject.Instantiate(projectileSword, new Vector3(verticalWarning2.transform.position.x, verticalWarning2.transform.position.y + 10, verticalWarning2.transform.position.z), projectileSword.transform.rotation);
-
-                horizontalSword1 = GameObject.Instantiate(projectileSword, new Vector3(horizontalWarning1.transform.position.x - 10, horizontalWarning1.transform.position.y, horizontalWarning1.transform.position.z), projectileSword.transform.rotation);
-                horizontalSword2 = GameObject.Instantiate(projectileSword, new Vector3(horizontalWarning2.transform.position.x - 10, horizontalWarning2.transform.position.y, horizontalWarning2.transform.position.z), projectileSword.transform.rotation);
+                
+                projectileSword.transform.rotation = Quaternion.Euler(0, 0, 225);
+                verticalSword1 = GameObject.Instantiate(projectileSword, new Vector3(verticalWarning1.transform.position.x, verticalWarning1.transform.position.y + 10, verticalWarning1.transform.position.z), Quaternion.Euler(0, 0, 225));
+                verticalSword2 = GameObject.Instantiate(projectileSword, new Vector3(verticalWarning2.transform.position.x, verticalWarning2.transform.position.y + 10, verticalWarning2.transform.position.z), Quaternion.Euler(0, 0, 225));
+                
+                projectileSword.transform.rotation = Quaternion.Euler(0, 0, 315);
+                horizontalSword1 = GameObject.Instantiate(projectileSword, new Vector3(horizontalWarning1.transform.position.x - 10, horizontalWarning1.transform.position.y, horizontalWarning1.transform.position.z), Quaternion.Euler(0, 0, 315));
+                horizontalSword2 = GameObject.Instantiate(projectileSword, new Vector3(horizontalWarning2.transform.position.x - 10, horizontalWarning2.transform.position.y, horizontalWarning2.transform.position.z), Quaternion.Euler(0, 0, 315));
 
                 Destroy(verticalWarning1);
                 Destroy(verticalWarning2);

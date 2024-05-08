@@ -18,6 +18,8 @@ public class SwordMovement : MonoBehaviour
 
     Vector3 targetDirection;
 
+    Quaternion initialRotation;
+
     Transform target;
 
     [SerializeField] private GameObject bossGameObject;
@@ -39,6 +41,7 @@ public class SwordMovement : MonoBehaviour
         bossGameObject = GameObject.FindGameObjectWithTag("Enemy");
         
         pointSword = GetComponent<PointSword>();
+        initialRotation = transform.rotation;
         //initialPosition = bossGameObject.transform.position - transform.position;
     }
 
@@ -82,6 +85,7 @@ public class SwordMovement : MonoBehaviour
 
         else if (!enableAttack && swordModeTimer <= 0.0f)
         {
+            transform.rotation = initialRotation;
             transform.position = new Vector3(bossGameObject.transform.position.x - 5 + 2 * swordNum, bossGameObject.transform.position.y, bossGameObject.transform.position.z);
             transform.SetParent(bossGameObject.transform);
 
