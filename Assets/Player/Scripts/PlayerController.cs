@@ -6,16 +6,19 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEditor.PlayerSettings;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDataPersistence
 {
     // player states
-    private enum State
+    public enum State
     {
         Moving,
-        ChargingAtk,
-        Dodging,
+        Dashing,
+        GotHit,
     }
-    private State state;
+    public State state;
+
+    // Floating sword variables
+    public bool hasSword = false;
 
     // Charging attack variables
     public float chargingMoveSpd = 3;
@@ -29,28 +32,35 @@ public class PlayerController : MonoBehaviour
     private int dodgeMinCD = 0;
     private int dodgeCD = 0;
     private int dodgeMaxCD = 30;
-    public float dodgeDeaccel = 0.8f;
-    public float dodgeSpd = 50f;
+    public float dodgeDeaccel = 0.95f;
+    public float dodgeSpd = 30f;
     public float dodgeMinSpd = 6f;
 
     // collision components and variables
+    private bool isMoving = false;
     public float collisionOffset = 0.05f;
     public ContactFilter2D movementFilter;
 
     SpriteRenderer spriteRenderer;
-    Animator animator;
+    public Animator animator;
 
     private PlayerInputHandler inputHandler;
     public Vector2 lastMoveDirection = Vector2.zero;
     public Vector2 inputDirection = Vector2.zero;
 
-    public FloatingSword floatingSword;
+    [SerializeField] private PersistentDataSO persistentDataSO;
+    private GameObject Sword;
+    private FloatingSword floatingSword;
     Collider2D playerCollider;
     Rigidbody2D rb;
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
 
+    public DataPersistenceManager manager;
+
     private void Start()
     {
+        Sword = GameObject.FindGameObjectWithTag("FloatingSword");
+        floatingSword = Sword.GetComponent<FloatingSword>(); 
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
@@ -58,6 +68,10 @@ public class PlayerController : MonoBehaviour
         inputHandler = PlayerInputHandler.Instance;
         lastMoveDirection.x = 0;
         lastMoveDirection.y = -1;
+        if (persistentDataSO.hasSword)
+        {
+            hasSword = true;
+        }
     }
 
 
@@ -67,36 +81,38 @@ public class PlayerController : MonoBehaviour
         switch (state)
         {
             case State.Moving:
-                // ---------- State changing ----------
-                if ((inputHandler.DodgeInput) && (dodgeCD <= dodgeMinCD)) // check if player pressed the dodge button
-                {
-                    dodgeDir = inputDirection;
-                    state = State.Dodging;
-                }
-
-                if ((isChargingAtk()) && (floatingSword.isAvailable) && (floatingSword.atkCD == 0)) // check if player pressed the dodge button
-                {
-                    floatingSword.isChargingAtk = true;
-                    moveSpd = chargingMoveSpd;
-                }
-                else
-                {
-                    floatingSword.isChargingAtk = false;
-                    moveSpd = 6;
-                }
-                // ------------------------------------
-
                 if (canMove)
                 {
+                    // ---------- State changing ----------
+                    if ((inputHandler.DodgeInput) && (dodgeCD <= dodgeMinCD)) // check if player pressed the dodge button
+                    {
+                        if (inputDirection == Vector2.zero)
+                        {
+                            dodgeDir = lastMoveDirection;
+                        }
+                        else dodgeDir = inputDirection;
+                        state = State.Dashing;
+                    }
+                    if ((isChargingAtk()) && (floatingSword.isAvailable) && (floatingSword.atkCD == 0) && (hasSword)) // check if player pressed the dodge button
+                    {
+                        floatingSword.isChargingAtk = true;
+                        moveSpd = chargingMoveSpd;
+                    }
+                    else
+                    {
+                        floatingSword.isChargingAtk = false;
+                        moveSpd = 6;
+                    }
+                    // ------------------------------------
                     if (inputDirection != Vector2.zero)
                     {
-                        bool canMove = TryMove(inputDirection);
-                        if (!canMove)
+                        isMoving = TryMove(inputDirection);
+                        if (!isMoving)
                         {
-                            canMove = TryMove(new Vector2(inputDirection.x, 0));
-                            if (!canMove)
+                            isMoving = TryMove(new Vector2(inputDirection.x, 0));
+                            if (!isMoving)
                             {
-                                canMove = TryMove(new Vector2(0, inputDirection.y));
+                                isMoving = TryMove(new Vector2(0, inputDirection.y));
                             }
                         }
                         animator.SetBool("isMoving", true);
@@ -120,7 +136,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-            case State.Dodging:
+            case State.Dashing:
                 if ((isChargingAtk()) && (floatingSword.isAvailable) && (floatingSword.atkCD == 0)) // check if player pressed the dodge button
                 {
                     floatingSword.isChargingAtk = true;
@@ -131,16 +147,23 @@ public class PlayerController : MonoBehaviour
                     floatingSword.isChargingAtk = false;
                     moveSpd = 6;
                 }
-
-                canMove = Dodge(dodgeDir);
-                if (!canMove)
+                animator.SetBool("isDashing", true);
+                isMoving = Dodge(dodgeDir);
+                if (!isMoving)
                 {
-                    canMove = Dodge(new Vector2(dodgeDir.x, 0));
-                    if (!canMove)
+                    dodgeSpd = dodgeSpd / dodgeDeaccel;
+                    isMoving = Dodge(new Vector2(dodgeDir.x, 0));
+                    if (!isMoving)
                     {
-                        canMove = Dodge(new Vector2(0, dodgeDir.y));
+                        dodgeSpd = dodgeSpd / dodgeDeaccel;
+                        isMoving = Dodge(new Vector2(0, dodgeDir.y));
                     }
                 }
+                break;
+
+            case State.GotHit:
+                // play animation
+
                 break;
         }
     }
@@ -183,8 +206,9 @@ public class PlayerController : MonoBehaviour
             dodgeSpd = dodgeSpd * dodgeDeaccel;
             if (dodgeSpd <= dodgeMinSpd)
             {
-                dodgeSpd = 50f;
+                dodgeSpd = 30f;
                 dodgeCD = dodgeMaxCD;
+                animator.SetBool("isDashing", false);
                 state = State.Moving;
             }
             return true;
@@ -194,16 +218,68 @@ public class PlayerController : MonoBehaviour
             dodgeSpd = dodgeSpd * dodgeDeaccel;
             if (dodgeSpd <= dodgeMinSpd)
             {
-                dodgeSpd = 50f;
+                dodgeSpd = 30f;
                 dodgeCD = dodgeMaxCD;
+                animator.SetBool("isDashing", false);
                 state = State.Moving;
             }
             return false;
         }
     }
 
+    public void CancelWakeup()
+    {
+        animator.SetBool("isWakingUp", false);
+    }
+
     public bool isChargingAtk()
     {
         return inputHandler.FireInput;
     }
+
+
+    public void LoadData(GameData data)
+    {
+        this.transform.position = data.playerSpawnPosition;
+    }
+
+    public void SaveData(GameData data)
+    {
+        data.playerSpawnPosition = this.transform.position;
+    }
+
+    public bool Interact()
+    {
+        return inputHandler.InteractInput;
+    }
+
+    public void SwordPickup()
+    {
+        persistentDataSO.hasSword = true;
+        hasSword = true;
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("tag: " + collision.tag);
+        if (collision.tag == "Checkpoint")
+        {
+
+            manager.SaveGame();
+        }
+
+        if ((collision.tag == "Enemy") && (state == State.Moving))
+        {
+            state = State.GotHit;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if ((collision.tag == "Enemy") && (state == State.Moving))
+        {
+            state = State.GotHit;
+        }
+    }
+
 }
