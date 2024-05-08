@@ -14,7 +14,9 @@ GameObject:
   - component: {fileID: 8897126273013273733}
   - component: {fileID: 2366857570015104110}
   - component: {fileID: 1458549130536333925}
-  m_Layer: 9
+  - component: {fileID: 8249613025539195443}
+  - component: {fileID: 757721547990734522}
+  m_Layer: 10
   m_Name: Target
   m_TagString: Target
   m_Icon: {fileID: 0}
@@ -164,7 +166,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DamageManager: {fileID: 0}
   FloatingSword: {fileID: 0}
+  TutorialManager: {fileID: 0}
 --- !u!114 &1458549130536333925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 955036698513108126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9187b827835cf34e85685b86ee340e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8249613025539195443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 955036698513108126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9187b827835cf34e85685b86ee340e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &757721547990734522
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

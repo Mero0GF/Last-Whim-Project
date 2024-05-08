@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6713197935904654345}
   - component: {fileID: 1097199217163446452}
   - component: {fileID: 9184285129832835713}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: SceneLoader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -67,7 +67,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -48.742294, y: -15.935837}
+  m_Offset: {x: 0.6231804, y: 2.403356}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -78,7 +78,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 19.459488, y: 2.2879171}
+  m_Size: {x: 7.9203606, y: 3.7111511}
   m_EdgeRadius: 0
 --- !u!114 &9184285129832835713
 MonoBehaviour:
@@ -94,7 +94,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 5255579370115382289}
   persistentDataSO: {fileID: 11400000, guid: 2417d9a83ccd02c4eb54730ba8a75550, type: 2}
-  levelManager: {fileID: 0}
+  levelManager: {fileID: 11400000, guid: 5276aa2465a41104daca5495a56303ad, type: 2}
   spawnPoint: {fileID: 7552094726178641532}
   sword: {fileID: 0}
   scene: 
@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 4599230030161463859}
   - component: {fileID: 3547711361694827009}
   - component: {fileID: 8465446547145475718}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Blackscreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,7 +151,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3473044349749303094}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -195,7 +195,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7552094726178641532}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: SpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
@@ -211,7 +211,7 @@ Transform:
   m_GameObject: {fileID: 5328368044842617197}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -48.74, y: -13.21, z: 0}
+  m_LocalPosition: {x: 0.56, y: -0.84, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -230,7 +230,7 @@ GameObject:
   - component: {fileID: 8187310201947956757}
   - component: {fileID: 8473558870040668152}
   - component: {fileID: 5255579370115382289}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Crossfade
   m_TagString: Untagged
   m_Icon: {fileID: 0}

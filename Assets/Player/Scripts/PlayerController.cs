@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
     {
         Moving,
         Dashing,
+        GotHit,
     }
     public State state;
 
@@ -159,6 +160,11 @@ public class PlayerController : MonoBehaviour, IDataPersistence
                     }
                 }
                 break;
+
+            case State.GotHit:
+                // play animation
+
+                break;
         }
     }
 
@@ -242,15 +248,6 @@ public class PlayerController : MonoBehaviour, IDataPersistence
         data.playerSpawnPosition = this.transform.position;
     }
 
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-        Debug.Log("tag: " + collision.tag);
-        if (collision.tag == "Checkpoint")
-        {
-
-            manager.SaveGame();
-        }
-    }
     public bool Interact()
     {
         return inputHandler.InteractInput;
@@ -261,4 +258,28 @@ public class PlayerController : MonoBehaviour, IDataPersistence
         persistentDataSO.hasSword = true;
         hasSword = true;
     }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("tag: " + collision.tag);
+        if (collision.tag == "Checkpoint")
+        {
+
+            manager.SaveGame();
+        }
+
+        if ((collision.tag == "Enemy") && (state == State.Moving))
+        {
+            state = State.GotHit;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if ((collision.tag == "Enemy") && (state == State.Moving))
+        {
+            state = State.GotHit;
+        }
+    }
+
 }
