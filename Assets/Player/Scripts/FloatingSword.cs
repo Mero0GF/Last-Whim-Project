@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UIElements;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class FloatingSword : MonoBehaviour, IDataPersistence
@@ -42,6 +43,13 @@ public class FloatingSword : MonoBehaviour, IDataPersistence
     private float charge = 0;
 
     // Following player variables
+    private Quaternion q;
+    private float defaultAngle = 0;
+    public float angle = 30;
+    public float rotationSpd = 3f;
+    private float atkRotationSpd = 20f;
+    public float rotationOffset = 0;
+    private float atkRotationOffset = 90;
     public float speed = 0.6f;
     public float maxSpd = 6;
     public float minSpd = 0.6f;
@@ -81,11 +89,21 @@ public class FloatingSword : MonoBehaviour, IDataPersistence
 
     private void FixedUpdate()
     {
+        // calcula o angulo que a espada deve se mover quando tiver seguindo o jogador (e em outros estados tb)
+        if (playerController.lastMoveDirection.y > 0) rotationOffset = -90;
+        else if (playerController.lastMoveDirection.y < 0) rotationOffset = 90;
+        angle = Mathf.Atan2((player.transform.position.y + pos) - transform.position.y, (player.transform.position.x + pos) - transform.position.x) * Mathf.Rad2Deg + rotationOffset;
+        Debug.Log(angle);
+        if (angle < -25 || angle > 25) angle = 25;
+        Vector2 direction = (player.transform.position + new Vector3(pos, pos, 0)) - transform.position;
+        // ----------------------------------------------------------------------------------------------
+
         switch (state)
         {
             case State.FollowingPlayer:
+                
                 distance = Vector2.Distance(transform.position, (player.transform.position + new Vector3(pos, pos, 0)));
-                Vector2 direction = (player.transform.position + new Vector3(pos, pos, 0)) - transform.position;
+
                 if (isChargingAtk) // checks if player is charging the attack and changes the value of some core variables
                 {
                     accel = 1.12f;
@@ -110,10 +128,29 @@ public class FloatingSword : MonoBehaviour, IDataPersistence
                     {
                         if (distance <= maxDistance)
                         {
+                            q = Quaternion.AngleAxis(defaultAngle, Vector3.forward);
+                            transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * rotationSpd);
                             speed = Mathf.Clamp(speed * (deaccel * deaccel), minSpd, maxSpd);
                         }
                         else
                         {
+                            if (direction.x > 0)
+                            {
+                                if (angle < 0) angle = -angle;
+                                q = Quaternion.AngleAxis(-angle, Vector3.forward);
+                                transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * rotationSpd);
+                            }
+                            else if (direction.x < 0)
+                            {
+                                if (angle < 0) angle = -angle;
+                                q = Quaternion.AngleAxis(angle, Vector3.forward);
+                                transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * rotationSpd);
+                            }
+                            else
+                            {
+                                q = Quaternion.AngleAxis(defaultAngle, Vector3.forward);
+                                transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * rotationSpd);
+                            }
                             speed = Mathf.Clamp(speed * (accel * accel), minSpd, maxSpd);
                         }
                     }
@@ -129,10 +166,13 @@ public class FloatingSword : MonoBehaviour, IDataPersistence
             case State.ChargingAtk:
                 if (isChargingAtk) // checks if player is pressing the button
                 {
+                    angle = Mathf.Atan2((transform.position.y + playerController.lastMoveDirection.y) - transform.position.y, (transform.position.x + playerController.lastMoveDirection.x) - transform.position.x) * Mathf.Rad2Deg + atkRotationOffset;
                     distance = Vector2.Distance(transform.position, (player.transform.position + new Vector3(pos, pos, 0)));
                     // all the variables inside this state were changed on "FollowingPlayer" state before
                     if (canAttack)
                     {
+                        q = Quaternion.AngleAxis(angle, Vector3.forward);
+                        transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * atkRotationSpd);
                         charge = Mathf.Clamp(charge + chargeSpd, minCharge, maxCharge); // charges the speed/power of the attack
                     }
                     if ((distance <= distanceOffset))
@@ -151,12 +191,8 @@ public class FloatingSword : MonoBehaviour, IDataPersistence
                     maxSpd = 6;
                     minSpd = 0.6f;
                     accel = 1.04f;
-
-                    if (playerController.inputDirection == Vector2.zero)
-                    {
-                        atkDir = playerController.lastMoveDirection;
-                    }
-                    else atkDir = playerController.inputDirection;
+                    Debug.Log(playerController.lastMoveDirection);
+                    atkDir = playerController.lastMoveDirection;
                     speed = charge;
                     canAttack = false;
                     state = State.Attack;
@@ -218,11 +254,30 @@ public class FloatingSword : MonoBehaviour, IDataPersistence
                 distance = Vector2.Distance(transform.position, (player.transform.position + new Vector3(pos, pos, 0)));
                 if ((isChargingAtk) && (distance != 0)) 
                 {
+                    if (direction.x > 0)
+                    {
+                        if (angle < 0) angle = -angle;
+                        q = Quaternion.AngleAxis(-angle, Vector3.forward);
+                        transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * rotationSpd);
+                    }
+                    else if (direction.x < 0)
+                    {
+                        if (angle < 0) angle = -angle;
+                        q = Quaternion.AngleAxis(angle, Vector3.forward);
+                        transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * rotationSpd);
+                    }
+                    else
+                    {
+                        q = Quaternion.AngleAxis(defaultAngle, Vector3.forward);
+                        transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * rotationSpd);
+                    }
                     speed = Mathf.Clamp(speed*accel, retrievingMinSpd, maxCharge);
                     transform.position = Vector2.MoveTowards(transform.position, (player.transform.position + new Vector3(pos, pos, 0)), speed * Time.deltaTime);
                 }
                 else if (distance > retrievingDistanceOffset)
                 {
+                    q = Quaternion.AngleAxis(defaultAngle, Vector3.forward);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * rotationSpd);
                     speed = Mathf.Clamp(speed * deaccel, retrievingMinSpd, maxCharge);
                     if (speed == retrievingMinSpd) speed = 0;
                     transform.position = Vector2.MoveTowards(transform.position, (player.transform.position + new Vector3(pos, pos, 0)), speed * Time.deltaTime);
@@ -262,6 +317,8 @@ public class FloatingSword : MonoBehaviour, IDataPersistence
                 {
                     BounceDown();
                 }
+                q = Quaternion.AngleAxis(defaultAngle, Vector3.forward);
+                transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * rotationSpd);
                 atkCD = Mathf.Clamp(atkCD - 1, minAtkCD, maxAtkCD);
                 break;
 

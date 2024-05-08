@@ -6,6 +6,7 @@ public class NewBehaviourScript : MonoBehaviour
 {
     private GameObject sword;
     private FloatingSword floatingSword;
+    [SerializeField] private PersistentDataSO persistentDataSO;
 
     private void Start()
     {

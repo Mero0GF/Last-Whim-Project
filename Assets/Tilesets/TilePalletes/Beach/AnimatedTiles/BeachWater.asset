@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: BeachWater
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: -5604240, guid: 7462c12c5143e46488bcfcf5cd89a21c, type: 3}
+  - {fileID: 242937873, guid: 7462c12c5143e46488bcfcf5cd89a21c, type: 3}
+  - {fileID: -820077422, guid: 7462c12c5143e46488bcfcf5cd89a21c, type: 3}
+  - {fileID: 1862357620, guid: 7462c12c5143e46488bcfcf5cd89a21c, type: 3}
+  - {fileID: 1590837837, guid: 7462c12c5143e46488bcfcf5cd89a21c, type: 3}
+  - {fileID: 1586682263, guid: 7462c12c5143e46488bcfcf5cd89a21c, type: 3}
+  - {fileID: 948927598, guid: 7462c12c5143e46488bcfcf5cd89a21c, type: 3}
+  - {fileID: 795168330, guid: 7462c12c5143e46488bcfcf5cd89a21c, type: 3}
+  - {fileID: -396114300, guid: 7462c12c5143e46488bcfcf5cd89a21c, type: 3}
+  - {fileID: 1733931424, guid: 7462c12c5143e46488bcfcf5cd89a21c, type: 3}
+  - {fileID: -19172246, guid: 7462c12c5143e46488bcfcf5cd89a21c, type: 3}
+  - {fileID: 1858642481, guid: 7462c12c5143e46488bcfcf5cd89a21c, type: 3}
+  - {fileID: 638235473, guid: 7462c12c5143e46488bcfcf5cd89a21c, type: 3}
+  - {fileID: 831962827, guid: 7462c12c5143e46488bcfcf5cd89a21c, type: 3}
+  - {fileID: 1601822494, guid: 7462c12c5143e46488bcfcf5cd89a21c, type: 3}
+  - {fileID: -1109846645, guid: 7462c12c5143e46488bcfcf5cd89a21c, type: 3}
+  m_MinSpeed: 10
+  m_MaxSpeed: 10
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 0
+  m_TileAnimationFlags: 0
