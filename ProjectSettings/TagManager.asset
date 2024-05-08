@@ -15,6 +15,7 @@ TagManager:
   - NewCam
   - CamFocus
   - Boss
+  - EnemySword
   layers:
   - Default
   - TransparentFX
