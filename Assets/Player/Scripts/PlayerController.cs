@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEditor.PlayerSettings;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDataPersistence
 {
     // player states
     public enum State
@@ -53,6 +53,8 @@ public class PlayerController : MonoBehaviour
     Collider2D playerCollider;
     Rigidbody2D rb;
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
+
+    public DataPersistenceManager manager;
 
     private void Start()
     {
@@ -229,6 +231,26 @@ public class PlayerController : MonoBehaviour
         return inputHandler.FireInput;
     }
 
+
+    public void LoadData(GameData data)
+    {
+        this.transform.position = data.playerSpawnPosition;
+    }
+
+    public void SaveData(GameData data)
+    {
+        data.playerSpawnPosition = this.transform.position;
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("tag: " + collision.tag);
+        if (collision.tag == "Checkpoint")
+        {
+
+            manager.SaveGame();
+        }
+    }
     public bool Interact()
     {
         return inputHandler.InteractInput;

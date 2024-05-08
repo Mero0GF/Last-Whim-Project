@@ -6,6 +6,7 @@ TagManager:
   tags:
   - FloatingSword
   - Wall
+  - Checkpoint
   - Enemy
   - Target
   - Camera
@@ -22,6 +23,7 @@ TagManager:
   - Player
   - FloatingSword
   - Floor
+  - Checkpoint
   - Enemies
   - TriggerBoxes
   - Underfloor

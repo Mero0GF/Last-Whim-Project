@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb850e4178da46445bce5e7d5bdbc786, type: 3}
   m_Name: PersistentData
   m_EditorClassIdentifier: 
-  hasSword: 1
-  beachCutscenePlayed: 1
+  hasSword: 0
+  beachCutscenePlayed: 0
