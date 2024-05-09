@@ -35,7 +35,7 @@ public class FloatingSword : MonoBehaviour, IDataPersistence
     public bool isChargingAtk = false;
     private float distanceOffset = 0.6f;
     private bool canAttack = false;
-    private Vector2 atkDir = Vector2.zero;
+    public Vector2 atkDir = Vector2.zero;
     private float chargeSpd = 2;
     private float atkDeaccel = 0.8f;
     private float maxCharge = 220f;
@@ -93,7 +93,6 @@ public class FloatingSword : MonoBehaviour, IDataPersistence
         if (playerController.lastMoveDirection.y > 0) rotationOffset = -90;
         else if (playerController.lastMoveDirection.y < 0) rotationOffset = 90;
         angle = Mathf.Atan2((player.transform.position.y + pos) - transform.position.y, (player.transform.position.x + pos) - transform.position.x) * Mathf.Rad2Deg + rotationOffset;
-        Debug.Log(angle);
         if (angle < -25 || angle > 25) angle = 25;
         Vector2 direction = (player.transform.position + new Vector3(pos, pos, 0)) - transform.position;
         // ----------------------------------------------------------------------------------------------
@@ -191,7 +190,6 @@ public class FloatingSword : MonoBehaviour, IDataPersistence
                     maxSpd = 6;
                     minSpd = 0.6f;
                     accel = 1.04f;
-                    Debug.Log(playerController.lastMoveDirection);
                     atkDir = playerController.lastMoveDirection;
                     speed = charge;
                     canAttack = false;

@@ -1017,6 +1017,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9184285129832835713, guid: fb5b7d9f57abff24d8dfadd50fb5c647, type: 3}
+      propertyPath: scene
+      value: FirstBossRoom
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1231,6 +1235,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 566739073987077269, guid: dd04d54e8ffc0b441a4738fed0ef6287, type: 3}
+      propertyPath: hasSword
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4998876449373218527, guid: dd04d54e8ffc0b441a4738fed0ef6287, type: 3}
       propertyPath: m_Name
       value: Player
@@ -2080,9 +2088,17 @@ PrefabInstance:
       propertyPath: m_Offset.y
       value: -0.022948548
       objectReference: {fileID: 0}
+    - target: {fileID: 6566314424749972312, guid: 0f0cbcc5ad31f2143990e7c1c062dff9, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8835198342917531550, guid: 0f0cbcc5ad31f2143990e7c1c062dff9, type: 3}
       propertyPath: m_Name
       value: DestructableWall
+      objectReference: {fileID: 0}
+    - target: {fileID: 8835198342917531550, guid: 0f0cbcc5ad31f2143990e7c1c062dff9, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

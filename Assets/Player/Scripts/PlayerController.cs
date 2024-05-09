@@ -261,7 +261,6 @@ public class PlayerController : MonoBehaviour, IDataPersistence
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("tag: " + collision.tag);
         if (collision.tag == "Checkpoint")
         {
 
