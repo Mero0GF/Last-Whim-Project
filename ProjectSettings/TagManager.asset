@@ -14,6 +14,8 @@ TagManager:
   - Barrier
   - NewCam
   - CamFocus
+  - BossHead
+  - Rock
   layers:
   - Default
   - TransparentFX
@@ -29,8 +31,8 @@ TagManager:
   - TriggerBoxes
   - Underfloor
   - Blackscreen
-  - 
-  - 
+  - Util
+  - EnemyProjectiles
   - 
   - 
   - 

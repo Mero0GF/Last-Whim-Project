@@ -10,8 +10,6 @@ public class BossHead : MonoBehaviour
     public float deaccel = 0.97f;
     public Vector2 direction;
 
-    public bool gotHit = false;
-
     public GameObject body;
     public GameObject boss;
     private GameObject sword;
@@ -43,7 +41,7 @@ public class BossHead : MonoBehaviour
         switch(state)
         {
             case State.Static:
-                if (gotHit)
+                if (bossController.gotHit)
                 {
                     state = State.Bouncing;
                 }

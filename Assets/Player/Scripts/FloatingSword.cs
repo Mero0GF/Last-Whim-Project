@@ -28,6 +28,7 @@ public class FloatingSword : MonoBehaviour, IDataPersistence
     private float retrievingDistanceOffset = 2f;
 
     // Sword attack variables
+    private bool enemyHitAux = false;
     public int atkCD = 0;
     private int maxAtkCD = 60;
     private int minAtkCD = 0;
@@ -216,6 +217,15 @@ public class FloatingSword : MonoBehaviour, IDataPersistence
                 int enemyMask = LayerMask.GetMask("Enemies");
                 int colMask = LayerMask.GetMask("Col");
                 RaycastHit2D collision = Physics2D.Raycast(swordPos, atkDir, speed * Time.deltaTime, colMask);
+                if (enemyHitAux == true)
+                {
+                    charge = 0;
+                    speed = 0;
+                    isAvailable = true;
+                    state = State.Retrieving;
+                }
+
+                // checks collision with walls
                 if (collision == true)
                 {
                     rb.position = collision.point;
@@ -227,9 +237,13 @@ public class FloatingSword : MonoBehaviour, IDataPersistence
                 else
                 {
                     RaycastHit2D enemyHit = Physics2D.Raycast(swordPos, atkDir, speed * Time.deltaTime, enemyMask);
+
+                    // checks collision with enemies
                     if (enemyHit)
                     {
                         rb.position = enemyHit.point;
+                        speed = 4;
+                        enemyHitAux = true;
                     }
                     rb.MovePosition(rb.position + atkDir * speed * Time.deltaTime);
                     speed = Mathf.Clamp(speed * atkDeaccel, 1, maxCharge);
@@ -284,6 +298,7 @@ public class FloatingSword : MonoBehaviour, IDataPersistence
                 {
                     transform.position = Vector2.MoveTowards(transform.position, (player.transform.position + new Vector3(pos, pos, 0)), speed * Time.deltaTime);
                     atkCD = maxAtkCD;
+                    enemyHitAux = false;
                     state = State.FollowingPlayer;
                 }
                 break;

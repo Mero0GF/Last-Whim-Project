@@ -267,7 +267,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
             manager.SaveGame();
         }
 
-        if ((collision.tag == "Enemy") && (state == State.Moving))
+        if (((collision.tag == "Enemy") || (collision.tag == "Rock")) && (state == State.Moving))
         {
             state = State.GotHit;
         }
@@ -275,7 +275,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if ((collision.tag == "Enemy") && (state == State.Moving))
+        if (((collision.tag == "Enemy") || (collision.tag == "Rock")) && (state == State.Moving))
         {
             state = State.GotHit;
         }

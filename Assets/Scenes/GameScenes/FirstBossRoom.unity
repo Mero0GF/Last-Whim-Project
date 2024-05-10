@@ -73204,6 +73204,22 @@ PrefabInstance:
       propertyPath: hasSword
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2443423811278254582, guid: dd04d54e8ffc0b441a4738fed0ef6287, type: 3}
+      propertyPath: m_Size.x
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2443423811278254582, guid: dd04d54e8ffc0b441a4738fed0ef6287, type: 3}
+      propertyPath: m_Size.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2443423811278254582, guid: dd04d54e8ffc0b441a4738fed0ef6287, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.011390477
+      objectReference: {fileID: 0}
+    - target: {fileID: 2443423811278254582, guid: dd04d54e8ffc0b441a4738fed0ef6287, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.0934329
+      objectReference: {fileID: 0}
     - target: {fileID: 4998876449373218527, guid: dd04d54e8ffc0b441a4738fed0ef6287, type: 3}
       propertyPath: m_Name
       value: Player
@@ -73261,6 +73277,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 201521558996379016, guid: 0644ed236b787b64d978155001b0518c, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 714327406695770891, guid: 0644ed236b787b64d978155001b0518c, type: 3}
       propertyPath: m_Name
       value: Boss
@@ -73305,24 +73325,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4461837574412109456, guid: 0644ed236b787b64d978155001b0518c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4461837574412109456, guid: 0644ed236b787b64d978155001b0518c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5714049865769399821, guid: 0644ed236b787b64d978155001b0518c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 5714049865769399821, guid: 0644ed236b787b64d978155001b0518c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 5.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 8349854150254474669, guid: 0644ed236b787b64d978155001b0518c, type: 3}
-      propertyPath: m_UseFullKinematicContacts
+    - target: {fileID: 7895411701347775681, guid: 0644ed236b787b64d978155001b0518c, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
