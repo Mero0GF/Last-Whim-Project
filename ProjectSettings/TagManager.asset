@@ -16,6 +16,8 @@ TagManager:
   - CamFocus
   - BossHead
   - Rock
+  - Boss
+  - EnemySword
   layers:
   - Default
   - TransparentFX
