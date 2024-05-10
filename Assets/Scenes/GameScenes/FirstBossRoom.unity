@@ -73202,7 +73202,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 566739073987077269, guid: dd04d54e8ffc0b441a4738fed0ef6287, type: 3}
       propertyPath: hasSword
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2443423811278254582, guid: dd04d54e8ffc0b441a4738fed0ef6287, type: 3}
       propertyPath: m_Size.x
