@@ -5,7 +5,7 @@ using UnityEngine;
 public class DestroyEye : MonoBehaviour
 {
 
-    private float targetTime = 10.0f;
+    private float targetTime = 4.0f;
 
     // Start is called before the first frame update
     void Start()

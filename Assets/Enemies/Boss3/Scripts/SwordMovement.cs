@@ -38,7 +38,7 @@ public class SwordMovement : MonoBehaviour
 
 
         target = GameObject.FindGameObjectWithTag("Player").transform;
-        bossGameObject = GameObject.FindGameObjectWithTag("Enemy");
+        bossGameObject = GameObject.FindGameObjectWithTag("Boss");
         
         pointSword = GetComponent<PointSword>();
         initialRotation = transform.rotation;

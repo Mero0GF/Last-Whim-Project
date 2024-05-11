@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EyeMovement : MonoBehaviour
 {
-    public float speed = 60.0f;
+    public float speed = 180.0f;
 
     private float targetTime = 2.0f;
 

@@ -118,6 +118,9 @@ MonoBehaviour:
   atkCD: 0
   isAvailable: 1
   isChargingAtk: 0
+  angle: 30
+  rotationSpd: 3
+  rotationOffset: 0
   speed: 0.6
   maxSpd: 6
   minSpd: 0.6
