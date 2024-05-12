@@ -9,6 +9,12 @@ public class Boss : MonoBehaviour
 
     [SerializeField] private GameObject enemySword;
 
+    public int health = 3;
+
+    [SerializeField] private float cooldownTime = 2.0f;
+
+    private float damageCooldown = 0.0f;
+
     private GameObject sword1;
     private GameObject sword2;
     private GameObject sword3;
@@ -36,22 +42,22 @@ public class Boss : MonoBehaviour
         sword4.transform.SetParent(transform);
     }
 
-    /*
+    
     void Update()
     {
-        targetTime -= Time.deltaTime;
+        damageCooldown -= Time.deltaTime;
 
-        if (targetTime <= 0.0f)
+        if (health == 0)
         {
-            timerEnded();
-        }
+            Destroy(sword1);
+            Destroy(sword2);
+            Destroy(sword3);
+            Destroy(sword4);
+            Destroy(gameObject);
 
-        void timerEnded()
-        {
-            swordAttack = true;
         }
     }
-    */
+    
 
     public void LookAtPlayer()
     {
@@ -72,6 +78,17 @@ public class Boss : MonoBehaviour
             transform.Rotate(0f, 180f, 0f);
             isFlipped = true;
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        
+        if (collider.gameObject.CompareTag("FloatingSword") && damageCooldown <= 0.0f)
+        {
+            health -= 1;
+            damageCooldown = cooldownTime;
+        }
+        
     }
 
 }

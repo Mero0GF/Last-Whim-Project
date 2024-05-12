@@ -5,9 +5,11 @@ using UnityEngine;
 public class BossFollow : MonoBehaviour
 {
 
-    public float speed = 2.5f;
+    public float speed = 2.0f;
 
     Transform player;
+
+    
 
     Boss boss;
 
@@ -15,6 +17,7 @@ public class BossFollow : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        
 
         boss = GetComponent<Boss>();
     }
@@ -22,6 +25,8 @@ public class BossFollow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+        
         boss.LookAtPlayer();
 
         //Vector2 target = player.position;
