@@ -6,7 +6,7 @@ public class SwordMovement : MonoBehaviour
 {
     public int swordNum;
     
-    [SerializeField] private float speed = 7.0f;
+    [SerializeField] private float speed = 12.0f;
 
     private float swordModeTimer = 10.0f;
 
@@ -23,9 +23,11 @@ public class SwordMovement : MonoBehaviour
     Transform target;
 
     [SerializeField] private GameObject bossGameObject;
+    Boss boss;
 
     PointSword pointSword;
 
+    private int bossPhase;
 
     bool enableAttack = false;
 
@@ -39,6 +41,7 @@ public class SwordMovement : MonoBehaviour
 
         target = GameObject.FindGameObjectWithTag("Player").transform;
         bossGameObject = GameObject.FindGameObjectWithTag("Boss");
+        boss = bossGameObject.GetComponent<Boss>();
         
         pointSword = GetComponent<PointSword>();
         initialRotation = transform.rotation;
@@ -57,6 +60,7 @@ public class SwordMovement : MonoBehaviour
         {
             enableAttack = true;
             cooldownTimer = 6.0f;
+            bossPhase = boss.phase;
         }
 
         if (enableAttack)
@@ -86,7 +90,7 @@ public class SwordMovement : MonoBehaviour
         else if (!enableAttack && swordModeTimer <= 0.0f)
         {
             transform.rotation = initialRotation;
-            transform.position = new Vector3(bossGameObject.transform.position.x - 5 + 2 * swordNum, bossGameObject.transform.position.y, bossGameObject.transform.position.z);
+            transform.position = new Vector3(bossGameObject.transform.position.x + 2 * swordNum - 1 - 2 * bossPhase, bossGameObject.transform.position.y - 2, bossGameObject.transform.position.z);
             transform.SetParent(bossGameObject.transform);
 
             swordModeTimer = 10.0f;
