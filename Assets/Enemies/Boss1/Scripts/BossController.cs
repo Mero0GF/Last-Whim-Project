@@ -16,13 +16,13 @@ public class BossController : MonoBehaviour
 
     public bool gotHit = false;
     private float staggerSpd = 0;
-    private float invincibilityFrame = 0;
     private float speed;
     public Vector3 headPos = new Vector3(0, 3);
     public Vector3 rockSpawnPos = new Vector3(0, 10);
     private float distance;
     private Vector2 playerPos;
 
+    private bool canMove = false;
     public float atkRange = 4;
     private float atkSpd = 25;
     private float atkCd = 0;
@@ -46,6 +46,7 @@ public class BossController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         sword = GameObject.FindGameObjectWithTag("FloatingSword");
         floatingSword = sword.GetComponent<FloatingSword>();
+        barrier.SetActive(true);
     }
 
     private void FixedUpdate()
@@ -54,18 +55,13 @@ public class BossController : MonoBehaviour
 
         switch (state) {
             case State.FollowingPlayer:
+                barrier.SetActive(true);
                 transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
                 barrier.transform.position = transform.position + new Vector3(0,0.5f);
                 SpawnRock();
                 if (gotHit == false)
                 {
                     head.transform.position = transform.position + headPos;
-                    invincibilityFrame = Mathf.Clamp(invincibilityFrame - 1, manager.invincibilityFrameMin, manager.invincibilityFrameMax);
-                    if (invincibilityFrame > 0)
-                    {
-                        barrier.SetActive(true);
-                    }
-                    else barrier.SetActive(false);
                 }
                 if (distance <= atkRange && atkCd <= 0)
                 {
@@ -83,9 +79,16 @@ public class BossController : MonoBehaviour
                 break;
 
             case State.MeleeAtk:
-                head.transform.position = transform.position + headPos;
                 barrier.transform.position = transform.position + new Vector3(0, 0.5f);
                 SpawnRock();
+                if (gotHit == false)
+                {
+                    head.transform.position = transform.position + headPos;
+                }
+                if (canMove)
+                {
+                    transform.position = Vector2.MoveTowards(transform.position, playerPos, atkSpd * Time.deltaTime);
+                }
                 if (atkCd <= 0)
                 {
                     StartCoroutine(MeleeAtk());
@@ -96,8 +99,9 @@ public class BossController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("FloatingSword") && (floatingSword.state == FloatingSword.State.Attack) && (state == State.FollowingPlayer) && (invincibilityFrame <= 0))
+        if (collision.CompareTag("FloatingSword") && (floatingSword.state == FloatingSword.State.Attack))
         {
+            barrier.SetActive(false);
             StartCoroutine(Stagger());
         }
         if (collision.CompareTag("BossHead") && (state == State.SeekingHead))
@@ -110,7 +114,6 @@ public class BossController : MonoBehaviour
     {
         speed = staggerSpd; 
         bossHead.direction = floatingSword.atkDir;
-        invincibilityFrame = manager.invincibilityFrameMax;
         gotHit = true;
         yield return new WaitForSeconds(1.5f);
         speed = manager.speed;
@@ -130,29 +133,36 @@ public class BossController : MonoBehaviour
 
     IEnumerator MeleeAtk()
     {
-        int i = 0;
         atkCd = atkCdMax;
+
+        // Attack 1
         yield return new WaitForSeconds(1f);
         playerPos = player.transform.position;
-        while (i < 10)
-        {
-            i++;
-            transform.position = Vector2.MoveTowards(transform.position, playerPos, atkSpd * Time.deltaTime);
-        }
+        canMove = true;
+        yield return new WaitForSeconds(0.1f);
+        canMove = false;
+
+        // Attack 2
         yield return new WaitForSeconds(1f);
         playerPos = player.transform.position;
-        for (i = 0; i < 10; i++)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, playerPos, atkSpd * Time.deltaTime);
-        }
+        canMove = true;
+        yield return new WaitForSeconds(0.1f);
+        canMove = false;
+
+        // Attack 3
         yield return new WaitForSeconds(1.5f);
         playerPos = player.transform.position;
-        for (i = 0; i < 10; i++)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, playerPos, atkSpd* 3 * Time.deltaTime);
-        }
+        canMove = true;
+        yield return new WaitForSeconds(0.3f);
+        canMove = false;
+
+        barrier.SetActive(false);
         yield return new WaitForSeconds(2f);
-        state = State.FollowingPlayer;
+        if (!gotHit)
+        {
+            state = State.FollowingPlayer;
+            barrier.SetActive(true);
+        }
     }
 
     private void SpawnRock()
