@@ -271,7 +271,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
         if (collision.tag == "Checkpoint")
         {
             Debug.Log(collision.tag);
-            manager.SaveGame();
+            DataPersistenceManager.instance.SaveGame();
         }
 
         if (((collision.tag == "Enemy") || (collision.tag == "Rock")) && (state == State.Moving))

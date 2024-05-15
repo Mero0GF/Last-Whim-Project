@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class DataPersistenceManager : MonoBehaviour
 {
@@ -19,14 +20,25 @@ public class DataPersistenceManager : MonoBehaviour
     {
         if(instance != null)
         {
-            Debug.LogError("Found more than one Data persistence Manager in the scene.");
+            Debug.Log("Found more than one Data persistence Manager in the scene. Destroying the newest one.");
+            Destroy(this.gameObject);
+            return;
         }
         instance = this;
+        DontDestroyOnLoad(this.gameObject);
+        this.dataHandler = new FileDataHandler(Application.persistentDataPath, filename);
+    }
+    public void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    public void Start()
+    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        this.dataHandler = new FileDataHandler(Application.persistentDataPath, filename);
         this.dataPersistenceObjects = FindAllDataPersistenceObjects();
         LoadGame();
     }
@@ -42,8 +54,8 @@ public class DataPersistenceManager : MonoBehaviour
 
         if(this.gameData == null)
         {
-            Debug.Log("No data was found. Initializing data to defaults.");
-            NewGame();
+            Debug.Log("No data was found. A new Game needs to be started before data can be loaded.");
+            return;
         }
         foreach(IDataPersistence dataPersistenceObj in dataPersistenceObjects)
         {
@@ -54,6 +66,12 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void SaveGame()
     {
+        if(this.gameData == null)
+        {
+            Debug.LogWarning("No data was found. A new Game needs to be started before data can be loaded.");
+            return;
+        }
+
         foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects)
         {
             dataPersistenceObj.SaveData(gameData);

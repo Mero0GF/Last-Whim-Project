@@ -52,6 +52,7 @@ public class SceneTransition : MonoBehaviour
 
     private void LoadScene(string sceneName)
     {
+        DataPersistenceManager.instance.SaveGame();
         StartCoroutine(LoadLevel(sceneName));
     }
     
