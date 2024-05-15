@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasSword: 0
   beachCutscenePlayed: 0
+  firstBossDone: 1

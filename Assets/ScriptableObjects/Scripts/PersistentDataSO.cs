@@ -7,11 +7,13 @@ public class PersistentDataSO : ScriptableObject
 {
     public bool hasSword;
     public bool beachCutscenePlayed;
+    public bool firstBossDone;
 
     private void OnEnable()
     {
         hasSword = false;
         beachCutscenePlayed = false;
+        firstBossDone = false;
     }
 
     public void BeachCutsceneDone()
@@ -22,5 +24,10 @@ public class PersistentDataSO : ScriptableObject
     public void TutorialCutsceneDone()
     {
         hasSword = true;
+    }
+
+    public void FirstBossKilled()
+    {
+        firstBossDone = true;
     }
 }

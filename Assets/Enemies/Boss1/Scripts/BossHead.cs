@@ -18,6 +18,10 @@ public class BossHead : MonoBehaviour
     private Collider2D col;
     private Rigidbody2D rb;
 
+    private GameObject[] sceneBarriers;
+
+    [SerializeField] PersistentDataSO persistentDataSO;
+
     public enum State
     {
         Static,
@@ -28,6 +32,16 @@ public class BossHead : MonoBehaviour
 
     private void Start()
     {
+        if (persistentDataSO.firstBossDone)
+        {
+            sceneBarriers = new GameObject[2];
+            for (int i = 0; i < sceneBarriers.Length; i++)
+            {
+                sceneBarriers[i] = GameObject.FindGameObjectWithTag("Barrier");
+                sceneBarriers[i].SetActive(false);
+            }
+            boss.SetActive(false);
+        }
         sword = GameObject.FindGameObjectWithTag("FloatingSword");
         floatingSword = sword.GetComponent<FloatingSword>();
         state = State.Static;
@@ -70,6 +84,12 @@ public class BossHead : MonoBehaviour
     {
         if (collision.CompareTag("FloatingSword") && (floatingSword.state == FloatingSword.State.Attack) && (state == State.Exposed))
         {
+            for (int i = 0; i < sceneBarriers.Length; i++)
+            {
+                sceneBarriers[i] = GameObject.FindGameObjectWithTag("Barrier");
+                sceneBarriers[i].SetActive(false);
+            }
+            persistentDataSO.FirstBossKilled();
             Destroy(boss);
         }
 
