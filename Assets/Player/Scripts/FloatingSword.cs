@@ -75,6 +75,7 @@ public class FloatingSword : MonoBehaviour, IDataPersistence
     Rigidbody2D rb;
 
     GameData data;
+    PersistentDataSO persistentDataSO;
 
     private void Start()
     {
@@ -380,7 +381,11 @@ private void BounceDown()
 
     public void LoadData(GameData data)
     {
-        this.transform.position = data.swordSpawnPosition;
+        if(data.playerPersistentData.hasSword == true)
+        {
+            this.transform.position = data.swordSpawnPosition;
+        }
+   
     }
 
     // On trigger functions

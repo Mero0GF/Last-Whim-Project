@@ -11,7 +11,6 @@ public class DataPersistenceManager : MonoBehaviour
     public GameData gameData;
     private List<IDataPersistence> dataPersistenceObjects;
     private FileDataHandler dataHandler;
-
     //indica que pode ser referenciada publicamente mas so pode modificar
     //a instancia de forma privada
     public static DataPersistenceManager instance { get; private set; }
@@ -68,7 +67,6 @@ public class DataPersistenceManager : MonoBehaviour
     {
         SaveGame();
     }*/
-
 
     //encontrar os scripts que utilizam a interface IDataPersistence e retornar uma lista desses scripts
     private List<IDataPersistence> FindAllDataPersistenceObjects()

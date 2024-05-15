@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
     public Vector2 lastMoveDirection = Vector2.zero;
     public Vector2 inputDirection = Vector2.zero;
 
-    [SerializeField] private PersistentDataSO persistentDataSO;
+    public PersistentDataSO persistentDataSO;
     private GameObject Sword;
     private FloatingSword floatingSword;
     Collider2D playerCollider;
@@ -68,10 +68,10 @@ public class PlayerController : MonoBehaviour, IDataPersistence
         inputHandler = PlayerInputHandler.Instance;
         lastMoveDirection.x = 0;
         lastMoveDirection.y = -1;
-        if (persistentDataSO.hasSword)
+        /*if (persistentDataSO.hasSword)
         {
             hasSword = true;
-        }
+        }*/
     }
 
 
@@ -241,11 +241,18 @@ public class PlayerController : MonoBehaviour, IDataPersistence
     public void LoadData(GameData data)
     {
         this.transform.position = data.playerSpawnPosition;
+        //load values from our game data into the srciptable object
+        this.persistentDataSO.hasSword = data.playerPersistentData.hasSword;
+        this.persistentDataSO.beachCutscenePlayed = data.playerPersistentData.beachCutscenePlayed;
+        this.hasSword = data.playerPersistentData.hasSword;
     }
 
     public void SaveData(GameData data)
     {
         data.playerSpawnPosition = this.transform.position;
+        //save values fro our scriptable object into the game data
+        data.playerPersistentData.hasSword = this.persistentDataSO.hasSword;
+        data.playerPersistentData.beachCutscenePlayed = this.persistentDataSO.beachCutscenePlayed;
     }
 
     public bool Interact()
@@ -263,7 +270,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
     {
         if (collision.tag == "Checkpoint")
         {
-
+            Debug.Log(collision.tag);
             manager.SaveGame();
         }
 
