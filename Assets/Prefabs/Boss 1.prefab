@@ -202,6 +202,7 @@ MonoBehaviour:
   body: {fileID: 6527748431055173110}
   boss: {fileID: 714327406695770891}
   bossController: {fileID: 2425917060594524745}
+  persistentDataSO: {fileID: 11400000, guid: 2417d9a83ccd02c4eb54730ba8a75550, type: 2}
   state: 0
 --- !u!1 &6527748431055173110
 GameObject:
@@ -322,7 +323,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.000000834465, y: -0.0021796227}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -333,7 +334,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.7596619, y: 0.82299376}
+  m_Size: {x: 0.9968095, y: 0.99300766}
   m_EdgeRadius: 0
 --- !u!114 &2425917060594524745
 MonoBehaviour:
@@ -351,6 +352,7 @@ MonoBehaviour:
   gotHit: 0
   headPos: {x: 0, y: 3, z: 0}
   rockSpawnPos: {x: 0, y: 10, z: 0}
+  atkRange: 4
   manager: {fileID: 11400000, guid: 03fdaf39f0f60d445b8ee605d63b7869, type: 2}
   barrier: {fileID: 7895411701347775681}
   rock: {fileID: 31555814489085744, guid: 28643cc641a1b6442a7d67c4a9de1972, type: 3}
@@ -399,7 +401,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4768106055489297152
 Transform:
   m_ObjectHideFlags: 0
@@ -496,7 +498,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.0026348233, y: 0.0015058666}
