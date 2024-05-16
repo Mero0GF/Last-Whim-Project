@@ -32,12 +32,12 @@ public class BossHead : MonoBehaviour
 
     private void Start()
     {
+        sceneBarriers = new GameObject[2];
+        sceneBarriers = GameObject.FindGameObjectsWithTag("Barrier");
         if (persistentDataSO.firstBossDone)
         {
-            sceneBarriers = new GameObject[2];
             for (int i = 0; i < sceneBarriers.Length; i++)
             {
-                sceneBarriers[i] = GameObject.FindGameObjectWithTag("Barrier");
                 sceneBarriers[i].SetActive(false);
             }
             boss.SetActive(false);
@@ -86,7 +86,6 @@ public class BossHead : MonoBehaviour
         {
             for (int i = 0; i < sceneBarriers.Length; i++)
             {
-                sceneBarriers[i] = GameObject.FindGameObjectWithTag("Barrier");
                 sceneBarriers[i].SetActive(false);
             }
             persistentDataSO.FirstBossKilled();

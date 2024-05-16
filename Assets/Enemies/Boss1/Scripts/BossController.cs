@@ -8,6 +8,7 @@ public class BossController : MonoBehaviour
 
     public enum State
     {
+        Static,
         FollowingPlayer,
         SeekingHead,
         MeleeAtk,
@@ -22,6 +23,7 @@ public class BossController : MonoBehaviour
     private float distance;
     private Vector2 playerPos;
 
+    private bool wait = false;
     private bool canMove = false;
     public float atkRange = 4;
     private float atkSpd = 25;
@@ -41,7 +43,7 @@ public class BossController : MonoBehaviour
     private void Start()
     {
         speed = manager.speed;
-        state = State.FollowingPlayer;
+        state = State.Static;
         bossHead = head.GetComponent<BossHead>();
         player = GameObject.FindGameObjectWithTag("Player");
         sword = GameObject.FindGameObjectWithTag("FloatingSword");
@@ -54,6 +56,16 @@ public class BossController : MonoBehaviour
         distance = Vector2.Distance(transform.position, player.transform.position);
 
         switch (state) {
+
+            case State.Static:
+                if (wait == false)
+                {
+                    StartCoroutine(Static());
+                }
+                break;
+
+
+
             case State.FollowingPlayer:
                 barrier.SetActive(true);
                 transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
@@ -163,6 +175,14 @@ public class BossController : MonoBehaviour
             state = State.FollowingPlayer;
             barrier.SetActive(true);
         }
+    }
+
+    private IEnumerator Static()
+    {
+        Debug.Log("penis");
+        wait = true;
+        yield return new WaitForSeconds(1f);
+        state = State.FollowingPlayer;
     }
 
     private void SpawnRock()
