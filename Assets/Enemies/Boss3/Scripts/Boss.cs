@@ -21,6 +21,10 @@ public class Boss : MonoBehaviour
 
     private float damageCooldown = 0.0f;
 
+    [SerializeField] PersistentDataSO persistentDataSO;
+
+    private GameObject[] sceneBarriers;
+
     private GameObject sword1;
     private GameObject sword2;
     private GameObject sword3;
@@ -40,6 +44,17 @@ public class Boss : MonoBehaviour
 
     private void Start()
     {
+        sceneBarriers = new GameObject[1];
+        sceneBarriers = GameObject.FindGameObjectsWithTag("Barrier");
+        if (persistentDataSO.lastBossDone)
+        {
+            for (int i = 0; i < sceneBarriers.Length; i++)
+            {
+                sceneBarriers[i].SetActive(false);
+            }
+            Destroy(gameObject);
+        }
+
         health = maxHealth;
 
         playerSword = GameObject.FindGameObjectWithTag("FloatingSword");
@@ -110,8 +125,12 @@ public class Boss : MonoBehaviour
 
         else if (health <= 0)
         {
+            for (int i = 0; i < sceneBarriers.Length; i++)
+            {
+                sceneBarriers[i].SetActive(false);
+            }
+            persistentDataSO.LastBossKilled();
             Destroy(gameObject);
-
         }
     }
     
@@ -140,7 +159,7 @@ public class Boss : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider)
     {
         
-        if (collider.gameObject.CompareTag("FloatingSword") && damageCooldown <= 0.0f && floatingSword.state == FloatingSword.State.Attack)
+        if (collider.CompareTag("FloatingSword") && damageCooldown <= 0.0f && floatingSword.state == FloatingSword.State.Attack)
         {
             health -= 1;
             damageCooldown = cooldownTime;

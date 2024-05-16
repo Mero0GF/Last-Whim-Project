@@ -149,7 +149,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2754428855732376359, guid: fb5b7d9f57abff24d8dfadd50fb5c647, type: 3}
       propertyPath: m_Name
-      value: SceneLoader (from Beach)
+      value: SceneLoader (to Beach)
       objectReference: {fileID: 0}
     - target: {fileID: 2754428855732376359, guid: fb5b7d9f57abff24d8dfadd50fb5c647, type: 3}
       propertyPath: m_Layer
@@ -1024,6 +1024,14 @@ PrefabInstance:
     - target: {fileID: 6713197935904654345, guid: fb5b7d9f57abff24d8dfadd50fb5c647, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7552094726178641532, guid: fb5b7d9f57abff24d8dfadd50fb5c647, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 7552094726178641532, guid: fb5b7d9f57abff24d8dfadd50fb5c647, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.28
       objectReference: {fileID: 0}
     - target: {fileID: 9184285129832835713, guid: fb5b7d9f57abff24d8dfadd50fb5c647, type: 3}
       propertyPath: scene

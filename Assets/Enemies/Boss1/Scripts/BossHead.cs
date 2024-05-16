@@ -40,7 +40,7 @@ public class BossHead : MonoBehaviour
             {
                 sceneBarriers[i].SetActive(false);
             }
-            boss.SetActive(false);
+            Destroy(boss.gameObject);
         }
         sword = GameObject.FindGameObjectWithTag("FloatingSword");
         floatingSword = sword.GetComponent<FloatingSword>();
