@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UIElements;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
-public class FloatingSword : MonoBehaviour
+public class FloatingSword : MonoBehaviour, IDataPersistence
 {
     public enum State
     {
@@ -27,6 +28,7 @@ public class FloatingSword : MonoBehaviour
     private float retrievingDistanceOffset = 2f;
 
     // Sword attack variables
+    private bool enemyHitAux = false;
     public int atkCD = 0;
     private int maxAtkCD = 60;
     private int minAtkCD = 0;
@@ -34,7 +36,7 @@ public class FloatingSword : MonoBehaviour
     public bool isChargingAtk = false;
     private float distanceOffset = 0.6f;
     private bool canAttack = false;
-    private Vector2 atkDir = Vector2.zero;
+    public Vector2 atkDir = Vector2.zero;
     private float chargeSpd = 2;
     private float atkDeaccel = 0.8f;
     private float maxCharge = 220f;
@@ -42,7 +44,13 @@ public class FloatingSword : MonoBehaviour
     private float charge = 0;
 
     // Following player variables
-    public bool canMove = true;
+    private Quaternion q;
+    private float defaultAngle = 0;
+    public float angle = 30;
+    public float rotationSpd = 3f;
+    private float atkRotationSpd = 20f;
+    public float rotationOffset = 0;
+    private float atkRotationOffset = 90;
     public float speed = 0.6f;
     public float maxSpd = 6;
     public float minSpd = 0.6f;
@@ -61,13 +69,18 @@ public class FloatingSword : MonoBehaviour
     public float bounceSpd = 0.5f;
 
     SpriteRenderer spriteRenderer;
-    public GameObject player;
-    public PlayerController playerController;
+    private GameObject player;
+    private PlayerController playerController;
 
     Rigidbody2D rb;
 
+    GameData data;
+    PersistentDataSO persistentDataSO;
+
     private void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerController = player.GetComponent<PlayerController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         LayerMask mask = LayerMask.GetMask("Col");
@@ -78,11 +91,20 @@ public class FloatingSword : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // calcula o angulo que a espada deve se mover quando tiver seguindo o jogador (e em outros estados tb)
+        if (playerController.lastMoveDirection.y > 0) rotationOffset = -90;
+        else if (playerController.lastMoveDirection.y < 0) rotationOffset = 90;
+        angle = Mathf.Atan2((player.transform.position.y + pos) - transform.position.y, (player.transform.position.x + pos) - transform.position.x) * Mathf.Rad2Deg + rotationOffset;
+        if (angle < -25 || angle > 25) angle = 25;
+        Vector2 direction = (player.transform.position + new Vector3(pos, pos, 0)) - transform.position;
+        // ----------------------------------------------------------------------------------------------
+
         switch (state)
         {
             case State.FollowingPlayer:
+                
                 distance = Vector2.Distance(transform.position, (player.transform.position + new Vector3(pos, pos, 0)));
-                Vector2 direction = (player.transform.position + new Vector3(pos, pos, 0)) - transform.position;
+
                 if (isChargingAtk) // checks if player is charging the attack and changes the value of some core variables
                 {
                     accel = 1.12f;
@@ -107,10 +129,29 @@ public class FloatingSword : MonoBehaviour
                     {
                         if (distance <= maxDistance)
                         {
+                            q = Quaternion.AngleAxis(defaultAngle, Vector3.forward);
+                            transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * rotationSpd);
                             speed = Mathf.Clamp(speed * (deaccel * deaccel), minSpd, maxSpd);
                         }
                         else
                         {
+                            if (direction.x > 0)
+                            {
+                                if (angle < 0) angle = -angle;
+                                q = Quaternion.AngleAxis(-angle, Vector3.forward);
+                                transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * rotationSpd);
+                            }
+                            else if (direction.x < 0)
+                            {
+                                if (angle < 0) angle = -angle;
+                                q = Quaternion.AngleAxis(angle, Vector3.forward);
+                                transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * rotationSpd);
+                            }
+                            else
+                            {
+                                q = Quaternion.AngleAxis(defaultAngle, Vector3.forward);
+                                transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * rotationSpd);
+                            }
                             speed = Mathf.Clamp(speed * (accel * accel), minSpd, maxSpd);
                         }
                     }
@@ -126,10 +167,13 @@ public class FloatingSword : MonoBehaviour
             case State.ChargingAtk:
                 if (isChargingAtk) // checks if player is pressing the button
                 {
+                    angle = Mathf.Atan2((transform.position.y + playerController.lastMoveDirection.y) - transform.position.y, (transform.position.x + playerController.lastMoveDirection.x) - transform.position.x) * Mathf.Rad2Deg + atkRotationOffset;
                     distance = Vector2.Distance(transform.position, (player.transform.position + new Vector3(pos, pos, 0)));
                     // all the variables inside this state were changed on "FollowingPlayer" state before
                     if (canAttack)
                     {
+                        q = Quaternion.AngleAxis(angle, Vector3.forward);
+                        transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * atkRotationSpd);
                         charge = Mathf.Clamp(charge + chargeSpd, minCharge, maxCharge); // charges the speed/power of the attack
                     }
                     if ((distance <= distanceOffset))
@@ -148,12 +192,7 @@ public class FloatingSword : MonoBehaviour
                     maxSpd = 6;
                     minSpd = 0.6f;
                     accel = 1.04f;
-
-                    if (playerController.inputDirection == Vector2.zero)
-                    {
-                        atkDir = playerController.lastMoveDirection;
-                    }
-                    else atkDir = playerController.inputDirection;
+                    atkDir = playerController.lastMoveDirection;
                     speed = charge;
                     canAttack = false;
                     state = State.Attack;
@@ -179,6 +218,15 @@ public class FloatingSword : MonoBehaviour
                 int enemyMask = LayerMask.GetMask("Enemies");
                 int colMask = LayerMask.GetMask("Col");
                 RaycastHit2D collision = Physics2D.Raycast(swordPos, atkDir, speed * Time.deltaTime, colMask);
+                if (enemyHitAux == true)
+                {
+                    charge = 0;
+                    speed = 0;
+                    isAvailable = true;
+                    state = State.Retrieving;
+                }
+
+                // checks collision with walls
                 if (collision == true)
                 {
                     rb.position = collision.point;
@@ -190,9 +238,13 @@ public class FloatingSword : MonoBehaviour
                 else
                 {
                     RaycastHit2D enemyHit = Physics2D.Raycast(swordPos, atkDir, speed * Time.deltaTime, enemyMask);
+
+                    // checks collision with enemies
                     if (enemyHit)
                     {
                         rb.position = enemyHit.point;
+                        speed = 4;
+                        enemyHitAux = true;
                     }
                     rb.MovePosition(rb.position + atkDir * speed * Time.deltaTime);
                     speed = Mathf.Clamp(speed * atkDeaccel, 1, maxCharge);
@@ -215,11 +267,30 @@ public class FloatingSword : MonoBehaviour
                 distance = Vector2.Distance(transform.position, (player.transform.position + new Vector3(pos, pos, 0)));
                 if ((isChargingAtk) && (distance != 0)) 
                 {
+                    if (direction.x > 0)
+                    {
+                        if (angle < 0) angle = -angle;
+                        q = Quaternion.AngleAxis(-angle, Vector3.forward);
+                        transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * rotationSpd);
+                    }
+                    else if (direction.x < 0)
+                    {
+                        if (angle < 0) angle = -angle;
+                        q = Quaternion.AngleAxis(angle, Vector3.forward);
+                        transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * rotationSpd);
+                    }
+                    else
+                    {
+                        q = Quaternion.AngleAxis(defaultAngle, Vector3.forward);
+                        transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * rotationSpd);
+                    }
                     speed = Mathf.Clamp(speed*accel, retrievingMinSpd, maxCharge);
                     transform.position = Vector2.MoveTowards(transform.position, (player.transform.position + new Vector3(pos, pos, 0)), speed * Time.deltaTime);
                 }
                 else if (distance > retrievingDistanceOffset)
                 {
+                    q = Quaternion.AngleAxis(defaultAngle, Vector3.forward);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * rotationSpd);
                     speed = Mathf.Clamp(speed * deaccel, retrievingMinSpd, maxCharge);
                     if (speed == retrievingMinSpd) speed = 0;
                     transform.position = Vector2.MoveTowards(transform.position, (player.transform.position + new Vector3(pos, pos, 0)), speed * Time.deltaTime);
@@ -228,6 +299,7 @@ public class FloatingSword : MonoBehaviour
                 {
                     transform.position = Vector2.MoveTowards(transform.position, (player.transform.position + new Vector3(pos, pos, 0)), speed * Time.deltaTime);
                     atkCD = maxAtkCD;
+                    enemyHitAux = false;
                     state = State.FollowingPlayer;
                 }
                 break;
@@ -259,6 +331,8 @@ public class FloatingSword : MonoBehaviour
                 {
                     BounceDown();
                 }
+                q = Quaternion.AngleAxis(defaultAngle, Vector3.forward);
+                transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * rotationSpd);
                 atkCD = Mathf.Clamp(atkCD - 1, minAtkCD, maxAtkCD);
                 break;
 
@@ -285,7 +359,7 @@ public class FloatingSword : MonoBehaviour
         }
     }
 
-    private void BounceDown()
+private void BounceDown()
     {
         if (transform.position.y < (y - deaccelPoint)) bounceSpd = Mathf.Clamp(bounceSpd * 0.935f, 0.05f, 0.5f); //deacceleration
         else bounceSpd = Mathf.Clamp(bounceSpd * 1.07f, 0.06f, 0.5f); // acceleration
@@ -295,6 +369,23 @@ public class FloatingSword : MonoBehaviour
             flagDown = false;
             flagUp = true;
         }
+    }
+
+    public void SaveData(GameData data)
+    {
+        Vector2 swordSpawnPosition;
+        swordSpawnPosition.x = player.transform.position.x + pos;
+        swordSpawnPosition.y = player.transform.position.y + pos;
+        data.swordSpawnPosition = swordSpawnPosition;
+    }
+
+    public void LoadData(GameData data)
+    {
+        if(data.playerPersistentData.hasSword == true)
+        {
+            this.transform.position = data.swordSpawnPosition;
+        }
+   
     }
 
     // On trigger functions
