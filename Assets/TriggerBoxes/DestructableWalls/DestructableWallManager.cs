@@ -6,20 +6,20 @@ public class NewBehaviourScript : MonoBehaviour
 {
     private GameObject sword;
     private FloatingSword floatingSword;
-    [SerializeField] private PersistentDataSO persistentDataSO;
+    private Animator animator;
 
     private void Start()
     {
         sword = GameObject.FindGameObjectWithTag("FloatingSword");
         floatingSword = sword.GetComponent<FloatingSword>();
+        animator = GetComponent<Animator>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("FloatingSword") && (floatingSword.state == FloatingSword.State.Attack))
         {
-            // Animate
-            Destroy(gameObject);
+            animator.SetTrigger("Open");
         }
     }
 
@@ -27,8 +27,12 @@ public class NewBehaviourScript : MonoBehaviour
     {
         if (collision.CompareTag("FloatingSword") && (floatingSword.state == FloatingSword.State.Attack))
         {
-            // Animate
-            Destroy(gameObject);
+            animator.SetTrigger("Open");
         }
+    }
+
+    private void DisableCollider()
+    {
+        gameObject.GetComponent<Collider2D>().enabled = false;
     }
 }

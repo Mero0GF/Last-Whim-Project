@@ -179,7 +179,6 @@ public class BossController : MonoBehaviour
 
     private IEnumerator Static()
     {
-        Debug.Log("penis");
         wait = true;
         yield return new WaitForSeconds(1f);
         state = State.FollowingPlayer;

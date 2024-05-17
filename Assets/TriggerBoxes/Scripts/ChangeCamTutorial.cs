@@ -8,10 +8,8 @@ public class ChangeCamTutorial : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("pejis");
         if (collision.CompareTag("Player"))
         {
-            Debug.Log("penisis");
             newCamera.SetActive(true);
         }
     }
