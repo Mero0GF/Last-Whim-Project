@@ -6,8 +6,18 @@ TagManager:
   tags:
   - FloatingSword
   - Wall
+  - Checkpoint
   - Enemy
   - Target
+  - Camera
+  - DestructableWall
+  - Barrier
+  - NewCam
+  - CamFocus
+  - BossHead
+  - Rock
+  - Boss
+  - EnemySword
   layers:
   - Default
   - TransparentFX
@@ -18,13 +28,13 @@ TagManager:
   - Player
   - FloatingSword
   - Floor
+  - Checkpoint
   - Enemies
   - TriggerBoxes
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Underfloor
+  - Blackscreen
+  - Util
+  - EnemyProjectiles
   - 
   - 
   - 
@@ -44,4 +54,25 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Floor
+    uniqueID: 4219738059
+    locked: 0
+  - name: Walls
+    uniqueID: 93384931
+    locked: 0
+  - name: FloorUpper
+    uniqueID: 1629299577
+    locked: 0
+  - name: Bosses
+    uniqueID: 1220652751
+    locked: 0
+  - name: Sword
+    uniqueID: 1853366371
+    locked: 0
+  - name: Player
+    uniqueID: 130309691
+    locked: 0
+  - name: Blackscreen
+    uniqueID: 2759421053
     locked: 0
