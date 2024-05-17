@@ -18,6 +18,7 @@ TagManager:
   - Rock
   - Boss
   - EnemySword
+  - EnemyEye
   layers:
   - Default
   - TransparentFX

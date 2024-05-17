@@ -34,7 +34,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7, y: 4, z: 0}
-  m_LocalScale: {x: 7, y: 7, z: 1}
+  m_LocalScale: {x: 14, y: 14, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -126,9 +126,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 7298865535348805768, guid: dd04d54e8ffc0b441a4738fed0ef6287, type: 3}
   enemySword: {fileID: 6696935020515145157, guid: 76a89264cfcf72c4d9decb64e3992f88, type: 3}
+  maxHealth: 3
   health: 3
   cooldownTime: 3
   isFlipped: 0
+  phase: 1
 --- !u!114 &2653983811241832694
 MonoBehaviour:
   m_ObjectHideFlags: 0

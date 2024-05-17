@@ -267,17 +267,19 @@ public class PlayerController : MonoBehaviour, IDataPersistence
             manager.SaveGame();
         }
 
-        if (((collision.tag == "Enemy") || (collision.tag == "Rock")) && (state == State.Moving))
+        if (((collision.tag == "Enemy") || (collision.tag == "Rock") || (collision.tag == "EnemySword") || (collision.tag == "EnemyEye")) && (state == State.Moving))
         {
             state = State.GotHit;
+            
         }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (((collision.tag == "Enemy") || (collision.tag == "Rock")) && (state == State.Moving))
+        if (((collision.tag == "Enemy") || (collision.tag == "Rock") || (collision.tag == "EnemySword") || (collision.tag == "EnemyEye")) && (state == State.Moving))
         {
             state = State.GotHit;
+            
         }
     }
 

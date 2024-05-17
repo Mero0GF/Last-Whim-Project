@@ -5,7 +5,7 @@ using UnityEngine;
 public class BossFollow : MonoBehaviour
 {
 
-    public float speed = 2.0f;
+    public float speed = 1.5f;
 
     Transform player;
 
@@ -30,6 +30,11 @@ public class BossFollow : MonoBehaviour
         boss.LookAtPlayer();
 
         //Vector2 target = player.position;
-        transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+
+        if(Vector3.Distance(player.position, transform.position) > 10.0f)
+            transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+
+        else
+            transform.position = Vector2.MoveTowards(transform.position, player.position, -speed * Time.deltaTime);
     }
 }

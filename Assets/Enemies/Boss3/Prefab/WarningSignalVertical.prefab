@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8092999956373072521}
   - component: {fileID: 279138429531244174}
   - component: {fileID: -7329968060977011564}
-  m_Layer: 15
+  m_Layer: 0
   m_Name: WarningSignalVertical
   m_TagString: Untagged
   m_Icon: {fileID: 0}
