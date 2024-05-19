@@ -12,6 +12,7 @@ public class DataPersistenceManager : MonoBehaviour
     public GameData gameData;
     private List<IDataPersistence> dataPersistenceObjects;
     private FileDataHandler dataHandler;
+    private string selectedProfileId = "";
     //indica que pode ser referenciada publicamente mas so pode modificar
     //a instancia de forma privada
     public static DataPersistenceManager instance { get; private set; }
@@ -39,18 +40,35 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        
         this.dataPersistenceObjects = FindAllDataPersistenceObjects();
+        LoadGame();
+    }
+
+    public void ChangeSelectedProfileId(string newProfileId)
+    {
+        //update the profile to use for saving and loading
+        this.selectedProfileId = newProfileId;
+
+        //load the game, which will use that profile, updating our game accordingly
         LoadGame();
     }
 
     public void NewGame()
     {
         this.gameData = new GameData();
+        this.gameData.sceneName = "Beach";
+        this.gameData.playerSpawnPosition.x = -4.53f;
+        this.gameData.playerSpawnPosition.y = -8.0f;
+        this.gameData.playerPersistentData.hasSword = false;
+        this.gameData.playerPersistentData.beachCutscenePlayed = false;
+        this.gameData.swordSpawnPosition = Vector2.zero;
+        dataHandler.Save(this.gameData, selectedProfileId);
     }
 
     public void LoadGame()
     {
-        gameData = dataHandler.Load();
+        gameData = dataHandler.Load(selectedProfileId);
 
         if(this.gameData == null)
         {
@@ -76,9 +94,9 @@ public class DataPersistenceManager : MonoBehaviour
         {
             dataPersistenceObj.SaveData(gameData);
         }
+        gameData.lastUpdated = System.DateTime.Now.ToBinary();
 
-
-        dataHandler.Save(gameData);
+        dataHandler.Save(gameData, selectedProfileId);
     }
 
     /*public void OnApplicationQuit()
@@ -92,5 +110,26 @@ public class DataPersistenceManager : MonoBehaviour
         IEnumerable<IDataPersistence> dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>()
             .OfType<IDataPersistence>();
         return new List<IDataPersistence>(dataPersistenceObjects);
+    }
+
+    public bool HasGameData()
+    {
+        return gameData != null;
+    }
+
+    public Dictionary<string, GameData> GetAllProfilesGameData()
+    {               
+        return dataHandler.LoadAllProfiles();
+    }
+
+    public string SceneName()
+    {
+        return this.gameData.sceneName;
+    }
+
+    public void ChangeLastSceneIndex(int menuSceneIndex)
+    {
+        this.gameData.lastSceneIndex = menuSceneIndex;
+        dataHandler.Save(gameData, selectedProfileId);
     }
 }

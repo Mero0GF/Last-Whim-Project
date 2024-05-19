@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEditor.PlayerSettings;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour, IDataPersistence
 {
@@ -55,7 +56,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
     Rigidbody2D rb;
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
 
-    public DataPersistenceManager manager;
+    public bool enteredCheckpoint = false;
 
     private void Start()
     {
@@ -240,19 +241,40 @@ public class PlayerController : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
-        this.transform.position = data.playerSpawnPosition;
+        if(data.lastSceneIndex == 0)
+        {
+            this.transform.position = data.checkpointPosition;
+        }
+        else
+        {
+            this.transform.position = data.playerSpawnPosition;
+        }
+        
         //load values from our game data into the srciptable object
         this.persistentDataSO.hasSword = data.playerPersistentData.hasSword;
         this.persistentDataSO.beachCutscenePlayed = data.playerPersistentData.beachCutscenePlayed;
         this.hasSword = data.playerPersistentData.hasSword;
+
+        
     }
 
     public void SaveData(GameData data)
     {
         data.playerSpawnPosition = this.transform.position;
-        //save values fro our scriptable object into the game data
+        
+        //save values for our scriptable object into the game data
         data.playerPersistentData.hasSword = this.persistentDataSO.hasSword;
         data.playerPersistentData.beachCutscenePlayed = this.persistentDataSO.beachCutscenePlayed;
+
+        if (enteredCheckpoint)
+        {
+            data.checkpointPosition = this.transform.position;
+            //get scene name
+            Scene scene = SceneManager.GetActiveScene();
+            data.sceneName = scene.name;
+            data.lastSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            enteredCheckpoint = false;
+        }
     }
 
     public bool Interact()
@@ -271,6 +293,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
         if (collision.tag == "Checkpoint")
         {
             Debug.Log(collision.tag);
+            enteredCheckpoint = true;
             DataPersistenceManager.instance.SaveGame();
         }
 

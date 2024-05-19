@@ -383,9 +383,18 @@ private void BounceDown()
     {
         if(data.playerPersistentData.hasSword == true)
         {
-            this.transform.position = data.swordSpawnPosition;
-        }
-   
+            if(data.lastSceneIndex == 0)
+            {
+                Vector2 swordSpawnPosition;
+                swordSpawnPosition.x = data.checkpointPosition.x + pos;
+                swordSpawnPosition.y = data.checkpointPosition.y + pos;
+                this.transform.position = swordSpawnPosition;
+            }
+            else
+            {
+                this.transform.position = data.swordSpawnPosition;
+            }                                    
+        }   
     }
 
     // On trigger functions
