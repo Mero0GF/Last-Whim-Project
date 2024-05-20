@@ -241,9 +241,27 @@ public class PlayerController : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
-        if(data.lastSceneIndex == 0)
+        if(data.lastSceneIndex == 0) //indice da cene MenuScene
         {
-            this.transform.position = data.checkpointPosition;
+            if(data.playerPersistentData.beachCutscenePlayed == false)
+            {
+                Vector2 playerSpawnPosition;
+                playerSpawnPosition.x = -4.53f;
+                playerSpawnPosition.y = -8;
+                this.transform.position = playerSpawnPosition;
+            }
+            /*else if(data.checkpointPosition.x == 0 && data.checkpointPosition.y == 0)
+            {
+                Vector2 playerSpawnPosition;
+                playerSpawnPosition.x = -4.53f;
+                playerSpawnPosition.y = -8;
+                this.transform.position = playerSpawnPosition;
+                data.playerPersistentData.beachCutscenePlayed = false;
+            }*/
+            else
+            {
+                this.transform.position = data.checkpointPosition;
+            }                
         }
         else
         {
