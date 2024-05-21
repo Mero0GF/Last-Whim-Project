@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using static UnityEditor.PlayerSettings;
 
 public class PlayerController : MonoBehaviour, IDataPersistence
@@ -33,6 +34,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
     private int dodgeCD = 0;
     private int dodgeMaxCD = 30;
     public float dodgeDeaccel = 0.95f;
+    public float dodgeSpdMax = 30f;
     public float dodgeSpd = 30f;
     public float dodgeMinSpd = 6f;
 
@@ -162,8 +164,8 @@ public class PlayerController : MonoBehaviour, IDataPersistence
                 break;
 
             case State.GotHit:
-                // play animation
-
+                animator.SetTrigger("tookHit");
+                StartCoroutine(RestartScene());
                 break;
         }
     }
@@ -237,6 +239,11 @@ public class PlayerController : MonoBehaviour, IDataPersistence
         return inputHandler.FireInput;
     }
 
+    public IEnumerator RestartScene()
+    {
+        yield return new WaitForSeconds(4f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 
     public void LoadData(GameData data)
     {

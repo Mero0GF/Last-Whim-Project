@@ -25,7 +25,7 @@ public class BossController : MonoBehaviour
 
     private bool wait = false;
     private bool canMove = false;
-    public float atkRange = 4;
+    public float atkRange = 5;
     private float atkSpd = 25;
     private float atkCd = 0;
     private float atkCdMax = 120;
@@ -151,21 +151,21 @@ public class BossController : MonoBehaviour
         yield return new WaitForSeconds(1f);
         playerPos = player.transform.position;
         canMove = true;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.25f);
         canMove = false;
 
         // Attack 2
         yield return new WaitForSeconds(1f);
         playerPos = player.transform.position;
         canMove = true;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.25f);
         canMove = false;
 
         // Attack 3
         yield return new WaitForSeconds(1.5f);
         playerPos = player.transform.position;
         canMove = true;
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.5f);
         canMove = false;
 
         barrier.SetActive(false);

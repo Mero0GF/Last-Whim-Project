@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class Boss : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public class Boss : MonoBehaviour
 
     private GameObject[] sceneBarriers;
 
+    private PlayableDirector playableDirector;
+
     private GameObject sword1;
     private GameObject sword2;
     private GameObject sword3;
@@ -44,6 +47,7 @@ public class Boss : MonoBehaviour
 
     private void Start()
     {
+        playableDirector = GetComponent<PlayableDirector>();
         sceneBarriers = new GameObject[1];
         sceneBarriers = GameObject.FindGameObjectsWithTag("Barrier");
         if (persistentDataSO.lastBossDone)
@@ -131,6 +135,7 @@ public class Boss : MonoBehaviour
             }
             persistentDataSO.LastBossKilled();
             Destroy(gameObject);
+            playableDirector.Play();
         }
     }
     
