@@ -19,9 +19,16 @@ public class FileDataHandler
         this.dataFileName = dataFileName;
     }
 
-    public GameData Load()
+    public GameData Load(string profileId)
     {
-        string fullpath = Path.Combine(dataDirPath, dataFileName);
+        //base case - profileId is null
+        if(profileId == null)
+        {
+            return null;
+        }
+
+        string fullpath = Path.Combine(dataDirPath, profileId, dataFileName);
+        Debug.Log(fullpath);
 
         GameData loadedData = null;
         if(File.Exists(fullpath))
@@ -48,9 +55,16 @@ public class FileDataHandler
 
     }
 
-    public void Save(GameData data)
+    public void Save(GameData data, string profileId)
     {
-        string fullpath = Path.Combine(dataDirPath, dataFileName);
+        //base case - profileId is null
+        if(profileId == null)
+        {
+            return;
+        }
+
+        string fullpath = Path.Combine(dataDirPath, profileId, dataFileName);
+        Debug.Log(fullpath);
 
         try
         {
@@ -72,5 +86,74 @@ public class FileDataHandler
         { 
             Debug.LogError("Error occured when trying to save data to file: " + fullpath + "\n" + e);
         }
+    }
+
+    public Dictionary<string, GameData> LoadAllProfiles() 
+    {
+        Dictionary<string, GameData> profileDictionary = new Dictionary<string, GameData>();
+
+        //loop over all the directory names in the data directory path
+        IEnumerable<DirectoryInfo> dirInfos = new DirectoryInfo(dataDirPath).EnumerateDirectories();
+
+        foreach (DirectoryInfo dirInfo in dirInfos)
+        {
+            string profileId = dirInfo.Name;
+
+            //check if the data file exist
+            //if it doesn't, then this folder isn't a profile and should be skipped
+            string fullPath = Path.Combine(dataDirPath, profileId, dataFileName);
+            if (!File.Exists(fullPath))
+            {
+                Debug.LogWarning("Skipping directory when loading all profiles because it does not contain data: "
+                    + profileId);
+                continue;
+            }
+
+            //load the game data for this profile and put it in the dictionary
+            GameData profileData = Load(profileId);
+
+            //check if data isn't null
+            if(profileData != null)
+            {
+                profileDictionary.Add(profileId, profileData);
+            }
+            else
+            {
+                Debug.LogError("Tried to load profile but something went wrong. ProfileId: " + profileId);
+            }
+        }
+
+        return profileDictionary;
+    }
+
+    public string GetMostRecentlyUpdatedProfileId()
+    {
+        string mostRecentProfileId = null;
+        Dictionary<string, GameData> profilesGameData = LoadAllProfiles();
+        foreach (KeyValuePair<string, GameData> pair in profilesGameData)
+        {
+            string profileId = pair.Key;
+            GameData gameData = pair.Value;
+
+            if (gameData == null)
+            {
+                continue;
+            }
+
+            if(mostRecentProfileId == null)
+            {
+                mostRecentProfileId = profileId;
+            }
+            else
+            {
+                DateTime mostRecentDateTime = DateTime.FromBinary(profilesGameData[mostRecentProfileId].lastUpdated);
+                DateTime newDateTime = DateTime.FromBinary(gameData.lastUpdated);
+                if(newDateTime > mostRecentDateTime)
+                {
+                    mostRecentProfileId = profileId;
+                }
+            }
+        }
+        return mostRecentProfileId;
     }
 }
