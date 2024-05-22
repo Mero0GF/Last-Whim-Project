@@ -387,7 +387,7 @@ private void BounceDown()
             {
                 Vector2 swordSpawnPosition;
                 swordSpawnPosition.x = data.checkpointPosition.x + pos;
-                swordSpawnPosition.y = data.checkpointPosition.y + pos;
+                swordSpawnPosition.y = data.checkpointPosition.y + pos - 1.5f;
                 this.transform.position = swordSpawnPosition;
             }
             else

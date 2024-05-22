@@ -267,7 +267,10 @@ public class PlayerController : MonoBehaviour, IDataPersistence
             }*/
             else
             {
-                this.transform.position = data.checkpointPosition;
+                Vector2 playerSpawnPosition;
+                playerSpawnPosition.x = data.checkpointPosition.x;
+                playerSpawnPosition.y = data.checkpointPosition.y - 1.5f;
+                this.transform.position = playerSpawnPosition;
             }                
         }
         else
@@ -279,7 +282,8 @@ public class PlayerController : MonoBehaviour, IDataPersistence
         this.persistentDataSO.hasSword = data.playerPersistentData.hasSword;
         this.persistentDataSO.beachCutscenePlayed = data.playerPersistentData.beachCutscenePlayed;
         this.hasSword = data.playerPersistentData.hasSword;
-
+        this.persistentDataSO.firstBossDone = data.playerPersistentData.firstBossDone;
+        this.persistentDataSO.lastBossDone = data.playerPersistentData.lastBossDone;
         
     }
 
@@ -290,6 +294,8 @@ public class PlayerController : MonoBehaviour, IDataPersistence
         //save values for our scriptable object into the game data
         data.playerPersistentData.hasSword = this.persistentDataSO.hasSword;
         data.playerPersistentData.beachCutscenePlayed = this.persistentDataSO.beachCutscenePlayed;
+        data.playerPersistentData.firstBossDone = this.persistentDataSO.firstBossDone;
+        data.playerPersistentData.lastBossDone = this.persistentDataSO.lastBossDone;
 
         if (enteredCheckpoint)
         {

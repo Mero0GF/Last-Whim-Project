@@ -62,6 +62,8 @@ public class DataPersistenceManager : MonoBehaviour
         this.gameData.playerSpawnPosition.y = -8.0f;
         this.gameData.playerPersistentData.hasSword = false;
         this.gameData.playerPersistentData.beachCutscenePlayed = false;
+        this.gameData.playerPersistentData.firstBossDone = false;
+        this.gameData.playerPersistentData.lastBossDone = false;
         this.gameData.swordSpawnPosition = Vector2.zero;
         dataHandler.Save(this.gameData, selectedProfileId);
     }
