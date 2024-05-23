@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 using static UnityEngine.RuleTile.TilingRuleOutput;
+using UnityEngine.SceneManagement;
 
 public class FloatingSword : MonoBehaviour, IDataPersistence
 {
@@ -76,6 +77,7 @@ public class FloatingSword : MonoBehaviour, IDataPersistence
 
     GameData data;
     PersistentDataSO persistentDataSO;
+    [SerializeField] SceneTransition sceneTransition;
 
     private void Start()
     {
@@ -383,7 +385,14 @@ private void BounceDown()
     {
         if(data.playerPersistentData.hasSword == true)
         {
-            if(data.lastSceneIndex == 0)
+            if (data.lastSceneIndex == 0 && SceneManager.GetActiveScene().buildIndex == 7)
+            {
+                Vector2 swordSpawnPosition;
+                swordSpawnPosition.x = player.transform.position.x + pos;
+                swordSpawnPosition.y = player.transform.position.y + pos;
+                this.transform.position = swordSpawnPosition;
+            }
+            else if (data.lastSceneIndex == 0)
             {
                 Vector2 swordSpawnPosition;
                 swordSpawnPosition.x = data.checkpointPosition.x + pos;

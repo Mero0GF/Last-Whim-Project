@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using static UnityEditor.PlayerSettings;
-using UnityEngine.SceneManagement;
+
 
 public class PlayerController : MonoBehaviour, IDataPersistence
 {
@@ -59,6 +59,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
 
     public bool enteredCheckpoint = false;
+    [SerializeField] SceneTransition sceneTransition;
 
     private void Start()
     {
@@ -265,6 +266,10 @@ public class PlayerController : MonoBehaviour, IDataPersistence
                 this.transform.position = playerSpawnPosition;
                 data.playerPersistentData.beachCutscenePlayed = false;
             }*/
+            else if(SceneManager.GetActiveScene().buildIndex == 7)
+            {
+                this.transform.position = sceneTransition.transform.position;
+            }
             else
             {
                 Vector2 playerSpawnPosition;
@@ -272,6 +277,10 @@ public class PlayerController : MonoBehaviour, IDataPersistence
                 playerSpawnPosition.y = data.checkpointPosition.y - 1.5f;
                 this.transform.position = playerSpawnPosition;
             }                
+        }
+        else if(data.lastSceneIndex == 4)
+        {
+            this.transform.position = sceneTransition.GetSpawnPointPosition();
         }
         else
         {

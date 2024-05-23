@@ -38,6 +38,11 @@ public class SceneTransition : MonoBehaviour
         }
     }
 
+    public Vector2 GetSpawnPointPosition()
+    {
+        return spawnPoint.position;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
