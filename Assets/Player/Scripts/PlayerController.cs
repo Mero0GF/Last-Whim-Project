@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
 
     public bool enteredCheckpoint = false;
+    SceneTransition sceneTransition;
 
     private void Start()
     {
@@ -264,10 +265,21 @@ public class PlayerController : MonoBehaviour, IDataPersistence
                 this.transform.position = playerSpawnPosition;
                 data.playerPersistentData.beachCutscenePlayed = false;
             }*/
+            else if(SceneManager.GetActiveScene().buildIndex == 7)
+            {
+                this.transform.position = sceneTransition.transform.position;
+            }
             else
             {
-                this.transform.position = data.checkpointPosition;
+                Vector2 playerSpawnPosition;
+                playerSpawnPosition.x = data.checkpointPosition.x;
+                playerSpawnPosition.y = data.checkpointPosition.y - 1.5f;
+                this.transform.position = playerSpawnPosition;
             }                
+        }
+        else if (SceneManager.GetActiveScene().buildIndex == 7)
+        {
+            this.transform.position = sceneTransition.transform.position;
         }
         else
         {
