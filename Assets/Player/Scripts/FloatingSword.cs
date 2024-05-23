@@ -77,7 +77,6 @@ public class FloatingSword : MonoBehaviour, IDataPersistence
 
     GameData data;
     PersistentDataSO persistentDataSO;
-    [SerializeField] SceneTransition sceneTransition;
 
     private void Start()
     {
@@ -385,23 +384,23 @@ private void BounceDown()
     {
         if(data.playerPersistentData.hasSword == true)
         {
-            if (data.lastSceneIndex == 0 && SceneManager.GetActiveScene().buildIndex == 7)
+            if (SceneManager.GetActiveScene().buildIndex == 7)
             {
+                Debug.Log("penisnsdad");
                 Vector2 swordSpawnPosition;
-                swordSpawnPosition.x = player.transform.position.x + pos;
-                swordSpawnPosition.y = player.transform.position.y + pos;
-                this.transform.position = swordSpawnPosition;
+                swordSpawnPosition = player.transform.position;
+                transform.position = swordSpawnPosition;
             }
             else if (data.lastSceneIndex == 0)
             {
                 Vector2 swordSpawnPosition;
                 swordSpawnPosition.x = data.checkpointPosition.x + pos;
                 swordSpawnPosition.y = data.checkpointPosition.y + pos - 1.5f;
-                this.transform.position = swordSpawnPosition;
+                transform.position = swordSpawnPosition;
             }
             else
             {
-                this.transform.position = data.swordSpawnPosition;
+                transform.position = data.swordSpawnPosition;
             }                                    
         }   
     }

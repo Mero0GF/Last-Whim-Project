@@ -58,7 +58,8 @@ public class PlayerController : MonoBehaviour, IDataPersistence
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
 
     public bool enteredCheckpoint = false;
-    SceneTransition sceneTransition;
+    private GameObject sceneTransitionObj;
+    private SceneTransition sceneTransition;
 
     private void Start()
     {
@@ -69,6 +70,11 @@ public class PlayerController : MonoBehaviour, IDataPersistence
         rb = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<Collider2D>();
         inputHandler = PlayerInputHandler.Instance;
+        if (GameObject.FindGameObjectWithTag("Respawn"))
+        {
+            sceneTransitionObj = GameObject.FindGameObjectWithTag("Respawn");
+            sceneTransition = sceneTransitionObj.GetComponent<SceneTransition>();
+        }
         lastMoveDirection.x = 0;
         lastMoveDirection.y = -1;
         /*if (persistentDataSO.hasSword)
@@ -255,7 +261,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
                 Vector2 playerSpawnPosition;
                 playerSpawnPosition.x = -4.53f;
                 playerSpawnPosition.y = -8;
-                this.transform.position = playerSpawnPosition;
+                transform.position = playerSpawnPosition;
             }
             /*else if(data.checkpointPosition.x == 0 && data.checkpointPosition.y == 0)
             {
@@ -267,23 +273,23 @@ public class PlayerController : MonoBehaviour, IDataPersistence
             }*/
             else if(SceneManager.GetActiveScene().buildIndex == 7)
             {
-                this.transform.position = sceneTransition.transform.position;
+                transform.position = sceneTransition.GetSpawnPointPosition();
             }
             else
             {
                 Vector2 playerSpawnPosition;
                 playerSpawnPosition.x = data.checkpointPosition.x;
                 playerSpawnPosition.y = data.checkpointPosition.y - 1.5f;
-                this.transform.position = playerSpawnPosition;
+                transform.position = playerSpawnPosition;
             }                
         }
         else if (SceneManager.GetActiveScene().buildIndex == 7)
         {
-            this.transform.position = sceneTransition.transform.position;
+            transform.position = sceneTransition.GetSpawnPointPosition();
         }
         else
         {
-            this.transform.position = data.playerSpawnPosition;
+            transform.position = data.playerSpawnPosition;
         }
         
         //load values from our game data into the srciptable object
@@ -296,15 +302,17 @@ public class PlayerController : MonoBehaviour, IDataPersistence
 
     public void SaveData(GameData data)
     {
-        data.playerSpawnPosition = this.transform.position;
+        data.playerSpawnPosition = transform.position;
         
         //save values for our scriptable object into the game data
         data.playerPersistentData.hasSword = this.persistentDataSO.hasSword;
         data.playerPersistentData.beachCutscenePlayed = this.persistentDataSO.beachCutscenePlayed;
+        data.playerPersistentData.firstBossDone = this.persistentDataSO.firstBossDone;
+        data.playerPersistentData.lastBossDone = this.persistentDataSO.lastBossDone;
 
         if (enteredCheckpoint)
         {
-            data.checkpointPosition = this.transform.position;
+            data.checkpointPosition = transform.position;
             //get scene name
             Scene scene = SceneManager.GetActiveScene();
             data.sceneName = scene.name;
