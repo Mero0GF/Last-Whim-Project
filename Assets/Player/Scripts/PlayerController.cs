@@ -7,7 +7,6 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using static UnityEditor.PlayerSettings;
 
-
 public class PlayerController : MonoBehaviour, IDataPersistence
 {
     // player states
@@ -59,7 +58,6 @@ public class PlayerController : MonoBehaviour, IDataPersistence
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
 
     public bool enteredCheckpoint = false;
-    [SerializeField] SceneTransition sceneTransition;
 
     private void Start()
     {
@@ -266,21 +264,10 @@ public class PlayerController : MonoBehaviour, IDataPersistence
                 this.transform.position = playerSpawnPosition;
                 data.playerPersistentData.beachCutscenePlayed = false;
             }*/
-            else if(SceneManager.GetActiveScene().buildIndex == 7)
-            {
-                this.transform.position = sceneTransition.transform.position;
-            }
             else
             {
-                Vector2 playerSpawnPosition;
-                playerSpawnPosition.x = data.checkpointPosition.x;
-                playerSpawnPosition.y = data.checkpointPosition.y - 1.5f;
-                this.transform.position = playerSpawnPosition;
+                this.transform.position = data.checkpointPosition;
             }                
-        }
-        else if(data.lastSceneIndex == 4)
-        {
-            this.transform.position = sceneTransition.GetSpawnPointPosition();
         }
         else
         {
@@ -291,8 +278,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
         this.persistentDataSO.hasSword = data.playerPersistentData.hasSword;
         this.persistentDataSO.beachCutscenePlayed = data.playerPersistentData.beachCutscenePlayed;
         this.hasSword = data.playerPersistentData.hasSword;
-        this.persistentDataSO.firstBossDone = data.playerPersistentData.firstBossDone;
-        this.persistentDataSO.lastBossDone = data.playerPersistentData.lastBossDone;
+
         
     }
 
@@ -303,8 +289,6 @@ public class PlayerController : MonoBehaviour, IDataPersistence
         //save values for our scriptable object into the game data
         data.playerPersistentData.hasSword = this.persistentDataSO.hasSword;
         data.playerPersistentData.beachCutscenePlayed = this.persistentDataSO.beachCutscenePlayed;
-        data.playerPersistentData.firstBossDone = this.persistentDataSO.firstBossDone;
-        data.playerPersistentData.lastBossDone = this.persistentDataSO.lastBossDone;
 
         if (enteredCheckpoint)
         {

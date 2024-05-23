@@ -18,14 +18,14 @@ public class BossController : MonoBehaviour
     public bool gotHit = false;
     private float staggerSpd = 0;
     private float speed;
-    public Vector3 headPos = new Vector3(0, 3);
-    public Vector3 rockSpawnPos = new Vector3(0, 10);
+    private Vector3 headPos = new Vector3(0, 2.4f);
+    private Vector3 rockSpawnPos = new Vector3(0, 10);
     private float distance;
     private Vector2 playerPos;
 
     private bool wait = false;
     private bool canMove = false;
-    public float atkRange = 5;
+    public float atkRange = 7;
     private float atkSpd = 25;
     private float atkCd = 0;
     private float atkCdMax = 120;
@@ -40,10 +40,19 @@ public class BossController : MonoBehaviour
     private GameObject sword;
     private FloatingSword floatingSword;
 
+    private Animator animator;
+    private SpriteRenderer spriteRendererBody;
+    private SpriteRenderer spriteRendererHead;
+    private SpriteRenderer spriteRendererBarrier;
+
     private void Start()
     {
         speed = manager.speed;
         state = State.Static;
+        animator = GetComponent<Animator>();
+        spriteRendererBody = GetComponent<SpriteRenderer>();
+        spriteRendererHead = head.GetComponent<SpriteRenderer>();
+        spriteRendererBarrier = barrier.GetComponent<SpriteRenderer>();
         bossHead = head.GetComponent<BossHead>();
         player = GameObject.FindGameObjectWithTag("Player");
         sword = GameObject.FindGameObjectWithTag("FloatingSword");
@@ -69,7 +78,10 @@ public class BossController : MonoBehaviour
             case State.FollowingPlayer:
                 barrier.SetActive(true);
                 transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
-                barrier.transform.position = transform.position + new Vector3(0,0.5f);
+                barrier.transform.position = transform.position + new Vector3(0,-0.3f);
+                flipSprite(spriteRendererBarrier, player);
+                flipSprite(spriteRendererHead, player);
+                flipSprite(spriteRendererBody, player);
                 SpawnRock();
                 if (gotHit == false)
                 {
@@ -87,12 +99,18 @@ public class BossController : MonoBehaviour
 
             case State.SeekingHead:
                 transform.position = Vector2.MoveTowards(transform.position, head.transform.position, speed * Time.deltaTime);
+                flipSprite(spriteRendererBarrier, head);
+                flipSprite(spriteRendererHead, head);
+                flipSprite(spriteRendererBody, head);
                 SpawnRock();
                 break;
 
             case State.MeleeAtk:
-                barrier.transform.position = transform.position + new Vector3(0, 0.5f);
+                barrier.transform.position = transform.position + new Vector3(0, -0.3f);
                 SpawnRock();
+                flipSprite(spriteRendererBarrier, player);
+                flipSprite(spriteRendererHead, player);
+                flipSprite(spriteRendererBody, player);
                 if (gotHit == false)
                 {
                     head.transform.position = transform.position + headPos;
@@ -148,27 +166,36 @@ public class BossController : MonoBehaviour
         atkCd = atkCdMax;
 
         // Attack 1
+        animator.SetTrigger("Attack");
         yield return new WaitForSeconds(1f);
         playerPos = player.transform.position;
         canMove = true;
+        animator.SetTrigger("Attack");
         yield return new WaitForSeconds(0.25f);
+        animator.SetTrigger("Idle");
         canMove = false;
 
         // Attack 2
+        animator.SetTrigger("Attack");
         yield return new WaitForSeconds(1f);
         playerPos = player.transform.position;
         canMove = true;
+        animator.SetTrigger("Attack");
         yield return new WaitForSeconds(0.25f);
+        animator.SetTrigger("Idle");
         canMove = false;
 
         // Attack 3
+        animator.SetTrigger("Attack");
         yield return new WaitForSeconds(1.5f);
         playerPos = player.transform.position;
         canMove = true;
+        animator.SetTrigger("Attack");
         yield return new WaitForSeconds(0.5f);
         canMove = false;
 
         barrier.SetActive(false);
+        animator.SetTrigger("Idle");
         yield return new WaitForSeconds(2f);
         if (!gotHit)
         {
@@ -189,6 +216,18 @@ public class BossController : MonoBehaviour
         if (!GameObject.FindGameObjectWithTag("Rock"))
         {
             Instantiate(rock, player.transform.position + rockSpawnPos, Quaternion.identity);
+        }
+    }
+
+    private void flipSprite(SpriteRenderer sprite, GameObject objPos)
+    {
+        if (objPos.transform.position.x < transform.position.x)
+        {
+            sprite.flipX = true;
+        }
+        else if (objPos.transform.position.x > transform.position.x)
+        {
+            sprite.flipX = false;
         }
     }
 

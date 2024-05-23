@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 
 public class Boss : MonoBehaviour
 {
@@ -134,10 +135,13 @@ public class Boss : MonoBehaviour
                 sceneBarriers[i].SetActive(false);
             }
             persistentDataSO.LastBossKilled();
+            GameObject cutsceneObj = GameObject.FindGameObjectWithTag("Finish");
+            cutsceneObj.GetComponent<Collider2D>().enabled = true;
             Destroy(gameObject);
-            playableDirector.Play();
         }
     }
+
+
     
 
     public void LookAtPlayer()
@@ -170,6 +174,11 @@ public class Boss : MonoBehaviour
             damageCooldown = cooldownTime;
         }
         
+    }
+
+    public void ToMainMenu()
+    {
+        SceneManager.LoadScene("MenuScene");
     }
 
 }
