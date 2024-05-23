@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 3985211437464040943}
   - component: {fileID: 7641598538189591670}
   - component: {fileID: 7350446304822035164}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Boss
   m_TagString: Boss
   m_Icon: {fileID: 0}
@@ -34,7 +34,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7, y: 4, z: 0}
-  m_LocalScale: {x: 14, y: 14, z: 1}
+  m_LocalScale: {x: 10, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -129,6 +129,7 @@ MonoBehaviour:
   maxHealth: 3
   health: 3
   cooldownTime: 3
+  persistentDataSO: {fileID: 11400000, guid: 2417d9a83ccd02c4eb54730ba8a75550, type: 2}
   isFlipped: 0
   phase: 1
 --- !u!114 &2653983811241832694
