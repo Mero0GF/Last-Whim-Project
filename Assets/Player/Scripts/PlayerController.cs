@@ -50,6 +50,9 @@ public class PlayerController : MonoBehaviour, IDataPersistence
     public Vector2 lastMoveDirection = Vector2.zero;
     public Vector2 inputDirection = Vector2.zero;
 
+    public GameObject footsteps;
+    public GameObject dashSound;
+    public GameObject deathSound;
     public PersistentDataSO persistentDataSO;
     private GameObject Sword;
     private FloatingSword floatingSword;
@@ -115,6 +118,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
                     // ------------------------------------
                     if (inputDirection != Vector2.zero)
                     {
+                        Footsteps();
                         isMoving = TryMove(inputDirection);
                         if (!isMoving)
                         {
@@ -132,8 +136,10 @@ public class PlayerController : MonoBehaviour, IDataPersistence
                         //if (animator.GetFloat("moveY") < 0) swordAtk.direction = SwordAtk.AttackDirection.down;
                         //if (animator.GetFloat("moveY") > 0) swordAtk.direction = SwordAtk.AttackDirection.up;
                     }
+                    
                     else
                     {
+                        StopFootsteps();
                         animator.SetBool("isMoving", false);
                         Animate(inputDirection);
                     }
@@ -157,6 +163,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
                     moveSpd = 6;
                 }
                 animator.SetBool("isDashing", true);
+                DashSound();
                 isMoving = Dodge(dodgeDir);
                 if (!isMoving)
                 {
@@ -171,6 +178,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
                 break;
 
             case State.GotHit:
+                DeathSound();
                 animator.SetTrigger("tookHit");
                 StartCoroutine(RestartScene());
                 break;
@@ -198,6 +206,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
 
     public void LockMovement()
     {
+        StopFootsteps();
         canMove = false;
     }
 
@@ -218,6 +227,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
                 dodgeSpd = 30f;
                 dodgeCD = dodgeMaxCD;
                 animator.SetBool("isDashing", false);
+                StopDashSound();
                 state = State.Moving;
             }
             return true;
@@ -230,6 +240,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
                 dodgeSpd = 30f;
                 dodgeCD = dodgeMaxCD;
                 animator.SetBool("isDashing", false);
+                StopDashSound();
                 state = State.Moving;
             }
             return false;
@@ -330,6 +341,31 @@ public class PlayerController : MonoBehaviour, IDataPersistence
     {
         persistentDataSO.hasSword = true;
         hasSword = true;
+    }
+
+    public void Footsteps()
+    {
+        footsteps.SetActive(true);
+    }
+
+    public void StopFootsteps()
+    {
+        footsteps.SetActive(false);
+    }
+
+    public void DashSound()
+    {
+        dashSound.SetActive(true);
+    }
+
+    public void StopDashSound()
+    {
+        dashSound.SetActive(false);
+    }
+
+    public void DeathSound()
+    {
+        deathSound.SetActive(true);
     }
 
     public void OnTriggerEnter2D(Collider2D collision)

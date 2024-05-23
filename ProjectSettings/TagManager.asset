@@ -19,6 +19,7 @@ TagManager:
   - Boss
   - EnemySword
   - EnemyEye
+  - BGmusic
   layers:
   - Default
   - TransparentFX

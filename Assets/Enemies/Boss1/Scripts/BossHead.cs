@@ -17,6 +17,7 @@ public class BossHead : MonoBehaviour
     public BossController bossController;
     private Collider2D col;
     private Rigidbody2D rb;
+    private GameObject bossMusic;
 
     private GameObject[] sceneBarriers;
 
@@ -32,6 +33,7 @@ public class BossHead : MonoBehaviour
 
     private void Start()
     {
+        bossMusic = GameObject.FindGameObjectWithTag("BGmusic");
         sceneBarriers = new GameObject[2];
         sceneBarriers = GameObject.FindGameObjectsWithTag("Barrier");
         if (persistentDataSO.firstBossDone)
@@ -89,6 +91,7 @@ public class BossHead : MonoBehaviour
                 sceneBarriers[i].SetActive(false);
             }
             persistentDataSO.FirstBossKilled();
+            bossMusic.SetActive(false);
             Destroy(boss);
         }
 

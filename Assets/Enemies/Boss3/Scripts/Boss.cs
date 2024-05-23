@@ -27,7 +27,7 @@ public class Boss : MonoBehaviour
 
     private GameObject[] sceneBarriers;
 
-    private PlayableDirector playableDirector;
+    private GameObject bossMusic;
 
     private GameObject sword1;
     private GameObject sword2;
@@ -48,7 +48,7 @@ public class Boss : MonoBehaviour
 
     private void Start()
     {
-        playableDirector = GetComponent<PlayableDirector>();
+        bossMusic = GameObject.FindGameObjectWithTag("BGmusic");
         sceneBarriers = new GameObject[1];
         sceneBarriers = GameObject.FindGameObjectsWithTag("Barrier");
         if (persistentDataSO.lastBossDone)
@@ -137,6 +137,7 @@ public class Boss : MonoBehaviour
             persistentDataSO.LastBossKilled();
             GameObject cutsceneObj = GameObject.FindGameObjectWithTag("Finish");
             cutsceneObj.GetComponent<Collider2D>().enabled = true;
+            bossMusic.SetActive(false);
             Destroy(gameObject);
         }
     }
