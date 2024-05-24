@@ -11,7 +11,8 @@ Além destes dois chefes, que representam o combate, o jogo possui mecânicas co
 3. Após descompactar o arquivo a pasta disponibilizará o arquivo "Last Whim.exe".<br>
 4. Abra o executável e teste o jogo à vontade!<br>
 <br>
-Obs: este jogo não está completamente polido, então haverão bugs ao longo da sua execução.
+Obs: este jogo não está completamente polido, então haverão bugs ao longo da sua execução.<br>
+<br>
 <br>
 ///////////////////////// TESTE DO CÓDIGO NO UNITY ///////////////////////// <br>
 <br>
