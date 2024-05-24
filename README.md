@@ -5,7 +5,6 @@ Além destes dois chefes, que representam o combate, o jogo possui mecânicas co
 <br>
 ///////////////////////// TESTE DO EXECUTÁVEL ///////////////////////// <br>
 <br>
-<br>
 1. Para testar o projeto basta acessar este link no drive: https://drive.google.com/drive/u/0/folders/1CSYoqfey-vZucnGpx3XWVY95IRCHCI5R
 2. Ao fazer o download do arquivo .zip, descompacte o arquivo.
 3. Após descompactar o arquivo a pasta disponibilizará o arquivo "Last Whim.exe".
@@ -16,7 +15,6 @@ Obs: este jogo não está completamente polido, então haverão bugs ao longo da
 <br>
 ///////////////////////// TESTE DO CÓDIGO NO UNITY ///////////////////////// <br>
 <br>
-<br>
 1. Instale o Unity em sua versão 2022.3.20f1.  <br>
 2. Clone este repositório em uma pasta vazia no seu computador (os arquivos do jogo estarão lozalizados nesta pasta).  <br>
 3. Clique no botão "Add" no Unity Hub, localize o repositório criado anteriormente e adicione o projeto na sua lista de projetos.  <br>
@@ -24,6 +22,7 @@ Obs: este jogo não está completamente polido, então haverão bugs ao longo da
 <br>
 <br><br>
 ///////////////////////// CRÉDITOS ///////////////////////// <br>
+<br>
 Áudio: Cauê Macedo, Pedro Volpe, Eric Uchiyamada, Lucas Meres(implementação). <br>
 Mecânicas do jogador: Lucas Meres. <br>
 Mecânicas de combate(espada): Lucas Meres e Eric Uchiyamada.<br>
