@@ -20,6 +20,6 @@ Obs: este jogo não está completamente polido, então haverão bugs ao longo da
 1. Instale o Unity em sua versão 2022.3.20f1. <br>
 2. Clone este repositório em uma pasta vazia no seu computador (os arquivos do jogo estarão lozalizados nesta pasta). <br>
 3. Clique no botão "Add" no Unity Hub, localize o repositório criado anteriormente e adicione o projeto na sua lista de projetos. <br>
-4. Entre no projeto. <br>
+4. Entre no projeto e modifique o código o quanto desejar. <br>
 <br>
 <br>
