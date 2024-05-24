@@ -6,10 +6,10 @@ Além destes dois chefes, que representam o combate, o jogo possui mecânicas co
 ///////////////////////// TESTE DO EXECUTÁVEL ///////////////////////// <br>
 <br>
 <br>
-1. Para testar o projeto basta acessar este link no drive: https://drive.google.com/drive/u/0/folders/1CSYoqfey-vZucnGpx3XWVY95IRCHCI5R <br>
-2. Ao fazer o download do arquivo .zip, descompacte o arquivo.<br>
-3. Após descompactar o arquivo a pasta disponibilizará o arquivo "Last Whim.exe".<br>
-4. Abra o executável e teste o jogo à vontade!<br>
+1. Para testar o projeto basta acessar este link no drive: https://drive.google.com/drive/u/0/folders/1CSYoqfey-vZucnGpx3XWVY95IRCHCI5R 
+2. Ao fazer o download do arquivo .zip, descompacte o arquivo.
+3. Após descompactar o arquivo a pasta disponibilizará o arquivo "Last Whim.exe".
+4. Abra o executável e teste o jogo à vontade!
 <br>
 Obs: este jogo não está completamente polido, então haverão bugs ao longo da sua execução.<br>
 <br>
@@ -17,9 +17,9 @@ Obs: este jogo não está completamente polido, então haverão bugs ao longo da
 ///////////////////////// TESTE DO CÓDIGO NO UNITY ///////////////////////// <br>
 <br>
 <br>
-1. Instale o Unity em sua versão 2022.3.20f1. <br>
-2. Clone este repositório em uma pasta vazia no seu computador (os arquivos do jogo estarão lozalizados nesta pasta). <br>
-3. Clique no botão "Add" no Unity Hub, localize o repositório criado anteriormente e adicione o projeto na sua lista de projetos. <br>
-4. Entre no projeto e modifique o código o quanto desejar. <br>
+1. Instale o Unity em sua versão 2022.3.20f1. 
+2. Clone este repositório em uma pasta vazia no seu computador (os arquivos do jogo estarão lozalizados nesta pasta). 
+3. Clique no botão "Add" no Unity Hub, localize o repositório criado anteriormente e adicione o projeto na sua lista de projetos. 
+4. Entre no projeto e modifique o código o quanto desejar. 
 <br>
 <br>
