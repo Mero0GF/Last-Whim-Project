@@ -27,7 +27,7 @@ Obs: este jogo não está completamente polido, então haverão bugs ao longo da
 Mecânicas do jogador: Lucas Meres. <br>
 Mecânicas de combate(espada): Lucas Meres e Eric Uchiyamada.<br>
 Músicas: Lucas Meres (Obs: criação autoral da música do "Main menu". As outras músicas foram encontradas de forma gratuita na internet).<br>
-Sistema de checkpoints: Eric Uchiyamda.<br>
+Sistema de checkpoints: Eric Uchiyamada.<br>
 Chefões/Bosses: Lucas Meres e Oliver Mccormack.<br>
 Artes e animações: Pedro Volpe e Lucas Meres(implementação).<br>
 Cutscenes: Pedro Volpe e Lucas Meres(implementação).<br>
