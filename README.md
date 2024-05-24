@@ -1,5 +1,5 @@
 O projeto se trata de um jogo em Unity implementado por Lucas Meres, Pedro Volpe, Eric Uchiyamada, Oliver Mccormack, Thiago Liporace, Renan Tagliaferro e Cauê Macedo. <br>
-"Last Whim" é um jogo top-down shooter voltado à velocidade e dificuldade, apresentando dois chefes principais, "The Watcher" e, "The Avatar". Estes dois chefes foram desenvolvidos de forma que tragam certa dificuldade até que sejam derrotados, trazendo assim uma experiência mais interessante ao jogador.<br>
+"Last Whim" é um jogo top-down shooter voltado à velocidade e dificuldade, apresentando dois chefes principais, "The Watcher" e, "The Avatar". Estes dois chefes foram desenvolvidos de forma que tragam certa dificuldade até que sejam derrotados, trazendo assim uma experiência mais recompensadora ao jogador.<br>
 Além destes dois chefes, que representam o combate, o jogo possui mecânicas como a de ataque, desvio, "save em checkpoints", "cutscenes", cenário, entre outras menos importantes. <br>
 <br>
 <br>
@@ -23,4 +23,16 @@ Obs: este jogo não está completamente polido, então haverão bugs ao longo da
 4. Entre no projeto e modifique o código o quanto desejar.  <br>
 <br>
 <br><br>
-<br>  
+<br>
+///////////////////////// CRÉDITOS ///////////////////////// <br>
+Áudio: Cauê Macedo, Pedro Volpe, Eric Uchiyamada, Lucas Meres(implementação). <br>
+Mecânicas do jogador: Lucas Meres. <br>
+Mecânicas de combate(espada): Lucas Meres e Eric Uchiyamada.
+Músicas: Lucas Meres (Obs: criação autoral da música do "Main menu". As outras músicas foram encontradas de forma gratuita na internet).
+Sistema de checkpoints: Eric Uchiyamda.
+Chefões/Bosses: Lucas Meres e Oliver Mccormack.
+Artes e animações: Pedro Volpe e Lucas Meres(implementação).
+Cutscenes: Pedro Volpe e Lucas Meres(implementação).
+Main Menu: Pedro Volpe e Thiago Liporace.
+
+
