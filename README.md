@@ -23,7 +23,6 @@ Obs: este jogo não está completamente polido, então haverão bugs ao longo da
 4. Entre no projeto e modifique o código o quanto desejar.  <br>
 <br>
 <br><br>
-<br>
 ///////////////////////// CRÉDITOS ///////////////////////// <br>
 Áudio: Cauê Macedo, Pedro Volpe, Eric Uchiyamada, Lucas Meres(implementação). <br>
 Mecânicas do jogador: Lucas Meres. <br>
