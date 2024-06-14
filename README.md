@@ -11,10 +11,7 @@ Além destes dois chefes, que representam o combate, o jogo possui mecânicas co
 4. Abra o executável e teste o jogo à vontade!
 <br>
 Obs: este jogo não está completamente polido, então haverão bugs ao longo da sua execução.<br>
-<br>
-<br>
-///////////////////////// TESTE DO CÓDIGO NO UNITY ///////////////////////// <br>
-<br>
+# Teste de Código no Unity
 1. Instale o Unity em sua versão 2022.3.20f1.  <br>
 2. Clone este repositório em uma pasta vazia no seu computador (os arquivos do jogo estarão lozalizados nesta pasta).  <br>
 3. Clique no botão "Add" no Unity Hub, localize o repositório criado anteriormente e adicione o projeto na sua lista de projetos.  <br>
