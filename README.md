@@ -12,6 +12,7 @@ Além destes dois chefes, que representam o combate, o jogo possui mecânicas co
 <br>
 Obs: este jogo não está completamente polido, então haverão bugs ao longo da sua execução.<br>
 # Teste de Código no Unity
+<br>
 1. Instale o Unity em sua versão 2022.3.20f1.  <br>
 2. Clone este repositório em uma pasta vazia no seu computador (os arquivos do jogo estarão lozalizados nesta pasta).  <br>
 3. Clique no botão "Add" no Unity Hub, localize o repositório criado anteriormente e adicione o projeto na sua lista de projetos.  <br>
@@ -19,6 +20,7 @@ Obs: este jogo não está completamente polido, então haverão bugs ao longo da
 <br>
 <br><br>
 # Créditos
+<br>
 Áudio: Cauê Macedo, Pedro Volpe, Eric Uchiyamada, Lucas Meres(implementação). <br>
 Mecânicas do jogador: Lucas Meres. <br>
 Mecânicas de combate(espada): Lucas Meres e Eric Uchiyamada.<br>
