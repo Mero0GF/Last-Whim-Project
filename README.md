@@ -11,6 +11,7 @@ Além destes dois chefes, que representam o combate, o jogo possui mecânicas co
 4. Abra o executável e teste o jogo à vontade!
 <br>
 Obs: este jogo não está completamente polido, então haverão bugs ao longo da sua execução.<br>
+  
 # Teste de Código no Unity
 <br>
 1. Instale o Unity em sua versão 2022.3.20f1.  <br>
@@ -19,6 +20,7 @@ Obs: este jogo não está completamente polido, então haverão bugs ao longo da
 4. Entre no projeto e modifique o código o quanto desejar.  <br>
 <br>
 <br><br>
+  
 # Créditos
 <br>
 Áudio: Cauê Macedo, Pedro Volpe, Eric Uchiyamada, Lucas Meres(implementação). <br>
