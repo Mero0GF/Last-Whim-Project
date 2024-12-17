@@ -1,34 +1,34 @@
-# Sobre o Jogo
-O projeto se trata de um jogo em **Unity** implementado por Lucas Meres, Pedro Volpe, Eric Uchiyamada, Oliver Mccormack, Thiago Liporace, Renan Tagliaferro e Cauê Macedo. <br>
-"Last Whim" é um jogo top-down shooter voltado à **velocidade** e **dificuldade**, apresentando dois chefes principais, "The Watcher" e, "The Avatar". Estes dois chefes foram desenvolvidos de forma que tragam certa dificuldade até que sejam derrotados, trazendo assim uma experiência mais recompensadora ao jogador.<br>
-Além destes dois chefes, que representam o combate, o jogo possui mecânicas como a de ataque, desvio, "save em checkpoints", "cutscenes", cenário, entre outras menos importantes. <br>
+# About the Game
+The project is a game in Unity implemented by Lucas Meres, Pedro Volpe, Eric Uchiyamada, Oliver Mccormack, Thiago Liporace, Renan Tagliaferro, and Cauê Macedo. <br>
+"Last Whim" is a top-down shooter game focused on speed and difficulty, featuring two main bosses, "The Watcher" and "The Avatar." These two bosses were designed to present a certain level of challenge until they are defeated, thus providing a more rewarding experience for the player. <br>
+Besides these two bosses representing combat, the game includes mechanics such as attack, dodge, "save at checkpoints," "cutscenes," environment, among others of lesser importance. <br>
 <br>
 <br>
-# Teste do Executável
-1. Para testar o projeto basta acessar este link no drive: https://drive.google.com/drive/u/0/folders/1CSYoqfey-vZucnGpx3XWVY95IRCHCI5R
-2. Ao fazer o download do arquivo .zip, descompacte o arquivo.
-3. Após descompactar o arquivo a pasta disponibilizará o arquivo "Last Whim.exe".
-4. Abra o executável e teste o jogo à vontade!
-<br>
-**Obs**: este jogo não está completamente polido, então haverão bugs ao longo da sua execução. <br>
-  
-# Teste de Código no Unity
 
-1. Instale o Unity em sua versão 2022.3.20f1.  <br>
-2. Clone este repositório em uma pasta vazia no seu computador (os arquivos do jogo estarão lozalizados nesta pasta).  <br>
-3. Clique no botão "Add" no Unity Hub, localize o repositório criado anteriormente e adicione o projeto na sua lista de projetos.  <br>
-4. Entre no projeto e modifique o código o quanto desejar.  <br>
-<br>
+# Executable Test
+
+1. To test the project, simply access this link on the drive: https://drive.google.com/drive/u/0/folders/1CSYoqfey-vZucnGpx3XWVY95IRCHCI5R
+2. After downloading the .zip file, extract it.
+3. Once extracted, the folder will contain the "Last Whim.exe" file.
+4. Open the executable and enjoy testing the game! <br>
+Note: this game is not really polished, so there will be bugs throughout. <br>
+
+# Code Testing in Unity
+
+1. Install Unity version 2022.3.20f1. <br>
+2. Clone this repository into an empty folder on your computer (the game files will be located in this folder). <br>
+3. Click the "Add" button in Unity Hub, locate the previously created repository, and add the project to your project list. <br>
+4. Enter the project and modify the code as much as you want. <br> <br>
 <br><br>
-  
-# Créditos
 
-- Áudio: Cauê Macedo, Pedro Volpe, Eric Uchiyamada, Lucas Meres(implementação). <br>
-- Mecânicas do jogador: Lucas Meres. <br>
-- Mecânicas de combate(espada): Lucas Meres e Eric Uchiyamada.<br>
-- Músicas: Lucas Meres (Obs: criação autoral da música do "Main menu". As outras músicas foram encontradas de forma gratuita na internet).<br>
-- Sistema de checkpoints: Eric Uchiyamada.<br>
-- Chefões/Bosses: Oliver Mccormack e Lucas Meres.<br>
-- Artes e animações: Pedro Volpe e Lucas Meres(implementação).<br>
-- Cutscenes: Pedro Volpe e Lucas Meres(implementação).<br>
-- Main Menu: Pedro Volpe e Thiago Liporace.<br>
+# Credits
+
+- Audio: Cauê Macedo, Pedro Volpe, Eric Uchiyamada, Lucas Meres (implementation). <br>
+- Player mechanics: Lucas Meres. <br>
+- Combat mechanics (sword): Lucas Meres and Eric Uchiyamada.<br>
+- Music: Lucas Meres (Note: original creation of the "Main Menu" music. Other tracks were found for free online).<br>
+- Checkpoint system: Eric Uchiyamada.<br>
+- Bosses: Oliver Mccormack and Lucas Meres.<br>
+- Art and animations: Pedro Volpe and Lucas Meres (implementation).<br>
+- Cutscenes: Pedro Volpe and Lucas Meres (implementation).<br>
+- Main Menu: Pedro Volpe and Thiago Liporace.<br>
