@@ -2,7 +2,6 @@
 The project is a game in Unity implemented by Lucas Meres, Pedro Volpe, Eric Uchiyamada, Oliver Mccormack, Thiago Liporace, Renan Tagliaferro, and Cauê Macedo. <br>
 "Last Whim" is a top-down shooter game focused on speed and difficulty, featuring two main bosses, "The Watcher" and "The Avatar." These two bosses were designed to present a certain level of challenge until they are defeated, thus providing a more rewarding experience for the player. <br>
 Besides these two bosses representing combat, the game includes mechanics such as attack, dodge, "save at checkpoints," "cutscenes," environment, among others of lesser importance. <br>
-<br>
 
 # Executable Test
 
@@ -17,8 +16,7 @@ Note: this game is not really polished, so there will be bugs throughout. <br>
 1. Install Unity version 2022.3.20f1. <br>
 2. Clone this repository into an empty folder on your computer (the game files will be located in this folder). <br>
 3. Click the "Add" button in Unity Hub, locate the previously created repository, and add the project to your project list. <br>
-4. Enter the project and modify the code as much as you want. <br> <br>
-<br>
+4. Enter the project and modify the code as much as you want. <br>
 
 # Credits
 
