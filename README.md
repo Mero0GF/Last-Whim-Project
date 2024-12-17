@@ -1,7 +1,7 @@
 # About the Game
 The project is a game in Unity implemented by Lucas Meres, Pedro Volpe, Eric Uchiyamada, Oliver Mccormack, Thiago Liporace, Renan Tagliaferro, and Cauê Macedo. <br>
 "Last Whim" is a top-down shooter game focused on speed and difficulty, featuring two main bosses, "The Watcher" and "The Avatar." These two bosses were designed to present a certain level of challenge until they are defeated, thus providing a more rewarding experience for the player. <br>
-Besides these two bosses representing combat, the game includes mechanics such as attack, dodge, "save at checkpoints," "cutscenes," environment, among others of lesser importance. <br>
+Besides these two bosses representing the combat, the game includes mechanics, like attacking, dodging, saving at checkpoints, "cutscenes", environment, among less important ones. <br>
 
 # Executable Test
 
@@ -9,7 +9,7 @@ Besides these two bosses representing combat, the game includes mechanics such a
 2. After downloading the .zip file, extract it.
 3. Once extracted, the folder will contain the "Last Whim.exe" file.
 4. Open the executable and enjoy testing the game! <br>
-Note: this game is not really polished, so there will be bugs throughout. <br>
+Note: this game is not really polished, so it's very likely to have bugs throughout the game. <br>
 
 # Code Testing in Unity
 
