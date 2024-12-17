@@ -23,7 +23,7 @@ Note: this game is not really polished, so there will be bugs throughout. <br>
 - Audio: Cauê Macedo, Pedro Volpe, Eric Uchiyamada, Lucas Meres (implementation). <br>
 - Player mechanics: Lucas Meres. <br>
 - Combat mechanics (sword): Lucas Meres and Eric Uchiyamada.<br>
-- Music: Lucas Meres (Note: original creation of the "Main Menu" music. Other tracks were found for free online).<br>
+- Music: Lucas Meres (Note: The "Main Manu" theme is an original song for the game. Other tracks were found for free online).<br>
 - Checkpoint system: Eric Uchiyamada.<br>
 - Bosses: Oliver Mccormack and Lucas Meres.<br>
 - Art and animations: Pedro Volpe and Lucas Meres (implementation).<br>
